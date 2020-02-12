@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include "linkedqueue.h"
 #include "predefconst.h"
+#include "sqstack.h"
 
 typedef struct BiTNode
 {
@@ -27,7 +27,7 @@ Status InitTree(BiTree *T)
 } // InitTree
 
 /*******************************************************************************
- * 即使 BiTree 类型和 BiTNode * 等价, 表面上是指针,但是在指针传递时, 仍要取 BiTree 的地址,
+ * 即使 BiTree 类型和 BiTNode * 等价, 表面上是指针, 但是在指针传递时, 仍要取 BiTree 的地址,
  * 因为在子函数中需要改变是指针本身 ( 改变了结点间的链接关系 ), 而不是指针指向的内容, 
  * 因此子函数参数列表中写 BiTree *T, 否则只能传递一份指向某二叉树的指针, 在子函数中修改了二叉树
  * 后, 主函数中的指针仍然指向 NULL.
@@ -80,6 +80,73 @@ void CreateTree(BiTree *T, FILE *fp)
         CreateTree(&((*T)->rchild), fp); // 创建右子树
     }
 } // CreateTree
+
+// 采用二叉链表存储结构, Visit 是对结点操作的应用函数.
+// 先序遍历二叉树 T, 对每个结点调用函数 Visit 一次且仅一次.
+// 一旦 Visit() 失败, 则操作失败.
+Status PreOrderTraverse(BiTree T, Status (*Visit)(TElemType e))
+{
+    if (T)
+    {
+        if (Visit(T->data))
+        {
+            if (PreOrderTraverse(T->lchild, Visit))
+            {
+                if (PreOrderTraverse(T->rchild, Visit))
+                    return OK;
+            }
+        }
+        return ERROR;
+    }
+    else
+        return OK;
+} // PreOrderTraverse
+
+// 采用二叉链表存储结构, Visit 是对结点操作的应用函数.
+// 中序遍历二叉树 T, 对每个结点调用函数 Visit 一次且仅一次.
+// 一旦 Visit() 失败, 则操作失败.
+Status InOrderTraverse(BiTree T, Status (*Visit)(TElemType e))
+{
+    if (T)
+    {
+        if (InOrderTraverse(T->lchild, Visit))
+            if (Visit(T->data))
+                if (InOrderTraverse(T->rchild, Visit))
+                    return OK;
+
+        return ERROR;
+    }
+    else
+        return OK;
+} // InOrderTraverse
+
+// 采用二叉链表存储结构, Visit 是对结点操作的应用函数.
+// 后序遍历二叉树 T, 对每个结点调用函数 Visit 一次且仅一次.
+// 一旦 Visit() 失败, 则操作失败.
+Status PostOrderTraverse(BiTree T, Status (*Visit)(TElemType e))
+{
+    if (T)
+    {
+        if (PostOrderTraverse(T->lchild, Visit))
+            if (PostOrderTraverse(T->rchild, Visit))
+                if (Visit(T->data))
+                    return OK;
+
+        return ERROR;
+    }
+    else
+        return OK;
+} // PostOrderTraverse
+
+// 采用二叉链表存储结构, Visit 是对结点操作的应用函数.
+// 层序遍历二叉树 T, 对每个结点调用函数 Visit 一次且仅一次.
+// 一旦 Visit() 失败, 则操作失败.
+Status LevelOrderTraverse(BiTree T, Status (*Visit)(TElemType e))
+{
+    SqStack S;
+    InitStack(&S);
+    Push(&S, )
+} // LevelOrderTraverse
 
 // void PrintTree(BiTree T)
 // {
