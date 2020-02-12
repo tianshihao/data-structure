@@ -2,9 +2,11 @@
 
 int main()
 {
-    BiTree my_bitree;
+    BiTree my_bitree = NULL;
 
-    CreateBiTree(my_bitree);
+    InitTree(&my_bitree);
+
+    CreateBiTree(&my_bitree, ".\\input.txt");
 
     return 0;
 }
