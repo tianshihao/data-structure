@@ -25,7 +25,7 @@ typedef int Status;
 // 数据元素类型
 typedef int ElemType;
 typedef int SElemType;
-typedef int QElemType;
+typedef void QElemType;
 typedef char TElemType;
 
 // 顺序栈存储空间初始分配量
