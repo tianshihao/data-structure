@@ -1,6 +1,6 @@
 ﻿#include "bitree.h"
 
-Status PrintElement(TElemType e)
+Status PrintElement(ElemType e)
 {
     printf(" %c ", e);
     return OK;
@@ -8,6 +8,7 @@ Status PrintElement(TElemType e)
 
 int main()
 {
+    // my_bitree 是一个指向二叉树结点的指针.
     BiTree my_bitree = NULL;
 
     InitTree(&my_bitree);
@@ -15,6 +16,8 @@ int main()
     CreateBiTree(&my_bitree, ".\\input.txt");
 
     PostOrderTraverse(my_bitree, PrintElement);
+
+    PreOrderTraverse(my_bitree, PrintElement);
 
     return 0;
 }

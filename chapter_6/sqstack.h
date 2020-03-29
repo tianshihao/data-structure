@@ -12,10 +12,10 @@
 typedef struct SqStack
 {
     // 在栈构造之前和销毁之后, base 的值为 NULL
-    SElemType *base;
+    ElemType *base;
 
     // 栈顶指针
-    SElemType *top;
+    ElemType *top;
 
     // 当前已分配的存储空间, 以元素为单位
     int stack_size;
@@ -25,7 +25,7 @@ typedef struct SqStack
 Status InitStack(SqStack *S)
 {
     // 栈顶指针指向分配的内存空间的起始地址
-    S->base = malloc(STACK_INIT_SIZE * sizeof(SElemType));
+    S->base = malloc(STACK_INIT_SIZE * sizeof(ElemType));
 
     // 存储分配失败
     if (!S->base)
@@ -72,7 +72,7 @@ int StackLength(SqStack S)
 } // StackLength
 
 // 若栈不空, 则用 e 返回 S 的栈顶元素, 并返回 OK; 否则返回 ERROR.
-Status GetTop(SqStack S, SElemType *e)
+Status GetTop(SqStack S, ElemType *e)
 {
     // 空栈
     if (S.top == S.base)
@@ -84,12 +84,12 @@ Status GetTop(SqStack S, SElemType *e)
 } // GetTop
 
 // 插入元素 e 为新的栈顶元素.
-Status Push(SqStack *S, SElemType e)
+Status Push(SqStack *S, ElemType e)
 {
     // 栈满, 追加存储空间
     if ((S->top - S->base) >= S->stack_size)
     {
-        S->base = realloc(S->base, (S->stack_size + STACK_INCREMENT) * sizeof(SElemType));
+        S->base = realloc(S->base, (S->stack_size + STACK_INCREMENT) * sizeof(ElemType));
 
         if (!S->base)
             exit(OVERFLOW);
@@ -107,7 +107,7 @@ Status Push(SqStack *S, SElemType e)
 } // Push
 
 // 若栈不空, 则删除 S 的栈顶元素, 用 e 返回其值, 并返回 OK; 否则返回ERROR.
-Status Pop(SqStack *S, SElemType *e)
+Status Pop(SqStack *S, ElemType *e)
 {
     if (S->top == S->base)
         return ERROR;
@@ -144,7 +144,7 @@ void conversion()
 
     printf("octal of this number is: ");
 
-    SElemType e;
+    ElemType e;
     while (!StackEmpty(S))
     {
         Pop(&S, &e);
@@ -175,7 +175,7 @@ Status MatchBrackets()
             Push(&S, bracket_sequence[i]);
         else
         {
-            SElemType left_bracket;
+            ElemType left_bracket;
 
             // stack have bracket
             if ((!StackEmpty(S)) && (Pop(&S, &left_bracket)))

@@ -23,10 +23,7 @@
 typedef int Status;
 
 // 数据元素类型
-typedef int ElemType;
-typedef int SElemType;
-typedef void QElemType;
-typedef char TElemType;
+typedef char ElemType;
 
 // 顺序栈存储空间初始分配量
 #define STACK_INIT_SIZE 100
