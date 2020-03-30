@@ -8,16 +8,16 @@ Status PrintElement(ElemType e)
 
 int main()
 {
-    // my_bitree 是一个指向二叉树结点的指针.
-    BiTree my_bitree = NULL;
+    // myBiTree 是一个指向二叉树结点的指针.
+    BiTree myBiTree = NULL;
 
-    InitTree(&my_bitree);
+    InitTree(&myBiTree);
 
-    CreateBiTree(&my_bitree, ".\\input.txt");
+    CreateBiTree(&myBiTree, ".\\input.txt");
 
-    PostOrderTraverse(my_bitree, PrintElement);
+    PostOrderTraverse(myBiTree, PrintElement);
 
-    PreOrderTraverse(my_bitree, PrintElement);
+    PreOrderTraverse(myBiTree, PrintElement);
 
     return 0;
 }

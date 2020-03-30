@@ -19,9 +19,11 @@ typedef struct BiTNode
 // 构造一个空的二叉树 T.
 Status InitTree(BiTree *T)
 {
-    // *T 即为指向 BiTNode 的指针.
-    if (*T == NULL) // 修改指针指向的内容.
+    // *T 即为指向二叉树根结点的指针.
+    if (*T == NULL) // 若已经指向空, 操作失败, 报错.
+    {
         return ERROR;
+    }
 
     *T = NULL; // 使得指针指向 NULL.
 
@@ -48,9 +50,11 @@ Status CreateBiTree(BiTree *T, char *path)
 {
     FILE *fp = fopen(path, "r");
     if (fp == NULL)
+    {
         return ERROR;
+    }
 
-    // 此时只用修改指针指向的内容, 而不用修改指针本身的内容, 所以只传递指向二叉树的地址.
+    // 传递的还是二叉树指针的指针.
     CreateTree(T, fp);
 
     fclose(fp);
@@ -64,20 +68,24 @@ void CreateTree(BiTree *T, FILE *fp)
     char ch = 0;
 
     // 读取当前结点的值
-    if (fp == NULL)
-        scanf("%c", &ch);
-    else
-        ch = fgetc(fp);
+    // if (fp == NULL)
+    // scanf("%c", &ch);
+    // else
+    ch = fgetc(fp);
 
-    if (ch == '^')
+    if (ch == '^') // 使用'^'表示空结点.
+    {
         *T = NULL;
+    }
     else
     {
-        // 生成根结点
+        // 为根结点指针分配要指向要内存空间.
         *T = (BiTNode *)malloc(sizeof(BiTNode));
         if (!*T)
+        {
             exit(OVERFLOW);
-
+        }
+        
         (*T)->data = ch;
         CreateTree(&((*T)->lchild), fp); // 创建左子树
         CreateTree(&((*T)->rchild), fp); // 创建右子树
@@ -96,13 +104,17 @@ Status PreOrderTraverse(BiTree T, Status (*Visit)(ElemType e))
             if (PreOrderTraverse(T->lchild, Visit))
             {
                 if (PreOrderTraverse(T->rchild, Visit))
+                {
                     return OK;
+                }
             }
         }
         return ERROR;
     }
     else
+    {
         return OK;
+    }
 } // PreOrderTraverse
 
 // 采用二叉链表存储结构, Visit 是对结点操作的应用函数.
@@ -113,14 +125,21 @@ Status InOrderTraverse(BiTree T, Status (*Visit)(ElemType e))
     if (T)
     {
         if (InOrderTraverse(T->lchild, Visit))
+        {
             if (Visit(T->data))
+            {
                 if (InOrderTraverse(T->rchild, Visit))
+                {
                     return OK;
-
+                }
+            }
+        }
         return ERROR;
     }
     else
+    {
         return OK;
+    }
 } // InOrderTraverse
 
 // 采用二叉链表存储结构, Visit 是对结点操作的应用函数.
@@ -131,14 +150,21 @@ Status PostOrderTraverse(BiTree T, Status (*Visit)(ElemType e))
     if (T)
     {
         if (PostOrderTraverse(T->lchild, Visit))
+        {
             if (PostOrderTraverse(T->rchild, Visit))
+            {
                 if (Visit(T->data))
+                {
                     return OK;
-
+                }
+            }
+        }
         return ERROR;
     }
     else
+    {
         return OK;
+    }
 } // PostOrderTraverse
 
 // 采用二叉链表存储结构, Visit 是对结点操作的应用函数.
