@@ -50,7 +50,7 @@ void PrintAdjacencyList(ALGraph G)
 {
     for (int i = 0; i < G.vexnum; ++i)
     {
-        printf("V%d→");
+        printf("V%d→", G.vertices[i].data);
         ArcNode *p = G.vertices[i].firstarc;
 
         while (p)
@@ -96,7 +96,7 @@ Status CreateDG(ALGraph *G)
     printf("enter vertex vector of graph: ");
     for (int i = 0; i < G->vexnum; ++i)
     {
-        scanf("%d", G->vertices[i].data);
+        scanf("%d", &G->vertices[i].data);
         G->vertices[i].firstarc = NULL;
     }
 
