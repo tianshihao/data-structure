@@ -74,7 +74,7 @@ void PrintAdjMatrix(MGraph G)
 Status CreateGraph(MGraph *G)
 {
     printf("enter graph's type: ");
-    scanf("%d", &G->type);
+    scanf("%u", &G->type);
 
     switch (G->type)
     {
