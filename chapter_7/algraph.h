@@ -46,6 +46,8 @@ Status CreateDN(ALGraph *G);
 
 Status CreateUDG(ALGraph *G);
 
+Status CreateUDN(ALGraph *G);
+
 void PrintAdjacencyList(ALGraph G)
 {
     for (int i = 0; i < G.vexnum; ++i)
@@ -63,8 +65,6 @@ void PrintAdjacencyList(ALGraph G)
 
     return;
 } // PrintAdjacencyList
-
-Status CreateUDN(ALGraph *G);
 
 Status CreateGraph(ALGraph *G)
 {
@@ -109,19 +109,28 @@ Status CreateDG(ALGraph *G)
 
         ArcNode *arc = malloc(sizeof(ArcNode));
 
-        arc->adjvex = v2;
+        arc->adjvex = v2 - 1;
         arc->info = &weight;
-        arc->nextarc = NULL;
 
-        ArcNode *p = G->vertices[v1].firstarc;
-
-        while (p->nextarc)
-        {
-            p = p->nextarc;
-        }
-
-        p->nextarc = arc;
+        arc->nextarc = G->vertices[v1 - 1].firstarc;
+        G->vertices[v1 - 1].firstarc = arc;
     }
 
     return OK;
 } // CreateDG
+
+Status CreateDN(ALGraph *G)
+{
+    return OK;
+} // CreateDN
+
+Status CreateUDG(ALGraph *G)
+{
+    return OK;
+
+} // CreateUDG
+
+Status CreateUDN(ALGraph *G)
+{
+    return OK;
+} // CreateUDN
