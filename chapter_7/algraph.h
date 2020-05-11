@@ -36,6 +36,8 @@ typedef struct ALGraph
     GraphType type;
 } ALGraph;
 
+void PrintAdjacencyList(ALGraph G);
+
 Status CreateGraph(ALGraph *G);
 
 Status CreateDG(ALGraph *G);
@@ -43,6 +45,24 @@ Status CreateDG(ALGraph *G);
 Status CreateDN(ALGraph *G);
 
 Status CreateUDG(ALGraph *G);
+
+void PrintAdjacencyList(ALGraph G)
+{
+    for (int i = 0; i < G.vexnum; ++i)
+    {
+        printf("V%d→");
+        ArcNode *p = G.vertices[i].firstarc;
+
+        while (p)
+        {
+            printf("%d→", p->adjvex);
+        }
+
+        printf("\n");
+    }
+
+    return;
+} // PrintAdjacencyList
 
 Status CreateUDN(ALGraph *G);
 
