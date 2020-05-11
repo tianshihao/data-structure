@@ -37,7 +37,11 @@ Status CreateGraph(MGraph *G);
 
 Status CreateDG(MGraph *G);
 
+Status CreateDN(MGraph *G);
+
 Status CreateUDG(MGraph *G);
+
+Status CreateUDN(MGraph *G);
 
 VertexType LocateVex(MGraph G, VertexType v)
 {
@@ -81,11 +85,11 @@ Status CreateGraph(MGraph *G)
     case DG:
         return CreateDG(G);
     case DN:
-        break;
+        return CreateDN(G);
     case UDG:
         return CreateUDG(G);
     case UDN:
-        break;
+        return CreateUDN(G);
     default:
         return ERROR;
     }
@@ -128,6 +132,11 @@ Status CreateDG(MGraph *G)
     return OK;
 } // CreateDG
 
+Status CreateDN(MGraph *G)
+{
+    return CreateDG(G);
+} // CreateDN
+
 Status CreateUDG(MGraph *G)
 {
     printf("enter vertex and arc number of graph: ");
@@ -164,3 +173,8 @@ Status CreateUDG(MGraph *G)
 
     return OK;
 } // CreateUDG
+
+Status CreateUDN(MGraph *G)
+{
+    return CreateUDG(G);
+} // CreateUDN
