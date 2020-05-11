@@ -35,6 +35,8 @@ void PrintAdjMatrix(MGraph G);
 
 Status CreateGraph(MGraph *G);
 
+Status CreateDG(MGraph *G);
+
 Status CreateUDG(MGraph *G);
 
 VertexType LocateVex(MGraph G, VertexType v)
@@ -77,7 +79,7 @@ Status CreateGraph(MGraph *G)
     switch (G->type)
     {
     case DG:
-        break;
+        return CreateDG(G);
     case DN:
         break;
     case UDG:
@@ -90,6 +92,41 @@ Status CreateGraph(MGraph *G)
 
     return OK;
 } // CreateGraph
+
+Status CreateDG(MGraph *G)
+{
+    printf("enter vertex and arc number of graph: ");
+    scanf("%d %d", &G->vexnum, &G->arcnum);
+
+    printf("enter vertex vector of graph: ");
+    for (int i = 0; i < G->vexnum; ++i)
+    {
+        scanf("%d", (&G->vexs[i]));
+    }
+
+    for (int i = 0; i < G->vexnum; ++i)
+    {
+        for (int j = 0; j < G->vexnum; ++j)
+        {
+            G->arcs[i][j].adj = INFINITY;
+        }
+    }
+
+    printf("enter vertex relation:\n");
+    for (int k = 0; k < G->arcnum; ++k)
+    {
+        int v1, v2, weight;
+
+        scanf("%d %d %d", &v1, &v2, &weight);
+
+        int i = LocateVex(*G, v1);
+        int j = LocateVex(*G, v2);
+
+        G->arcs[i][j].adj = weight;
+    }
+
+    return OK;
+} // CreateDG
 
 Status CreateUDG(MGraph *G)
 {
