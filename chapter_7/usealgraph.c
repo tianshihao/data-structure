@@ -7,5 +7,7 @@ int main()
 
     CreateGraph(&G);
 
+    PrintAdjacencyList(G);
+
     return 0;
 }

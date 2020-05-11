@@ -58,6 +58,7 @@ void PrintAdjacencyList(ALGraph G)
         while (p)
         {
             printf("%d→", p->adjvex);
+            p = p->nextarc;
         }
 
         printf("\n");
