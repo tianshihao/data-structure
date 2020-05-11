@@ -4,13 +4,13 @@
 #define INFINITY __INT_MAX__
 #define MAX_VERTEX_NUM 20
 
-typedef enum GraphKind
+typedef enum GraphType
 {
     DG,  // Digraph
     DN,  // Dinet
     UDG, // Undigraph
     UDN  // Undinet
-} GraphKind;
+} GraphType;
 
 typedef int VRType; // vertex relation type
 
@@ -26,12 +26,14 @@ typedef struct MGraph
     VertexType vexs[MAX_VERTEX_NUM]; // vertex vector
     AdjMatrix arcs;                  // adjacency matrix
     int vexnum, arcnum;
-    GraphKind kind;
+    GraphType type;
 } MGraph;
 
 VertexType LocateVex(MGraph G, VertexType v);
 
 void PrintAdjMatrix(MGraph G);
+
+Status CreateGraph(MGraph *G);
 
 Status CreateUDG(MGraph *G);
 
@@ -66,6 +68,28 @@ void PrintAdjMatrix(MGraph G)
         printf("\n");
     }
 } // PrintAdjMatrix
+
+Status CreateGraph(MGraph *G)
+{
+    printf("enter graph's type: ");
+    scanf("%d", &G->type);
+
+    switch (G->type)
+    {
+    case DG:
+        break;
+    case DN:
+        break;
+    case UDG:
+        return CreateUDG(G);
+    case UDN:
+        break;
+    default:
+        return ERROR;
+    }
+
+    return OK;
+} // CreateGraph
 
 Status CreateUDG(MGraph *G)
 {

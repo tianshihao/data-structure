@@ -4,7 +4,7 @@ int main()
 {
     MGraph G;
 
-    CreateUDG(&G);
+    CreateGraph(&G);
 
     PrintAdjMatrix(G);
 
