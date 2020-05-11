@@ -1,0 +1,105 @@
+#include "predefconst.h"
+#include <stdio.h>
+
+#define INFINITY __INT_MAX__
+#define MAX_VERTEX_NUM 20
+
+typedef enum GraphKind
+{
+    DG,  // Digraph
+    DN,  // Dinet
+    UDG, // Undigraph
+    UDN  // Undinet
+} GraphKind;
+
+typedef int VRType; // vertex relation type
+
+typedef int VertexType;
+
+typedef struct ArcCell
+{
+    VRType adj;
+} ArcCell, AdjMatrix[MAX_VERTEX_NUM][MAX_VERTEX_NUM];
+
+typedef struct MGraph
+{
+    VertexType vexs[MAX_VERTEX_NUM]; // vertex vector
+    AdjMatrix arcs;                  // adjacency matrix
+    int vexnum, arcnum;
+    GraphKind kind;
+} MGraph;
+
+VertexType LocateVex(MGraph G, VertexType v);
+
+void PrintAdjMatrix(MGraph G);
+
+Status CreateUDG(MGraph *G);
+
+VertexType LocateVex(MGraph G, VertexType v)
+{
+    for (int i = 0; i < G.vexnum; ++i)
+    {
+        if (G.vexs[i] == v)
+        {
+            return i;
+        }
+    }
+    return 0;
+} // LocateVex
+
+void PrintAdjMatrix(MGraph G)
+{
+    for (int i = 0; i < G.vexnum; ++i)
+    {
+        for (int j = 0; j < G.vexnum; ++j)
+        {
+            if (G.arcs[i][j].adj == INFINITY)
+            {
+                printf("0\t");
+            }
+            else
+            {
+                printf("%d\t", G.arcs[i][j].adj);
+            }
+        }
+
+        printf("\n");
+    }
+} // PrintAdjMatrix
+
+Status CreateUDG(MGraph *G)
+{
+    printf("enter vertex and arc number of graph: ");
+    scanf("%d %d", &G->vexnum, &G->arcnum);
+
+    printf("enter vertex vector of graph: ");
+    for (int i = 0; i < G->vexnum; ++i)
+    {
+        scanf("%d", &G->vexs[i]);
+    }
+
+    for (int i = 0; i < G->vexnum; ++i)
+    {
+        for (int j = 0; j < G->vexnum; ++j)
+        {
+            G->arcs[i][j].adj = INFINITY;
+        }
+    }
+
+    printf("enter vertex relation:\n");
+    for (int k = 0; k < G->arcnum; ++k)
+    {
+        int v1, v2, weight;
+
+        scanf("%d %d %d", &v1, &v2, &weight);
+
+        int i = LocateVex(*G, v1);
+        int j = LocateVex(*G, v2);
+
+        G->arcs[i][j].adj = weight;
+
+        G->arcs[j][i].adj = G->arcs[i][j].adj;
+    }
+
+    return OK;
+} // CreateUDG
