@@ -93,7 +93,7 @@ Status CreateDG(ALGraph *G)
 
 Status CreateDN(ALGraph *G)
 {
-    return OK;
+    return CreateDG(G);
 } // CreateDN
 
 Status CreateUDG(ALGraph *G)
@@ -124,7 +124,7 @@ Status CreateUDG(ALGraph *G)
 
 Status CreateUDN(ALGraph *G)
 {
-    return OK;
+    return CreateUDG(G);
 } // CreateUDN
 
 void PrintAdjacencyList(ALGraph G)
@@ -146,6 +146,7 @@ void PrintAdjacencyList(ALGraph G)
     return;
 } // PrintAdjacencyList
 
+// 在邻接表的头结点和头结点指向的第一个表结点之间添加弧
 Status InsertArcNode(ALGraph *G, int v1, int v2, int weight)
 {
     ArcNode *arc = malloc(sizeof(ArcNode));
