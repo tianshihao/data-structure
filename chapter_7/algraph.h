@@ -20,7 +20,7 @@ typedef struct ArcNode
 {
     int adjvex;
     struct ArcNode *nextarc;
-    InfoType *info;
+    InfoType info;
 } ArcNode;
 
 typedef struct VNode
@@ -36,36 +36,13 @@ typedef struct ALGraph
     GraphType type;
 } ALGraph;
 
-void PrintAdjacencyList(ALGraph G);
-
 Status CreateGraph(ALGraph *G);
-
 Status CreateDG(ALGraph *G);
-
 Status CreateDN(ALGraph *G);
-
 Status CreateUDG(ALGraph *G);
-
 Status CreateUDN(ALGraph *G);
-
-void PrintAdjacencyList(ALGraph G)
-{
-    for (int i = 0; i < G.vexnum; ++i)
-    {
-        printf("V%d→", G.vertices[i].data);
-        ArcNode *p = G.vertices[i].firstarc;
-
-        while (p)
-        {
-            printf("%d→", p->adjvex);
-            p = p->nextarc;
-        }
-
-        printf("\n");
-    }
-
-    return;
-} // PrintAdjacencyList
+Status InsertArcNode(ALGraph *G, int v1, int v2, int weight);
+void PrintAdjacencyList(ALGraph G);
 
 Status CreateGraph(ALGraph *G)
 {
@@ -108,13 +85,7 @@ Status CreateDG(ALGraph *G)
 
         scanf("%d %d %d", &v1, &v2, &weight);
 
-        ArcNode *arc = malloc(sizeof(ArcNode));
-
-        arc->adjvex = v2 - 1;
-        arc->info = &weight;
-
-        arc->nextarc = G->vertices[v1 - 1].firstarc;
-        G->vertices[v1 - 1].firstarc = arc;
+        InsertArcNode(G, v1, v2, weight);
     }
 
     return OK;
@@ -127,11 +98,63 @@ Status CreateDN(ALGraph *G)
 
 Status CreateUDG(ALGraph *G)
 {
-    return OK;
+    printf("enter vertex and arc number of graph: ");
+    scanf("%d %d", &G->vexnum, &G->arcnum);
 
+    printf("enter vertex vector of graph: ");
+    for (int i = 0; i < G->vexnum; ++i)
+    {
+        scanf("%d", &G->vertices[i].data);
+        G->vertices[i].firstarc = NULL;
+    }
+
+    printf("enter vertex relation:\n");
+    for (int k = 0; k < G->arcnum; ++k)
+    {
+        int v1, v2, weight;
+
+        scanf("%d %d %d", &v1, &v2, &weight);
+
+        InsertArcNode(G, v1, v2, weight);
+        InsertArcNode(G, v2, v1, weight);
+    }
+
+    return OK;
 } // CreateUDG
 
 Status CreateUDN(ALGraph *G)
 {
     return OK;
 } // CreateUDN
+
+void PrintAdjacencyList(ALGraph G)
+{
+    for (int i = 0; i < G.vexnum; ++i)
+    {
+        printf("V%d→", G.vertices[i].data);
+        ArcNode *p = G.vertices[i].firstarc;
+
+        while (p)
+        {
+            printf("%d→", p->adjvex);
+            p = p->nextarc;
+        }
+
+        printf("\n");
+    }
+
+    return;
+} // PrintAdjacencyList
+
+Status InsertArcNode(ALGraph *G, int v1, int v2, int weight)
+{
+    ArcNode *arc = malloc(sizeof(ArcNode));
+
+    arc->adjvex = v2 - 1;
+    arc->info = weight;
+
+    arc->nextarc = G->vertices[v1 - 1].firstarc;
+    G->vertices[v1 - 1].firstarc = arc;
+
+    return OK;
+} // InsertArcNode
