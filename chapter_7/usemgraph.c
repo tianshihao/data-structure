@@ -18,7 +18,7 @@ int main()
 
     PrintAdjMatrix(G);
 
-    DFSTraverse(G, &Visit);
+    DFSTraverse(G, Visit);
 
     return 0;
 }
@@ -47,5 +47,5 @@ void Visit(int i)
 {
     printf("%d ", i);
 
-    return OK;
+    return;
 }

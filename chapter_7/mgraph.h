@@ -38,8 +38,8 @@ VertexType LocateVex(MGraph G, VertexType v);
 int FirstVex(MGraph G, int v);
 int NextVex(MGraph G, int v, int w);
 void PrintAdjMatrix(MGraph G);
-void DFSTraverse(MGraph G, Status (*Visit)(int v));
-void DFS(MGraph, int v, Status (*Visit)(int v), int visited[]);
+void DFSTraverse(MGraph G, void (*Visit)(int v));
+void DFS(MGraph, int v, void (*Visit)(int v), int visited[]);
 
 Status CreateGraph(MGraph *G)
 {
@@ -205,7 +205,7 @@ void PrintAdjMatrix(MGraph G)
     }
 } // PrintAdjMatrix
 
-void DFSTraverse(MGraph G, Status (*Visit)(int v))
+void DFSTraverse(MGraph G, void (*Visit)(int v))
 {
     int visited[G.vexnum];
 
@@ -223,7 +223,7 @@ void DFSTraverse(MGraph G, Status (*Visit)(int v))
     }
 } // DFSTraverse
 
-void DFS(MGraph G, int v, Status (*Visit)(int v), int visited[])
+void DFS(MGraph G, int v, void (*Visit)(int v), int visited[])
 {
     visited[v] = TRUE;
 
