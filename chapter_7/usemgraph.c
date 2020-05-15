@@ -2,7 +2,7 @@
 
 void WriteGraph(MGraph *G);
 void ReadGraph(MGraph *G);
-Status Visit(int i);
+void Visit(int i);
 
 int main()
 {
@@ -43,7 +43,7 @@ void ReadGraph(MGraph *G)
     return;
 } // ReadGraph
 
-Status Visit(int i)
+void Visit(int i)
 {
     printf("%d ", i);
 
