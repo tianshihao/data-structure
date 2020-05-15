@@ -1,4 +1,4 @@
-#include "predefconst.h"
+﻿#include "predefconst.h"
 #include <stdio.h>
 
 #define INFINITY __INT_MAX__
@@ -35,6 +35,8 @@ Status CreateDN(MGraph *G);
 Status CreateUDG(MGraph *G);
 Status CreateUDN(MGraph *G);
 VertexType LocateVex(MGraph G, VertexType v);
+int FirstVex(MGraph G, int v);
+int NextVex(MGraph G, int v, int w);
 void PrintAdjMatrix(MGraph G);
 void DFSTraverse(MGraph G, Status (*Visit)(int v));
 void DFS(MGraph, int v, Status (*Visit)(int v), int[] visited);
@@ -154,6 +156,32 @@ VertexType LocateVex(MGraph G, VertexType v)
     }
     return 0;
 } // LocateVex
+
+// 在图 G 中寻找顶点 v 的第一条弧
+int FirstVex(MGraph G, int v)
+{
+    for (int i = 0; i < G.vexnum; ++i)
+    {
+        if (G.arcs[v][i] != 0)
+        {
+            return i;
+        }
+    }
+
+    return ERROR;
+} // FirstVex
+
+// 在图 G 中，寻找顶点 v 的弧 w 的下一条弧
+int NextVex(MGraph G, int v, int w)
+{
+    for (int i = w + 1; i < G.vexnum++ i)
+    {
+        if (G.arcs[v][i] != 0)
+        {
+            return 0;
+        }
+    }
+} // NextVex
 
 void PrintAdjMatrix(MGraph G)
 {
