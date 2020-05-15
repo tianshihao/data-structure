@@ -29,51 +29,14 @@ typedef struct MGraph
     GraphType type;
 } MGraph;
 
-VertexType LocateVex(MGraph G, VertexType v);
-
-void PrintAdjMatrix(MGraph G);
-
 Status CreateGraph(MGraph *G);
-
 Status CreateDG(MGraph *G);
-
 Status CreateDN(MGraph *G);
-
 Status CreateUDG(MGraph *G);
-
 Status CreateUDN(MGraph *G);
-
-VertexType LocateVex(MGraph G, VertexType v)
-{
-    for (int i = 0; i < G.vexnum; ++i)
-    {
-        if (G.vexs[i] == v)
-        {
-            return i;
-        }
-    }
-    return 0;
-} // LocateVex
-
-void PrintAdjMatrix(MGraph G)
-{
-    for (int i = 0; i < G.vexnum; ++i)
-    {
-        for (int j = 0; j < G.vexnum; ++j)
-        {
-            if (G.arcs[i][j].adj == INFINITY)
-            {
-                printf("0\t");
-            }
-            else
-            {
-                printf("%d\t", G.arcs[i][j].adj);
-            }
-        }
-
-        printf("\n");
-    }
-} // PrintAdjMatrix
+VertexType LocateVex(MGraph G, VertexType v);
+void PrintAdjMatrix(MGraph G);
+void DFSTraverse(MGraph G, Status (*visit)(int v));
 
 Status CreateGraph(MGraph *G)
 {
@@ -178,3 +141,35 @@ Status CreateUDN(MGraph *G)
 {
     return CreateUDG(G);
 } // CreateUDN
+
+VertexType LocateVex(MGraph G, VertexType v)
+{
+    for (int i = 0; i < G.vexnum; ++i)
+    {
+        if (G.vexs[i] == v)
+        {
+            return i;
+        }
+    }
+    return 0;
+} // LocateVex
+
+void PrintAdjMatrix(MGraph G)
+{
+    for (int i = 0; i < G.vexnum; ++i)
+    {
+        for (int j = 0; j < G.vexnum; ++j)
+        {
+            if (G.arcs[i][j].adj == INFINITY)
+            {
+                printf("0\t");
+            }
+            else
+            {
+                printf("%d\t", G.arcs[i][j].adj);
+            }
+        }
+
+        printf("\n");
+    }
+} // PrintAdjMatrix
