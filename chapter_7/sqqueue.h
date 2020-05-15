@@ -76,7 +76,7 @@ void PrintSqQueue(SqQueue Q)
         printf("queue is empty\n");
         return;
     }
-    
+
     QElemType ptr = Q.front;
 
     while (ptr != Q.rear)
