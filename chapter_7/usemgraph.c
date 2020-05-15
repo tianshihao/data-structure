@@ -1,8 +1,8 @@
-#include "mgraph.h"
+﻿#include "mgraph.h"
 
 void WriteGraph(MGraph *G);
 void ReadGraph(MGraph *G);
-void Visit(int i);
+Status Visit(int i);
 
 int main()
 {
@@ -19,6 +19,7 @@ int main()
     PrintAdjMatrix(G);
 
     DFSTraverse(G, Visit);
+    BFSTraverse(G, Visit);
 
     return 0;
 }
