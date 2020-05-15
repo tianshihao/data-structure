@@ -1,4 +1,4 @@
-﻿#include "mgraph.h"
+#include "mgraph.h"
 
 void WriteGraph(MGraph *G);
 void ReadGraph(MGraph *G);
@@ -43,9 +43,9 @@ void ReadGraph(MGraph *G)
     return;
 } // ReadGraph
 
-void Visit(int i)
+Status Visit(int i)
 {
     printf("%d ", i);
 
-    return;
+    return OK;
 }
