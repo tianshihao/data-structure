@@ -36,7 +36,8 @@ Status CreateUDG(MGraph *G);
 Status CreateUDN(MGraph *G);
 VertexType LocateVex(MGraph G, VertexType v);
 void PrintAdjMatrix(MGraph G);
-void DFSTraverse(MGraph G, Status (*visit)(int v));
+void DFSTraverse(MGraph G, Status (*Visit)(int v));
+void DFS(MGraph, int v, Status (*Visit)(int v), int[] visited);
 
 Status CreateGraph(MGraph *G)
 {
@@ -173,3 +174,33 @@ void PrintAdjMatrix(MGraph G)
         printf("\n");
     }
 } // PrintAdjMatrix
+
+void DFSTraverse(MGraph G, Status (*Visit)(int v))
+{
+    int visited[G.vexnum] = {FALSE};
+
+    for (int v = 0; v < G.vexnum; ++v)
+    {
+        if (!Visit[v])
+        {
+            DFS(G, v, Visit, visited);
+        }
+    }
+} // DFSTraverse
+
+void DFS(MGraph G, int v, Status (*Visit)(int v), int[] visited)
+{
+    visited[v] = TRUE;
+
+    Visit(v);
+
+    for (int w = FitstVex(G, v);;)
+    {
+        if (!visited[w])
+        {
+            DFS(G, w, Visit, visited);
+        }
+    }
+
+    return;
+} // DFS
