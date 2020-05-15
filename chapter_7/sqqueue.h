@@ -8,6 +8,10 @@
 #pragma once
 
 #include "predefconst.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXQSIZE 100
 
 typedef int QElemType;
 
@@ -27,6 +31,7 @@ Status InitSqQueue(SqQueue *Q);
 int SqQueueLength(SqQueue Q);
 Status EnSqQueue(SqQueue *Q, QElemType e);
 Status DeSqQueue(SqQueue *Q, QElemType *e);
+Status SqQueueEmpry(SqQueue Q);
 void PrintSqQueue(SqQueue Q);
 
 // 构造一个空队列.
@@ -75,6 +80,11 @@ Status DeSqQueue(SqQueue *Q, QElemType *e)
 
     return OK;
 } // DeSqQueue
+
+Status SqQueueEmpty(SqQueue Q)
+{
+    return Q.front == Q.rear;
+} // SqQueueEmpry
 
 // 打印循环队列元素.
 void PrintSqQueue(SqQueue Q)

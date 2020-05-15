@@ -1,4 +1,5 @@
-#include "predefconst.h"
+﻿#include "predefconst.h"
+#include "sqqueue.h"
 #include <stdio.h>
 
 #define INFINITY __INT_MAX__
@@ -240,3 +241,50 @@ void DFS(MGraph G, int v, Status (*Visit)(int v), int visited[])
 
     return;
 } // DFS
+
+void BFSTraverse(MGraph G, Status (*Visit)(int v))
+{
+    int visited[G.vexnum];
+
+    for (int i = 0; i < G.vexnum; ++i)
+    {
+        visited[i] = FALSE;
+    }
+
+    SqQueue Q;
+
+    // 队列中存放已经访问过但邻接点未知的结点
+    InitSqQueue(&Q);
+
+    for (int v = 0; v < G.vexnum; ++v)
+    {
+        if (!visited[v])
+        {
+            visited[v] = TRUE;
+            Visit(G.vexs[v]);
+
+            // 结点 v 已经访问，将其入队
+            EnSqQueue(&Q, v);
+
+            while (!SqQueueEmpty(Q))
+            {
+                int u;
+
+                // 队头元素出队并置为u
+                DeSqQueue(&Q, &u);
+
+                // 访问已被访问过的结点 u 的邻接点
+                for (int w = FirstVex(G, u); w != 0; w = NextVex(G, u, w))
+                {
+                    if (!visited[w])
+                    {
+                        visited[w] = TRUE;
+                        Visit(G.vexs[w]);
+
+                        EnSqQueue(&Q, w);
+                    }
+                }
+            } // while
+        }     // if
+    }
+} // BFSTraverse
