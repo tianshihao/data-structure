@@ -9,6 +9,8 @@
 
 #include "predefconst.h"
 
+typedef int QElemType;
+
 typedef struct SqQueue
 {
     // 初始化的动态分配存储空间
@@ -20,6 +22,12 @@ typedef struct SqQueue
     // 尾指针, 若队列不空, 指向队尾元素的下一位置
     int rear;
 } SqQueue;
+
+Status InitSqQueue(SqQueue *Q);
+int SqQueueLength(SqQueue Q);
+Status EnSqQueue(SqQueue *Q, QElemType e);
+Status DeSqQueue(SqQueue *Q, QElemType *e);
+void PrintSqQueue(SqQueue Q);
 
 // 构造一个空队列.
 Status InitSqQueue(SqQueue *Q)
