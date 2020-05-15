@@ -39,7 +39,7 @@ int FirstVex(MGraph G, int v);
 int NextVex(MGraph G, int v, int w);
 void PrintAdjMatrix(MGraph G);
 void DFSTraverse(MGraph G, Status (*Visit)(int v));
-void DFS(MGraph, int v, Status (*Visit)(int v), int[] visited);
+void DFS(MGraph, int v, Status (*Visit)(int v), int visited[]);
 
 Status CreateGraph(MGraph *G)
 {
@@ -162,7 +162,7 @@ int FirstVex(MGraph G, int v)
 {
     for (int i = 0; i < G.vexnum; ++i)
     {
-        if (G.arcs[v][i] != 0)
+        if (G.arcs[v][i].adj != INFINITY)
         {
             return i;
         }
@@ -174,13 +174,15 @@ int FirstVex(MGraph G, int v)
 // 在图 G 中，寻找顶点 v 的弧 w 的下一条弧
 int NextVex(MGraph G, int v, int w)
 {
-    for (int i = w + 1; i < G.vexnum++ i)
+    for (int i = w + 1; i < G.vexnum; ++i)
     {
-        if (G.arcs[v][i] != 0)
+        if (G.arcs[v][i].adj != INFINITY)
         {
-            return 0;
+            return i;
         }
     }
+
+    return ERROR;
 } // NextVex
 
 void PrintAdjMatrix(MGraph G)
@@ -205,24 +207,29 @@ void PrintAdjMatrix(MGraph G)
 
 void DFSTraverse(MGraph G, Status (*Visit)(int v))
 {
-    int visited[G.vexnum] = {FALSE};
+    int visited[G.vexnum];
+
+    for (int i = 0; i < G.vexnum; ++i)
+    {
+        visited[i] = FALSE;
+    }
 
     for (int v = 0; v < G.vexnum; ++v)
     {
-        if (!Visit[v])
+        if (!visited[v])
         {
             DFS(G, v, Visit, visited);
         }
     }
 } // DFSTraverse
 
-void DFS(MGraph G, int v, Status (*Visit)(int v), int[] visited)
+void DFS(MGraph G, int v, Status (*Visit)(int v), int visited[])
 {
     visited[v] = TRUE;
 
-    Visit(v);
+    Visit(G.vexs[v]);
 
-    for (int w = FitstVex(G, v);;)
+    for (int w = FirstVex(G, v); w != 0; w = NextVex(G, v, w))
     {
         if (!visited[w])
         {

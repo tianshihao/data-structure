@@ -2,6 +2,7 @@
 
 void WriteGraph(MGraph *G);
 void ReadGraph(MGraph *G);
+Status Visit(int i);
 
 int main()
 {
@@ -17,7 +18,8 @@ int main()
 
     PrintAdjMatrix(G);
 
-    
+    DFSTraverse(G, &Visit);
+
     return 0;
 }
 
@@ -40,3 +42,10 @@ void ReadGraph(MGraph *G)
 
     return;
 } // ReadGraph
+
+Status Visit(int i)
+{
+    printf("%d ", i);
+
+    return OK;
+}
