@@ -1,4 +1,4 @@
-﻿#include "predefconst.h"
+#include "predefconst.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -148,16 +148,37 @@ void PrintAdjacencyList(ALGraph G)
     return;
 } // PrintAdjacencyList
 
-// 在邻接表的头结点和头结点指向的第一个表结点之间添加弧
+// 在顶点 v 的邻接表的表尾添加弧结点 ArcNode
 Status InsertArcNode(ALGraph *G, int v1, int v2, int weight)
 {
-    ArcNode *arc = malloc(sizeof(ArcNode));
+    // ArcNode *p = G->vertices[v1 - 1].firstarc;
 
-    arc->adjvex = v2 - 1;
-    arc->info = weight;
+    if (G->vertices[v1 - 1].firstarc == NULL)
+    {
+        G->vertices[v1 - 1].firstarc = malloc(sizeof(ArcNode));
+        // adjvex 是邻接点的位置
+        // v2 是结点编号
+        // v2 - 1 是结点 v2 在邻接表中的索引
+        G->vertices[v1 - 1].firstarc->adjvex = v2 - 1;
+        G->vertices[v1 - 1].firstarc->info = weight;
+        G->vertices[v1 - 1].firstarc->nextarc = NULL;
+    }
+    else
+    {
+        ArcNode *p = G->vertices[v1 - 1].firstarc;
 
-    arc->nextarc = G->vertices[v1 - 1].firstarc;
-    G->vertices[v1 - 1].firstarc = arc;
+        while (p->nextarc != NULL)
+        {
+            p = p->nextarc;
+        }
+
+        ArcNode *newarc = malloc(sizeof(ArcNode));
+        newarc->adjvex = v2 - 1;
+        newarc->info = weight;
+        newarc->nextarc = NULL;
+
+        p->nextarc = newarc;
+    }
 
     return OK;
 } // InsertArcNode
