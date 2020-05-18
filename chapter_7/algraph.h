@@ -1,4 +1,5 @@
 ﻿#include "predefconst.h"
+#include "sqqueue.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -45,6 +46,7 @@ Status InsertArcNode(ALGraph *G, int v1, int v2, int weight);
 void PrintAdjacencyList(ALGraph G);
 void DFSTraverse(ALGraph G, Status (*Visit)(int v));
 void DFS(ALGraph G, int v, Status (*Visit)(int v), int visited[]);
+void BFSTraverse(ALGraph G, Status (*Visit)(int v));
 
 Status CreateGraph(ALGraph *G)
 {
@@ -216,3 +218,44 @@ void DFS(ALGraph G, int v, Status (*Visit)(int v), int visited[])
         }
     }
 } // DFS
+
+void BFSTraverse(ALGraph G, Status (*Visit)(int v))
+{
+    int visited[G.vexnum];
+
+    for (int i = 0; i < G.vexnum; ++i)
+    {
+        visited[i] = FALSE;
+    }
+
+    SqQueue Q;
+    InitSqQueue(&Q);
+
+    for (int v = 0; v < G.vexnum; ++v)
+    {
+        if (!visited[v])
+        {
+            visited[v] = TRUE;
+            Visit(v);
+
+            EnSqQueue(&Q, v);
+
+            while (!SqQueueEmpty(Q))
+            {
+                int w;
+                DeSqQueue(&Q, &w);
+
+                for (ArcNode *u = G.vertices[w].firstarc; u != NULL; u = u->nextarc)
+                {
+                    if (!visited[u->adjvex])
+                    {
+                        visited[u->adjvex] = TRUE;
+                        Visit(u->adjvex);
+                        EnSqQueue(&Q, u->adjvex);
+                    }
+                }
+            } // while
+        }     // if
+    }
+
+} // BFSTraverse

@@ -16,7 +16,7 @@ int main()
 
     PrintAdjacencyList(G);
 
-    DFSTraverse(G, Visit);
+    BFSTraverse(G, Visit);
 
     return 0;
 }
