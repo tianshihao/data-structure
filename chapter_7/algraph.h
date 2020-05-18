@@ -43,6 +43,8 @@ Status CreateUDG(ALGraph *G);
 Status CreateUDN(ALGraph *G);
 Status InsertArcNode(ALGraph *G, int v1, int v2, int weight);
 void PrintAdjacencyList(ALGraph G);
+void DFSTraverse(ALGraph G, Status (*Visit)(int v));
+void DFS(ALGraph G, int v, Status (*Visit)(int v), int visited[]);
 
 Status CreateGraph(ALGraph *G)
 {
@@ -159,3 +161,37 @@ Status InsertArcNode(ALGraph *G, int v1, int v2, int weight)
 
     return OK;
 } // InsertArcNode
+
+void DFSTraverse(ALGraph G, Status (*Visit)(int v))
+{
+    int visited[G.vexnum];
+
+    for (int i = 0; i < G.vexnum; ++i)
+    {
+        visited[i] = FALSE;
+    }
+
+    for (int v = 0; v < G.vexnum; ++v)
+    {
+        if (!visited[v])
+        {
+            DFS(G, v, Visit, visited);
+        }
+    }
+} // DFSTraverse
+
+void DFS(ALGraph G, int v, Status (*Visit)(int v), int visited[])
+{
+    visited[v] = TRUE; // 标记顶点 v 已被访问
+
+    Visit(v); // 访问顶点 v
+
+    // 对 v 的尚未访问的邻接顶点 w 递归调用DFS
+    for (ArcNode *w = G.vertices[v].firstarc; w != NULL; w = w->nextarc)
+    {
+        if (!visited[w->adjvex])
+        {
+            DFS(G, w->adjvex, Visit, visited);
+        }
+    }
+} // DFS
