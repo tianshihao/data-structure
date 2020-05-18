@@ -201,6 +201,8 @@ void DFSTraverse(ALGraph G, Status (*Visit)(int v))
             DFS(G, v, Visit, visited);
         }
     }
+
+    return;
 } // DFSTraverse
 
 void DFS(ALGraph G, int v, Status (*Visit)(int v), int visited[])
@@ -217,6 +219,8 @@ void DFS(ALGraph G, int v, Status (*Visit)(int v), int visited[])
             DFS(G, w->adjvex, Visit, visited);
         }
     }
+
+    return;
 } // DFS
 
 void BFSTraverse(ALGraph G, Status (*Visit)(int v))
@@ -258,4 +262,5 @@ void BFSTraverse(ALGraph G, Status (*Visit)(int v))
         }     // if
     }
 
+    return;
 } // BFSTraverse

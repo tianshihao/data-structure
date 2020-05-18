@@ -223,6 +223,8 @@ void DFSTraverse(MGraph G, Status (*Visit)(int v))
             DFS(G, v, Visit, visited);
         }
     }
+
+    return;
 } // DFSTraverse
 
 void DFS(MGraph G, int v, Status (*Visit)(int v), int visited[])
@@ -287,4 +289,6 @@ void BFSTraverse(MGraph G, Status (*Visit)(int v))
             } // while
         }     // if
     }
+
+    return;
 } // BFSTraverse
