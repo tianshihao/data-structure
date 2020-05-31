@@ -150,7 +150,7 @@ Status QueueTraverse(LinkedQueue Q, Status (*visit)())
 // 打印队列数据.
 void PrintQueue(LinkedQueue Q)
 {
-    if(Q.front == Q.rear)
+    if (Q.front == Q.rear)
     {
         printf("queue is empty\n");
         return;

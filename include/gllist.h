@@ -40,4 +40,3 @@ typedef struct GLNode
     // 相当于线性链表的 next, 指向下一个元素结点
     struct GLNode *tp;
 } * GList;
-

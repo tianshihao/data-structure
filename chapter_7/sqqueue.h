@@ -8,6 +8,12 @@
 #pragma once
 
 #include "predefconst.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXQSIZE 100
+
+typedef int QElemType;
 
 typedef struct SqQueue
 {
@@ -20,6 +26,13 @@ typedef struct SqQueue
     // 尾指针, 若队列不空, 指向队尾元素的下一位置
     int rear;
 } SqQueue;
+
+Status InitSqQueue(SqQueue *Q);
+int SqQueueLength(SqQueue Q);
+Status EnSqQueue(SqQueue *Q, QElemType e);
+Status DeSqQueue(SqQueue *Q, QElemType *e);
+Status SqQueueEmpty(SqQueue Q);
+void PrintSqQueue(SqQueue Q);
 
 // 构造一个空队列.
 Status InitSqQueue(SqQueue *Q)
@@ -68,6 +81,11 @@ Status DeSqQueue(SqQueue *Q, QElemType *e)
     return OK;
 } // DeSqQueue
 
+Status SqQueueEmpty(SqQueue Q)
+{
+    return Q.front == Q.rear;
+} // SqQueueEmpty
+
 // 打印循环队列元素.
 void PrintSqQueue(SqQueue Q)
 {
@@ -76,7 +94,7 @@ void PrintSqQueue(SqQueue Q)
         printf("queue is empty\n");
         return;
     }
-    
+
     QElemType ptr = Q.front;
 
     while (ptr != Q.rear)
