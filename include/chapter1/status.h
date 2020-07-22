@@ -1,4 +1,11 @@
-﻿#pragma once
+﻿/**
+ * @file  : linklist.h
+ * @brief : 宏定义
+ * @author: 田世豪
+ * @date  : 2020-1-25
+ * */
+
+#pragma once
 
 // 函数结果状态代码
 #define TRUE 1

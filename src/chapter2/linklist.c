@@ -1,53 +1,5 @@
-﻿/************************
- * @file  : linkedlist.h
- * @brief : 单向链表
- * @author: 田世豪
- * @date  : 2020-1-25
- * *********************/
+﻿#include <chapter2/linklist.h>
 
-#pragma once
-
-#include "predefconst.h"
-
-// 省事写法
-// 实例化结构体语句
-// Link my_struct
-
-// 结点类型
-typedef struct LNode
-{
-    ElemType data;
-    struct LNode *next;
-} LNode, *Link, *Position;
-
-// 链表类型
-typedef struct LinkedList
-{
-    Link head;
-    Link tail;
-    int len;
-} LinkedList;
-
-// 传统写法
-// 实例化结构体语句
-// struct LNode my_struct
-
-// // 结点类型
-// struct LNode
-// {
-//     ElemType data;
-//     struct LNode *next;
-// };
-
-// // 链表类型
-// struct LinkedList
-// {
-//     struct LNode *head, *tail;
-//     int len;
-// };
-
-// 分配由 p 指向的值为 e 的结点, 并返回 OK,
-// 若分配失败, 则返回 ERROR.
 Status MakeNode(Link *p, ElemType e)
 {
     (*p) = malloc(sizeof(LNode));
@@ -72,7 +24,7 @@ void FreeNode(Link *p)
     return;
 } // FreeNode
 
-/*******************************************************************************
+/**
  * * 指针传递 *
  * 此处传递的其实是指针, 在定义形参的时候, 声明这个参数是指针类型.
  * 在使用函数时, 应在实参左侧加 &, 表示传递实参的地址.
@@ -80,18 +32,18 @@ void FreeNode(Link *p)
  * int main()
  * {
  *      ...
- *      LinkedList my_list;
- *      InitList(&my_list);
+ *      LinkList my_list;
+ *      InitList_L(&my_list);
  *      ...
  * }
  * 变量的地址传递给指针变量形参之后就可以用形参指向变量,
  * 修改主函数中的变量了, 不同于值传递的形参复制一份实参.
- * ****************************************************************************/
+ * */
 
 // 构造一个空的线性链表 L.
-Status InitList(LinkedList *list)
+Status InitList_L(LinkList *list)
 {
-    /***************************************************************************
+    /**
      * a.   malloc 的返回值类型是 void *,
      *      可以将这个指针转换为申请所需要的任何类型的指针.
      *      e.g. list.head = (LNode *)malloc(sizeof(LNode));
@@ -99,7 +51,7 @@ Status InitList(LinkedList *list)
      * b.   但又有一篇文章说不要强制类型转换好.
      *      e.g. list->head = malloc(sizeof(LNode));
      *      https://blog.csdn.net/bestone0213/article/details/40829203
-     * ************************************************************************/
+     * */
 
     list->head = malloc(sizeof(LNode));
 
@@ -116,10 +68,10 @@ Status InitList(LinkedList *list)
     list->len = 0;
 
     return OK;
-} // InitList
+} // InitList_L
 
 // 销毁线性链表 L, L 不再存在.
-Status DestoryList(LinkedList *L)
+Status DestoryList(LinkList *L)
 {
     while (L->head != NULL)
     {
@@ -138,7 +90,7 @@ Status DestoryList(LinkedList *L)
 
 // 将线性链表 L 重置为空表, 并释放原链表的结点空间,
 // 保留头结点.
-Status ClearList(LinkedList *L)
+Status ClearList(LinkList *L)
 {
     Link ptr = L->head->next;
 
@@ -189,7 +141,7 @@ Status DelFirst(Link h, Link *q)
 
 // 将指针 s 所指的一串结点链接在线性链表 L 的最后一个结点,
 // 之后, 并改变链表 L 的尾指针指向新的尾结点.
-Status Append(LinkedList *L, Link s)
+Status Append(LinkList *L, Link s)
 {
     Link ptr = L->head;
 
@@ -211,7 +163,7 @@ Status Append(LinkedList *L, Link s)
 }
 
 // 删除线性链表 L 中的尾结点, 并以 q 返回, 改变链表 L 的尾指针指向新的尾结点.
-Status Remove(LinkedList *L, Link *q)
+Status Remove(LinkList *L, Link *q)
 {
     Link ptr = L->head;
 
@@ -235,7 +187,7 @@ Status Remove(LinkedList *L, Link *q)
 // 已知 p 指向线性链表 L 中的一个结点, 将 s 所指结点插入在 p 所指结点之前,
 // 并修改指针 p 指向新插入的结点.
 // TODO 有待修复一个结点重复插入两次会出现链表闭环的bug.
-Status InsBefore(LinkedList *L, Link *p, Link s)
+Status InsBefore(LinkList *L, Link *p, Link s)
 {
     Link before_p = L->head;
 
@@ -262,7 +214,7 @@ Status InsBefore(LinkedList *L, Link *p, Link s)
 // 并修改指针 p 指向新插入的结点.
 // TODO 若在头结点后插入, 则会丧失头结点, 因为头结点会指向新结点 s,
 // TODO 导致原来的头结点成为野结点.
-Status InsAfter(LinkedList *L, Link *p, Link s)
+Status InsAfter(LinkList *L, Link *p, Link s)
 {
     // 将 s 所指的指针插入在 p 所指的结点之后
     s->next = (*p)->next;
@@ -289,7 +241,7 @@ ElemType GetCurElem(Link p)
 } // GetCurElem
 
 // 若线性链表 L 为空表, 则返回 TRUE, 否则返回 FALSE.
-Status ListEmpty(LinkedList L)
+Status ListEmpty(LinkList L)
 {
     if (L.head->next == NULL)
         return TRUE;
@@ -298,7 +250,7 @@ Status ListEmpty(LinkedList L)
 
 // 返回线性链表 L 中的元素个数.
 // 不包括头结点.
-int ListLength(LinkedList L)
+int ListLength(LinkList L)
 {
     int len = 0;
     Link ptr = L.head;
@@ -313,19 +265,19 @@ int ListLength(LinkedList L)
 } // ListLength
 
 // 返回线性链表 L 中头结点的位置.
-Position GetHead(LinkedList L)
+Position GetHead(LinkList L)
 {
     return L.head;
 } // GetHead
 
 // 返回线性链表 L 中最后一个结点的位置.
-Position GetLast(LinkedList L)
+Position GetLast(LinkList L)
 {
     return L.tail;
 } // GetLast
 
 // 已知 p 指向线性链表 L 中的一个结点, 返回 p 所指结点的直接前驱的位置.
-Position PriorPos(LinkedList L, Link p)
+Position PriorPos(LinkList L, Link p)
 {
     Link prior_position = L.head;
 
@@ -336,13 +288,13 @@ Position PriorPos(LinkedList L, Link p)
 } // PriorPos
 
 // 已知 p 指向线性链表 L 中的一个结点, 返回 p 所指结点的直接后继的位置.
-Position NextPos(LinkedList L, Link p)
+Position NextPos(LinkList L, Link p)
 {
     return p->next;
 } // NextPos
 
 // 返回 p 指示线性链表 L 中第 i 个结点的位置并返回 OK, i 值不合法时返回 ERROR.
-Status LocatePos(LinkedList L, int i, Link *p)
+Status LocatePos(LinkList L, int i, Link *p)
 {
     if ((i < 0) || (i > ListLength(L)))
         return ERROR;
@@ -357,7 +309,7 @@ Status LocatePos(LinkedList L, int i, Link *p)
 
 // 返回线性链表 L 中第 1 个与 e 满足函数 compare() 判定关系的元素的位置,
 // 若不存在这样的元素, 返回 NULL.
-Position LocateElem(LinkedList L, ElemType e, Status (*compare)(ElemType, ElemType))
+Position LocateElem_L(LinkList L, ElemType e, Status (*compare)(ElemType, ElemType))
 {
     Link wanted = L.head->next;
 
@@ -368,10 +320,10 @@ Position LocateElem(LinkedList L, ElemType e, Status (*compare)(ElemType, ElemTy
         return NULL;
 
     return wanted;
-} // LocateElem
+} // LocateElem_L
 
 // 依次对 L 的每个元素调用函数 visit(). 一旦 visit() 失败, 则操作失败.
-Status ListTraverse(LinkedList L, Status (*visit)(ElemType))
+Status ListTraverse(LinkList L, Status (*visit)(ElemType))
 {
     Link visiting = L.head->next;
 
@@ -387,7 +339,7 @@ Status ListTraverse(LinkedList L, Status (*visit)(ElemType))
 /***************************利用基本操作实现的高级操作******************************/
 
 // 在线性链表 L 第 i 个元素之前插入数据元素 e
-Status ListInsert_L(LinkedList *L, int i, ElemType e)
+Status ListInsert_L(LinkList *L, int i, ElemType e)
 {
     Link ptr;
 
@@ -409,10 +361,10 @@ Status ListInsert_L(LinkedList *L, int i, ElemType e)
 
 // 已知单线性链表 La 和 Lb 的元素按值非递减排列.
 // 归并 La 和 Lb 得到新的单线性链表 Lc, Lc 的元素也按值非线性递减排列.
-Status MergeList_L(LinkedList *La, LinkedList *Lb, LinkedList *Lc, Status (*compare)(ElemType, ElemType))
+Status MergeList_L(LinkList *La, LinkList *Lb, LinkList *Lc, Status (*compare)(ElemType, ElemType))
 {
     // 存储空间分配失败
-    if (!InitList(Lc))
+    if (!InitList_L(Lc))
         return ERROR;
 
     // ha 和 hb 分别指向 La 和 Lb 的头结点
@@ -460,7 +412,7 @@ Status MergeList_L(LinkedList *La, LinkedList *Lb, LinkedList *Lc, Status (*comp
 } // MergeList_L
 
 // 打印链表数据.
-void PrintList(LinkedList L)
+void PrintList(LinkList L)
 {
     if (L.head->next == NULL)
     {

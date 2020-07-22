@@ -9,6 +9,4 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG   ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/deb
 
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include)
 
-add_subdirectory(src)
-
-# add_executable(${PROJECT_NAME} main.cpp)
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/src)
