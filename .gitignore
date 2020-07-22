@@ -1,4 +1,5 @@
 ﻿# my configurations
 bin
 .vscode
-hello.c
+build
+input

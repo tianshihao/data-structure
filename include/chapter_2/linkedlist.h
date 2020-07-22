@@ -112,8 +112,8 @@ Status InitList(LinkedList *list)
     // 初始化头结点数据
     list->head->data = -1;
     list->head->next = NULL;
-    list->tail       = list->head;
-    list->len        = 0;
+    list->tail = list->head;
+    list->len = 0;
 
     return OK;
 } // InitList
