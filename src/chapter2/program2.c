@@ -64,11 +64,14 @@ void UseLinklist()
     InitList_L(&even);
 
     for (int i = 1, e = 1; i <= 3; ++i, e += 2)
+    {
         ListInsert_L(&odd, i, e);
+    }
 
     for (int i = 1, e = 2; i <= 5; ++i, e += 2)
+    {
         ListInsert_L(&even, i, e);
-
+    }
     PrintList(odd);
     PrintList(even);
 
