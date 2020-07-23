@@ -52,7 +52,18 @@ void UseSqlist()
     // 输出 L 中的数据元素.
     PrintList_Sq(L);
 
-    // int index = LocateElem_Sq(L, 5, MyCompare);
+    printf("测试Del_Min()\n");
+
+    /**
+     * 这里遇到一个 bug, Del_Min() 第二个参数是指向 ElemType 的指针,
+     * 如果先定义一个 ElemType *value, 再将 value 当作参数, 会出错, 因为这个
+     * value 仅仅是一个指针, 没有分配的内存空间
+     * */
+    ElemType value;
+
+    Del_Min(&L, &value);
+
+    PrintList_Sq(L);
 
     return;
 }

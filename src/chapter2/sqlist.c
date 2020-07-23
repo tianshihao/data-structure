@@ -130,3 +130,42 @@ Status ListEmpty_Sq(SqList L)
         return FALSE;
     }
 } // ListEmpty_Sq
+
+Status Del_Min(SqList *L, ElemType *value)
+{
+    // 如果顺序表为空.
+    if (ListEmpty_Sq(*L))
+    {
+        // 现实错误信息.
+        printf("error, the list is empty.\n");
+
+        // 并退出运行.
+        return ERROR;
+    }
+
+    // 假定第 0 号元素最小.
+    *value = L->elem[0];
+
+    // 用已记录最小元素索引.
+    int pos = 0;
+
+    for (int i = 1; i < L->length; ++i)
+    {
+        // 如果找到了更小的数据元素.
+        if (L->elem[i] < *value)
+        {
+            // 则更新 *e 存储的最小数据元素.
+            *value = L->elem[i];
+
+            // 同时更新最小数据元素的索引.
+            pos = i;
+        }
+    }
+
+    // 空出的位置由最后一个元素填补, 相当于把最后一个元素移动到最小的元素处,
+    // 所以顺序表长度减一.
+    L->elem[pos] = L->elem[L->length - 1];
+    L->length--;
+
+    return OK;
+} // Del_Min

@@ -89,4 +89,13 @@ void PrintList_Sq(SqList L);
  * */
 Status ListEmpty_Sq(SqList L);
 
+/**
+ * 王道数据结构 2.2.4
+ * 从顺序表中和三处具有最小值的元素 (假设唯一) 并由函数返回被删元素的值. 空出
+ * 的位置由最后一个元素填补, 若顺序表为空则显示出错误信息并退出运行.
+ * @param L 指向已存在顺序表的指针.
+ * @param value 用以保存被删除元素.
+ * */
+Status Del_Min(SqList *L, ElemType *value);
+
 #endif // SQLIST_H
