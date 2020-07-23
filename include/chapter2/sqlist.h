@@ -98,4 +98,11 @@ Status ListEmpty_Sq(SqList L);
  * */
 Status Del_Min(SqList *L, ElemType *value);
 
+/**
+ * 王道数据结构 2.2.4
+ * 将顺序表逆置. 要求算法的空间复杂度为 O(1).
+ * @param L 指向已存在顺序表的指针.
+ * */
+Status Reverse_Sq(SqList *L);
+
 #endif // SQLIST_H

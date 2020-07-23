@@ -169,3 +169,50 @@ Status Del_Min(SqList *L, ElemType *value)
 
     return OK;
 } // Del_Min
+
+Status Reverse_Sq(SqList *L)
+{
+    // 如果顺序表为空.
+    if (ListEmpty_Sq(*L))
+    {
+        // 现实错误信息.
+        printf("error, the list is empty.\n");
+
+        // 并退出运行.
+        return ERROR;
+    }
+
+    int front = 0;
+    int rear = L->length - 1;
+
+    ElemType temp; // 辅助变量.
+
+    do
+    {
+        // 交换首尾数据元素.
+        temp = L->elem[rear];
+        L->elem[rear] = L->elem[front];
+        L->elem[front] = temp;
+
+        // 更新指向首尾的指针.
+        ++front;
+        --rear;
+    } while (front < rear);
+
+    // 答案.
+    // ElemType temp; // 辅助变量.
+
+    // /**
+    //  * 让 i < length / 2 很好地避免了顺序表长度奇偶问题.
+    //  * 如果长度为偶数, 正好把表分成两半; 为奇数, 正好跳过正中间的元素.
+    //  * */
+    // for (int i = 0; i < L->length / 2; ++i)
+    // {
+    //     temp = L->elem[i];
+    //     // length - i - 1.
+    //     L->elem[i] = L->elem[L->length - i - 1];
+    //     L->elem[L->length - i - 1] = temp;
+    // }
+
+    return OK;
+} // Reverse_Sq
