@@ -140,4 +140,13 @@ Status DelST2(SqList *L, ElemType s, ElemType t);
  * */
 Status DeleteSame(SqList *L);
 
+/**
+ * 王道数据结构 2.2.4
+ * 将两个有序顺序表合并为一个新的有序表, 并由函数返回结果顺序表.
+ * @param A 待合并有序顺序表.
+ * @param B 待合并有序顺序表.
+ * @param C 结果有序顺序表.
+ * */
+Status Merge(SqList A, SqList B, SqList *C);
+
 #endif // SQLIST_H

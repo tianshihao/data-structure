@@ -334,3 +334,39 @@ Status DeleteSame(SqList *L)
 
     return OK;
 } // DeleteSame
+
+Status Merge(SqList A, SqList B, SqList *C)
+{
+    if (A.length + B.length > MAXSIZE)
+    {
+        printf("合并结果大于顺序表最大长度.\n");
+        return ERROR;
+    }
+
+    int i = 0, j = 0, k = 0;
+
+    while (i < A.length && j < B.length)
+    {
+        if (A.elem[i] < B.elem[j])
+        {
+            C->elem[k++] = A.elem[i++];
+        }
+        else
+        {
+            C->elem[k++] = B.elem[j++];
+        }
+    }
+
+    while (i < A.length) // 还剩一个没有比较完的顺序表.
+    {
+        C->elem[k++] = A.elem[i++];
+    }
+    while (j < B.length)
+    {
+        C->elem[k++] = B.elem[j++];
+    }
+
+    C->length = k;
+
+    return OK;
+} // Merge

@@ -23,37 +23,36 @@ int main()
 
 void UseSqlist()
 {
-    SqList L;
+    SqList A, B, C;
 
     // 初始化顺序表.
-    InitList_Sq(&L);
+    InitList_Sq(&A);
+    InitList_Sq(&B);
+    InitList_Sq(&C);
 
     // 如果顺序表为空, 向顺序表中插入数据元素.
-    if (ListEmpty_Sq(L))
+    if (ListEmpty_Sq(A))
     {
-        ListInsert_Sq(&L, 1, 5);
-        ListInsert_Sq(&L, 1, 4);
-        ListInsert_Sq(&L, 1, 4);
-        ListInsert_Sq(&L, 1, 3);
-        ListInsert_Sq(&L, 1, 3);
-        ListInsert_Sq(&L, 1, 3);
-        ListInsert_Sq(&L, 1, 2);
-        ListInsert_Sq(&L, 1, 2);
-        ListInsert_Sq(&L, 1, 2);
-        ListInsert_Sq(&L, 1, 2);
-        ListInsert_Sq(&L, 1, 1);
+        ListInsert_Sq(&A, 1, 9);
+        ListInsert_Sq(&A, 1, 7);
+        ListInsert_Sq(&A, 1, 5);
+        ListInsert_Sq(&A, 1, 3);
+        ListInsert_Sq(&A, 1, 1);
+    }
+    if (ListEmpty_Sq(B))
+    {
+        ListInsert_Sq(&B, 1, 8);
+        ListInsert_Sq(&B, 1, 6);
+        ListInsert_Sq(&B, 1, 4);
+        ListInsert_Sq(&B, 1, 2);
+        ListInsert_Sq(&B, 1, 0);
     }
 
-    // 输出 L 中的数据元素.
-    PrintList_Sq(L);
+    printf("测试Merge()\n");
 
-    printf("测试DeleteSame()\n");
+    Merge(A, B, &C);
 
-    DeleteSame(&L);
-
-    PrintList_Sq(L);
-
-    printf("%d\n", L.length);
+    PrintList_Sq(C);
 
     return;
 }
