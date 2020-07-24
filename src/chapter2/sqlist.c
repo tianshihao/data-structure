@@ -217,7 +217,7 @@ Status Reverse_Sq(SqList *L)
     return OK;
 } // Reverse_Sq
 
-Status Del_X(SqList *L, ElemType x)
+Status DelX(SqList *L, ElemType x)
 {
     int xCount = 0; // 辅助变量, 空间复杂度 O(1).
 
@@ -245,4 +245,39 @@ Status Del_X(SqList *L, ElemType x)
     L->length = L->length - xCount;
 
     return OK;
-} // Del_X
+} // DelX
+
+Status DelST1(SqList *L, ElemType s, ElemType t)
+{
+    if (s >= t || L->length == 0)
+    {
+        printf("s, t 不合理或顺序表长度为 0.\n");
+        return ERROR;
+    }
+
+    // 被删除的区间长度.
+    int delLen = 0;
+    for (int i = 0; i < L->length; ++i)
+    {
+        if ((L->elem[i] > s) && (L->elem[i] < t))
+        {
+            ++delLen;
+        }
+        // 大于等于 t 的元素要前移.
+        if (L->elem[i] >= t)
+        {
+            L->elem[i - delLen] = L->elem[i];
+        }
+    }
+
+    if (delLen == 0)
+    {
+        printf("L 中所有元素都小于 %d\n", s);
+        return ERROR;
+    }
+
+    // 更新顺序表长度.
+    L->length = L->length - delLen;
+
+    return OK;
+} // DelST1

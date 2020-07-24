@@ -111,6 +111,16 @@ Status Reverse_Sq(SqList *L);
  * @param L 指向已存在顺序表的指针.
  * @param x 要删除的数据元素.
  * */
-Status Del_X(SqList *L, ElemType x);
+Status DelX(SqList *L, ElemType x);
+
+/**
+ * 王道数据结构 2.2.4
+ * 从有序顺序表中删除其值在给定值 s 和 t 之间的所有元素. 如果 s 或 t 不合理
+ * 或顺序表为空, 则显示出错误信息并退出运行.
+ * @param L 指向已存在顺序表的指针.
+ * @param s 定值, 被删除的元素大于 s.
+ * @param t 定值, 被删除的元素小于 t.
+ */
+Status DelST1(SqList *L, ElemType s, ElemType t);
 
 #endif // SQLIST_H

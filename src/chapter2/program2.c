@@ -31,8 +31,12 @@ void UseSqlist()
     // 如果顺序表为空, 向顺序表中插入数据元素.
     if (ListEmpty_Sq(L))
     {
+        ListInsert_Sq(&L, 1, 15);
+        ListInsert_Sq(&L, 1, 12);
+        ListInsert_Sq(&L, 1, 8);
+        ListInsert_Sq(&L, 1, 6);
+        ListInsert_Sq(&L, 1, 6);
         ListInsert_Sq(&L, 1, 5);
-        ListInsert_Sq(&L, 1, 1);
         ListInsert_Sq(&L, 1, 4);
         ListInsert_Sq(&L, 1, 2);
     }
@@ -40,54 +44,13 @@ void UseSqlist()
     // 输出 L 中的数据元素.
     PrintList_Sq(L);
 
-    // 若 L 非空, 删除 L 表尾数据元素.
-    if (!ListEmpty_Sq(L))
-    {
-        // 存放被删除的数据元素.
-        ElemType deleted = 0;
-        ListDelete_Sq(&L, L.length, &deleted);
-        printf("The deleted element is: %d\n", deleted);
-    }
+    printf("测试DelST1()\n");
 
-    // 输出 L 中的数据元素.
-    PrintList_Sq(L);
-
-    // printf("测试Del_Min()\n");
-
-    /**
-     * 这里遇到一个 bug, Del_Min() 第二个参数是指向 ElemType 的指针,
-     * 如果先定义一个 ElemType *value, 再将 value 当作参数, 会出错, 因为这个
-     * value 仅仅是一个指针, 没有分配的内存空间
-     * */
-    // ElemType value;
-
-    // Del_Min(&L, &value);
-
-    // PrintList_Sq(L);
-
-    printf("测试Reverse_Sq()\n");
-
-    Reverse_Sq(&L);
+    DelST1(&L, 3, 8);
 
     PrintList_Sq(L);
 
-    printf("测试Del_X()\n");
-
-    ListInsert_Sq(&L, 1, 2);
-    ListInsert_Sq(&L, 1, 3);
-    ListInsert_Sq(&L, 1, 2);
-    ListInsert_Sq(&L, 1, 2);
-    ListInsert_Sq(&L, 1, 9);
-
-    printf("删除2之前\n");
-
-    PrintList_Sq(L);
-
-    printf("删除2之后\n");
-
-    Del_X(&L, 2);
-
-    PrintList_Sq(L);
+    printf("%d\n", L.length);
 
     return;
 }
