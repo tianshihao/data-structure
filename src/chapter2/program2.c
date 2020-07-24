@@ -71,6 +71,24 @@ void UseSqlist()
 
     PrintList_Sq(L);
 
+    printf("测试Del_X()\n");
+
+    ListInsert_Sq(&L, 1, 2);
+    ListInsert_Sq(&L, 1, 3);
+    ListInsert_Sq(&L, 1, 2);
+    ListInsert_Sq(&L, 1, 2);
+    ListInsert_Sq(&L, 1, 9);
+
+    printf("删除2之前\n");
+
+    PrintList_Sq(L);
+
+    printf("删除2之后\n");
+
+    Del_X(&L, 2);
+
+    PrintList_Sq(L);
+
     return;
 }
 

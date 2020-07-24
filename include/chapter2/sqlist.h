@@ -105,4 +105,12 @@ Status Del_Min(SqList *L, ElemType *value);
  * */
 Status Reverse_Sq(SqList *L);
 
+/**
+ * 王道数据结构 2.2.4
+ * 删除顺序表中所有值为 x 的数据元素. 要求事件复杂度为 O(n), 空间复杂度为 O(1).
+ * @param L 指向已存在顺序表的指针.
+ * @param x 要删除的数据元素.
+ * */
+Status Del_X(SqList *L, ElemType x);
+
 #endif // SQLIST_H

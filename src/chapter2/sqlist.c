@@ -182,10 +182,10 @@ Status Reverse_Sq(SqList *L)
         return ERROR;
     }
 
+    // 指向顺序表首尾的指针.
     int front = 0;
     int rear = L->length - 1;
-
-    ElemType temp; // 辅助变量.
+    ElemType temp; // 辅助变量. 空间复杂度为 O(1).
 
     do
     {
@@ -194,7 +194,7 @@ Status Reverse_Sq(SqList *L)
         L->elem[rear] = L->elem[front];
         L->elem[front] = temp;
 
-        // 更新指向首尾的指针.
+        // 更新指向首尾的指针.x
         ++front;
         --rear;
     } while (front < rear);
@@ -216,3 +216,33 @@ Status Reverse_Sq(SqList *L)
 
     return OK;
 } // Reverse_Sq
+
+Status Del_X(SqList *L, ElemType x)
+{
+    int xCount = 0; // 辅助变量, 空间复杂度 O(1).
+
+    /**
+     * 算法思想: 顺序表中等于 x 的数据元素有 m 个, 用 x 将顺序表分为 m+1 个区间,
+     * 每个区间中元素向前移动的长度为该区间前面 x 的数量.
+     * 所以只需要扫描一次顺序表, 一边扫描, 一边统计 m, 并将不等于 x 的元素向前
+     * 移动 m 单位.
+     */
+
+    // for() 时间复杂度 O(n).
+    for (int i = 0; i < L->length; ++i)
+    {
+        if (L->elem[i] == x)
+        {
+            ++xCount;
+        }
+        else
+        {
+            L->elem[i - xCount] = L->elem[i];
+        }
+    }
+
+    // 更新顺序表长度.
+    L->length = L->length - xCount;
+
+    return OK;
+} // Del_X
