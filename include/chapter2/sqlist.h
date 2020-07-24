@@ -12,9 +12,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define INITSIZE 100 // 顺序表存储空间的初始分配量.
-#define INCREMENT 10 // 顺序表存储空间的分配增量.
-#define MAXSIZE 200  // 顺序表的最大长度.
+#define LIST_INIT_SIZE 100 // 顺序表存储空间的初始分配量.
+#define LIST_INCREMENT 10  // 顺序表存储空间的分配增量.
+#define LIST_MAX_SIZE 200  // 顺序表的最大长度.
 
 typedef int ElemType;
 

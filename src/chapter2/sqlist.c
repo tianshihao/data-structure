@@ -9,14 +9,14 @@
 
 Status InitList_Sq(SqList *L)
 {
-    L->elem = (ElemType *)malloc(sizeof(ElemType) * INITSIZE);
+    L->elem = (ElemType *)malloc(sizeof(ElemType) * LIST_INIT_SIZE);
     if (!L->elem)
     {
         exit(OVERFLOW);
     }
 
     L->length = 0;
-    L->listsize = INITSIZE;
+    L->listsize = LIST_INIT_SIZE;
 
     return OK;
 } // InitList_Sq
@@ -67,7 +67,7 @@ Status ListInsert_Sq(SqList *L, int i, ElemType e)
     }
 
     // 当前存储空间已满, 不能插入.
-    if (L->length >= MAXSIZE)
+    if (L->length >= LIST_MAX_SIZE)
     {
         return ERROR;
     }
@@ -337,7 +337,7 @@ Status DeleteSame(SqList *L)
 
 Status Merge(SqList A, SqList B, SqList *C)
 {
-    if (A.length + B.length > MAXSIZE)
+    if (A.length + B.length > LIST_MAX_SIZE)
     {
         printf("合并结果大于顺序表最大长度.\n");
         return ERROR;
