@@ -1,13 +1,13 @@
-﻿/************************
+﻿/**
  * @file  : sqqueue.h
  * @brief : 循环队列
  * @author: 田世豪
  * @date  : 2020-1-30
- * *********************/
+ */
 
 #pragma once
 
-#include "predefconst.h"
+#include <chapter1/status.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -27,83 +27,14 @@ typedef struct SqQueue
     int rear;
 } SqQueue;
 
-Status InitSqQueue(SqQueue *Q);
-int SqQueueLength(SqQueue Q);
-Status EnSqQueue(SqQueue *Q, QElemType e);
-Status DeSqQueue(SqQueue *Q, QElemType *e);
-Status SqQueueEmpty(SqQueue Q);
-void PrintSqQueue(SqQueue Q);
+Status InitQueue_Sq(SqQueue *Q);
 
-// 构造一个空队列.
-Status InitSqQueue(SqQueue *Q)
-{
-    Q->base = (QElemType *)malloc(sizeof(MAXQSIZE * sizeof(QElemType)));
+int QueueLength_Sq(SqQueue Q);
 
-    if (!Q->base)
-        exit(OVERFLOW);
+Status EnQueue_Sq(SqQueue *Q, QElemType e);
 
-    Q->front = Q->rear = 0;
+Status DeQueue_Sq(SqQueue *Q, QElemType *e);
 
-    return OK;
-} // InitSqQueue
+Status QueueEmpty_Sq(SqQueue Q);
 
-// 返回 Q 的元素个数, 即队列的长度.
-int SqQueueLength(SqQueue Q)
-{
-    return (Q.rear - Q.front + MAXQSIZE) % MAXQSIZE;
-} // SqQueueLength
-
-// 插入元素 e 为 Q 的新的队尾元素
-Status EnSqQueue(SqQueue *Q, QElemType e)
-{
-    // 队列满
-    if ((Q->rear + 1) % MAXQSIZE == Q->front)
-        return ERROR;
-
-    Q->base[Q->rear] = e;
-
-    Q->rear = (Q->rear + 1) % MAXQSIZE;
-
-    return OK;
-} // EnQueue
-
-// 若队列不空, 则删除 Q 的队头元素, 用 e 返回其值, 并返回 OK;
-// 否则返回 ERROR.
-Status DeSqQueue(SqQueue *Q, QElemType *e)
-{
-    if (Q->front == Q->rear)
-        return ERROR;
-
-    *e = Q->base[Q->front];
-
-    Q->front = (Q->front + 1) % MAXQSIZE;
-
-    return OK;
-} // DeSqQueue
-
-Status SqQueueEmpty(SqQueue Q)
-{
-    return Q.front == Q.rear;
-} // SqQueueEmpty
-
-// 打印循环队列元素.
-void PrintSqQueue(SqQueue Q)
-{
-    if (Q.front == Q.rear)
-    {
-        printf("queue is empty\n");
-        return;
-    }
-
-    QElemType ptr = Q.front;
-
-    while (ptr != Q.rear)
-    {
-        printf(" %d ", Q.base[ptr]);
-
-        ptr = (ptr + 1) % MAXQSIZE;
-    } // while
-    printf("\n");
-
-    return;
-} // PrintSqQueue
+void PrintQueue_Sq(SqQueue Q);
