@@ -281,3 +281,56 @@ Status DelST1(SqList *L, ElemType s, ElemType t)
 
     return OK;
 } // DelST1
+
+Status DelST2(SqList *L, ElemType s, ElemType t)
+{
+    // 和 DelX() 一样
+
+    if (s >= t || L->length == 0)
+    {
+        printf("s, t 不合理或顺序表长度为 0.\n");
+        return ERROR;
+    }
+
+    int k = 0; // 辅助变量, 记录值在 s 和 t 之间的元素个数.
+
+    for (int i = 0; i < L->length; ++i)
+    {
+        if (L->elem[i] >= s && L->elem[i] <= t)
+        {
+            ++k;
+        }
+        else
+        {
+            L->elem[i - k] = L->elem[i];
+        }
+    }
+
+    // 更新顺序表长度.
+    L->length -= k;
+
+    return TRUE;
+} // DelST2
+
+Status DeleteSame(SqList *L)
+{
+    if (L->length == 0)
+    {
+        return ERROR;
+    }
+
+    int i, j;
+    // i 存储第一个不相同的元素, j 为工作指针.
+    for (i = 0, j = 1; j < L->length; ++j)
+    {
+        if (L->elem[i] != L->elem[j]) // 找到下一个与上一个元素不同的元素.
+        {
+            L->elem[++i] = L->elem[j]; // 将给元素前移至上一个元素之后.
+        }
+    }
+
+    // 更新顺序表长度.
+    L->length = i + 1;
+
+    return OK;
+} // DeleteSame

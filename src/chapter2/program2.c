@@ -31,22 +31,25 @@ void UseSqlist()
     // 如果顺序表为空, 向顺序表中插入数据元素.
     if (ListEmpty_Sq(L))
     {
-        ListInsert_Sq(&L, 1, 15);
-        ListInsert_Sq(&L, 1, 12);
-        ListInsert_Sq(&L, 1, 8);
-        ListInsert_Sq(&L, 1, 6);
-        ListInsert_Sq(&L, 1, 6);
         ListInsert_Sq(&L, 1, 5);
         ListInsert_Sq(&L, 1, 4);
+        ListInsert_Sq(&L, 1, 4);
+        ListInsert_Sq(&L, 1, 3);
+        ListInsert_Sq(&L, 1, 3);
+        ListInsert_Sq(&L, 1, 3);
         ListInsert_Sq(&L, 1, 2);
+        ListInsert_Sq(&L, 1, 2);
+        ListInsert_Sq(&L, 1, 2);
+        ListInsert_Sq(&L, 1, 2);
+        ListInsert_Sq(&L, 1, 1);
     }
 
     // 输出 L 中的数据元素.
     PrintList_Sq(L);
 
-    printf("测试DelST1()\n");
+    printf("测试DeleteSame()\n");
 
-    DelST1(&L, 3, 8);
+    DeleteSame(&L);
 
     PrintList_Sq(L);
 

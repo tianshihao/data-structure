@@ -123,4 +123,21 @@ Status DelX(SqList *L, ElemType x);
  */
 Status DelST1(SqList *L, ElemType s, ElemType t);
 
+/**
+ * 王道数据结构 2.2.4
+ * 从顺序表中删除其值在给定值 s 和 t 之间的所有元素 (包含 s 和 t). 如果 s 或
+ * t 不合理或顺序表为空, 则显示出错误信息并退出运行.
+ * @param L 指向已存在顺序表的指针.
+ * @param s 定值, 被删除的元素大于 s.
+ * @param t 定值, 被删除的元素小于 t.
+ */
+Status DelST2(SqList *L, ElemType s, ElemType t);
+
+/**
+ * 王道数据结构 2.2.4
+ * 从有序顺序表中删除所有值其值重复的元素, 使表中所有的元素的值均不同.
+ * @param L 指向已存在有序顺序表的指针.
+ * */
+Status DeleteSame(SqList *L);
+
 #endif // SQLIST_H
