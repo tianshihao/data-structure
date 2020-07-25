@@ -14,9 +14,9 @@ Status MyCompare(ElemType e1, ElemType e2);
 
 int main()
 {
-    UseSqlist();
+    // UseSqlist();
 
-    // UseLinklist();
+    UseLinklist();
 
     return 0;
 }
@@ -60,25 +60,31 @@ void UseSqlist()
 void UseLinklist()
 {
     LinkList odd, even;
+
     InitList_L(&odd);
     InitList_L(&even);
 
-    for (int i = 1, e = 1; i <= 3; ++i, e += 2)
+    for (int i = 1, e = 1; i <= 5; ++i, e += 2)
     {
-        ListInsert_L(&odd, i, e);
+        TailInsert(&odd, e);
     }
 
     for (int i = 1, e = 2; i <= 5; ++i, e += 2)
     {
-        ListInsert_L(&even, i, e);
+        TailInsert(&even, e);
     }
-    PrintList(odd);
-    PrintList(even);
 
-    LinkList sequence;
-    MergeList_L(&odd, &even, &sequence, MyCompare);
+    PrintList_L(odd);
+    PrintList_L(even);
 
-    PrintList(sequence);
+    LNode *node = GetElem(even, 4);
+
+    printf("\nnode->data = %d\n", node->data);
+
+    // LinkList sequence;
+    // MergeList_L(&odd, &even, &sequence, MyCompare);
+
+    // PrintList(sequence);
 
     return;
 }
