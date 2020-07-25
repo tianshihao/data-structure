@@ -7,24 +7,83 @@ Status InitStack(SqStack *S)
 
     // 存储分配失败
     if (!S->base)
+    {
         exit(OVERFLOW);
+    }
 
     S->top = S->base;
 
-    S->stack_size = STACK_INIT_SIZE;
+    S->stackSize = STACK_INIT_SIZE;
 
     return OK;
 } // InitStack
 
-Status DestoryStack(SqStack *S)
+Status StackEmpty(SqStack S)
 {
-    free(S->base);
-    S->base = NULL;
-    S->top = NULL;
-    S->stack_size = 0;
+    if (S.top == S.base)
+    {
+        return TRUE;
+    }
+
+    return FALSE;
+} // StackEmpty
+
+Status Push(SqStack *S, SElemType e)
+{
+    // 栈满, 追加存储空间
+    if ((S->top - S->base) >= S->stackSize)
+    {
+        S->base = realloc(S->base, (S->stackSize + STACK_INCREMENT) * sizeof(SElemType));
+
+        // 内存分配失败.
+        if (!S->base)
+        {
+            exit(OVERFLOW);
+        }
+
+        // 重置栈顶指针
+        S->top = S->base + S->stackSize;
+
+        // 更新栈大小
+        S->stackSize += STACK_INCREMENT;
+    }
+
+    // 更新栈顶指针, top 始终指向栈顶元素的下一位.
+    *(S->top)++ = e;
 
     return OK;
-} // DestoryStack
+} // Push
+
+Status Pop(SqStack *S, SElemType *e)
+{
+    // 若栈为空.
+    if (S->top == S->base)
+    {
+        return ERROR;
+    }
+
+    (*e) = *(--(S->top));
+
+    return OK;
+} // Pop
+
+Status GetTop(SqStack S, SElemType *e)
+{
+    // 空栈
+    if (S.top == S.base)
+    {
+        return ERROR;
+    }
+
+    *e = *(S.top - 1);
+
+    return OK;
+} // GetTop
+
+int StackLength(SqStack S)
+{
+    return (S.top - S.base);
+} // StackLength
 
 Status ClearStack(SqStack *S)
 {
@@ -33,60 +92,20 @@ Status ClearStack(SqStack *S)
     return OK;
 } // ClearStack
 
-Status StackEmpty(SqStack S)
+Status DestoryStack(SqStack *S)
 {
-    if (S.top == S.base)
-        return TRUE;
-    return FALSE;
-} // StackEmpty
+    // 释放顺序栈内容空间.
+    free(S->base);
 
-int StackLength(SqStack S)
-{
-    return (S.top - S.base);
-} // StackLength
+    // 置栈顶栈顶指针为空.
+    S->base = NULL;
+    S->top = NULL;
 
-Status GetTop(SqStack S, SElemType *e)
-{
-    // 空栈
-    if (S.top == S.base)
-        return ERROR;
-
-    *e = *(S.top - 1);
+    // 更新栈大小.
+    S->stackSize = 0;
 
     return OK;
-} // GetTop
-
-Status Push(SqStack *S, SElemType e)
-{
-    // 栈满, 追加存储空间
-    if ((S->top - S->base) >= S->stack_size)
-    {
-        S->base = realloc(S->base, (S->stack_size + STACK_INCREMENT) * sizeof(SElemType));
-
-        if (!S->base)
-            exit(OVERFLOW);
-
-        // 重置栈顶指针
-        S->top = S->base + S->stack_size;
-
-        // 更新栈大小
-        S->stack_size += STACK_INCREMENT;
-    }
-
-    *(S->top)++ = e;
-
-    return OK;
-} // Push
-
-Status Pop(SqStack *S, SElemType *e)
-{
-    if (S->top == S->base)
-        return ERROR;
-
-    (*e) = *(--(S->top));
-
-    return OK;
-} // Pop
+} // DestoryStack
 
 Status StackTraverse(SqStack S, Status (*visit)())
 {

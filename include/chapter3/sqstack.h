@@ -25,32 +25,59 @@ typedef struct SqStack
     SElemType *top;
 
     // 当前已分配的存储空间, 以元素为单位
-    int stack_size;
+    int stackSize;
 } SqStack;
 
-// 构造一个空栈
+/**
+ * 构造一个空栈.
+ * @param S 指向顺序栈的指针.
+ */
 Status InitStack(SqStack *S);
 
-// 销毁栈 S, S 不再存在.
-Status DestoryStack(SqStack *S);
-
-// 把 S 置为空栈.
-Status ClearStack(SqStack *S);
-
-// 若栈 S 为空, 则返回 TRUE, 否则返回 FALSE.
+/**
+ * 若栈 S 为空, 则返回 TRUE, 否则返回 FALSE.
+ * @param S 顺序栈.
+ */
 Status StackEmpty(SqStack S);
 
-// 返回 S 的元素个数, 即栈的长度.
-int StackLength(SqStack S);
-
-// 若栈不空, 则用 e 返回 S 的栈顶元素, 并返回 OK; 否则返回 ERROR.
-Status GetTop(SqStack S, SElemType *e);
-
-// 插入元素 e 为新的栈顶元素.
+/**
+ * 插入元素 e 为新的栈顶元素.
+ * @param S 指向顺序栈的指针.
+ * @param e 压入栈中的元素.
+ */
 Status Push(SqStack *S, SElemType e);
 
-// 若栈不空, 则删除 S 的栈顶元素, 用 e 返回其值, 并返回 OK; 否则返回ERROR.
+/**
+ * 若栈不空, 则删除 S 的栈顶元素, 用 e 返回其值, 并返回 OK; 否则返回ERROR.
+ * @param S 指向顺序栈的指针.
+ * @param e 用 e 保存出栈元素.
+ */
 Status Pop(SqStack *S, SElemType *e);
+
+/**
+ * 若栈不空, 则用 e 返回 S 的栈顶元素, 并返回 OK; 否则返回 ERROR.
+ * @param S 顺序栈.
+ * @param e 保存栈顶元素.
+ */
+Status GetTop(SqStack S, SElemType *e);
+
+/**
+ * 返回 S 的元素个数, 即栈的长度.
+ * @param S 顺序栈.
+ */
+int StackLength(SqStack S);
+
+/**
+ * 把 S 置为空栈.
+ * @param S 指向顺序栈的指针.
+ */
+Status ClearStack(SqStack *S);
+
+/**
+ * 销毁栈 S, S 不再存在.
+ * @param S 指向顺序栈的指针.
+ */
+Status DestoryStack(SqStack *S);
 
 //从栈底到栈顶依次对栈中的每个元素调用函数 visit(). 一旦 visit() 失败, 则操作失败.
 Status StackTraverse(SqStack S, Status (*visit)());
