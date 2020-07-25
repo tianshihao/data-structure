@@ -43,7 +43,7 @@ Status TailInsert(LinkList *L, ElemType e);
 /**
  * @brief 按序号查找结点值.
  * @param L 链表.
- * @param i 序号.
+ * @param i 序号. 取值范围 0 <= i <= length.
  * @return 返回指向符合要求结点的指针, 否则返回 NULL.
  */
 LNode *GetElem(LinkList L, int i);
@@ -57,6 +57,22 @@ LNode *GetElem(LinkList L, int i);
 LNode *LocateElem_L(LinkList L, ElemType e);
 
 /**
+ * 在线性链表 L 第 i 个元素之前插入数据元素 e.
+ * @param L 指向已存在链表.
+ * @param i 插入的位置. 取值范围 1 <= i <= length.
+ * @param e 要插入的元素.
+ * */
+Status ListInsert_L(LinkList *L, int i, ElemType e);
+
+/**
+ * 在线性链表 L 第 i 个元素之前插入数据元素 e.
+ * @param L 指向已存在链表.
+ * @param i 插入的位置. 取值范围 1 <= i <= length.
+ * @param e 要插入的元素.
+ * */
+Status ListDelete_L(LinkList *L, int i);
+
+/**
  * 打印链表.
  * @param L 待打印链表.
  */
@@ -66,9 +82,6 @@ void PrintList_L(LinkList L);
 // Status ListTraverse(LinkList L, Status (*visit)(ElemType));
 
 // /***************************利用基本操作实现的高级操作******************************/
-
-// // 在线性链表 L 第 i 个元素之前插入数据元素 e
-// Status ListInsert_L(LinkList *L, int i, ElemType e);
 
 // // 已知单线性链表 La 和 Lb 的元素按值非递减排列.
 // // 归并 La 和 Lb 得到新的单线性链表 Lc, Lc 的元素也按值非线性递减排列.

@@ -112,6 +112,44 @@ LNode *LocateElem_L(LinkList L, ElemType e)
     return p;
 } // LocateElem_L
 
+Status ListInsert_L(LinkList *L, int i, ElemType e)
+{
+    LNode *p;
+
+    // 获取第 i - 1 个结点的位置, 并将其返回给 p
+    p = GetElem(*L, i - 1);
+
+    if (!p)
+    {
+        printf("插入位置非法.\n");
+    }
+
+    LNode *s;
+    s = malloc(sizeof(LNode));
+    s->data = e;
+
+    s->next = p->next;
+    p->next = s;
+
+    return OK;
+} // ListInsert_L
+
+Status ListDelete_L(LinkList *L, int i)
+{
+    LNode *p = GetElem(*L, i - 1);
+
+    // 被删结点.
+    LNode *q = p->next;
+
+    // 跳过被删结点.
+    p->next = q->next;
+
+    // 释放被删结点内存.
+    free(q);
+
+    return OK;
+} // ListDelete_L
+
 void PrintList_L(LinkList L)
 {
     // L 是头结点, p 指向第一个结点.

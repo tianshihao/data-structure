@@ -74,12 +74,9 @@ void UseLinklist()
         TailInsert(&even, e);
     }
 
+    ListInsert_L(&odd, 4, 100);
+
     PrintList_L(odd);
-    PrintList_L(even);
-
-    LNode *node = LocateElem_L(even, 4);
-
-    printf("\nnode->data = %d\n", node->next->data);
 
     // LinkList sequence;
     // MergeList_L(&odd, &even, &sequence, MyCompare);
