@@ -49,6 +49,14 @@ Status TailInsert(LinkList *L, ElemType e);
 LNode *GetElem(LinkList L, int i);
 
 /**
+ * @brief 按值查找表结点.
+ * @param L 链表.
+ * @param e 要查找的值.
+ * @return 返回指向符合要求结点的指针, 否则返回 NULL.
+ */
+LNode *LocateElem_L(LinkList L, ElemType e);
+
+/**
  * 打印链表.
  * @param L 待打印链表.
  */

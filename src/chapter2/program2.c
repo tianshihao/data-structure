@@ -77,9 +77,9 @@ void UseLinklist()
     PrintList_L(odd);
     PrintList_L(even);
 
-    LNode *node = GetElem(even, 4);
+    LNode *node = LocateElem_L(even, 4);
 
-    printf("\nnode->data = %d\n", node->data);
+    printf("\nnode->data = %d\n", node->next->data);
 
     // LinkList sequence;
     // MergeList_L(&odd, &even, &sequence, MyCompare);

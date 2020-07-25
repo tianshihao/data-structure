@@ -99,6 +99,19 @@ LNode *GetElem(LinkList L, int i)
     return p;
 } // GetElem
 
+LNode *LocateElem_L(LinkList L, ElemType e)
+{
+    // p 指向第一个元素.
+    LNode *p = L->next;
+
+    while (p && p->data != e)
+    {
+        p = p->next;
+    }
+
+    return p;
+} // LocateElem_L
+
 void PrintList_L(LinkList L)
 {
     // L 是头结点, p 指向第一个结点.
