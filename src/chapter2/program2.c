@@ -78,6 +78,8 @@ void UseLinklist()
 
     PrintList_L(odd);
 
+    printf("\nlength = %d\n", ListLength_L(odd));
+
     // LinkList sequence;
     // MergeList_L(&odd, &even, &sequence, MyCompare);
 

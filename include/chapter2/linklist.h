@@ -73,6 +73,12 @@ Status ListInsert_L(LinkList *L, int i, ElemType e);
 Status ListDelete_L(LinkList *L, int i);
 
 /**
+ * @brief 返回 L 中数据元素个数.
+ * @param L 链表.
+ * @return L 的数据元素个数.
+ */
+int ListLength_L(LinkList L);
+/**
  * 打印链表.
  * @param L 待打印链表.
  */

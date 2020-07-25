@@ -150,6 +150,21 @@ Status ListDelete_L(LinkList *L, int i)
     return OK;
 } // ListDelete_L
 
+int ListLength_L(LinkList L)
+{
+    LNode *p = L->next;
+
+    int length = 0;
+
+    while (p)
+    {
+        length++;
+        p = p->next;
+    }
+
+    return length;
+} // ListLength
+
 void PrintList_L(LinkList L)
 {
     // L 是头结点, p 指向第一个结点.
