@@ -1,6 +1,6 @@
 ﻿#include <chapter2/linklist.h>
 
-Status InitList_L(LinkList *L)
+Status InitList_L(Linklist *L)
 {
     /**
      * a.   malloc 的返回值类型是 void *,
@@ -20,7 +20,7 @@ Status InitList_L(LinkList *L)
     return OK;
 } // InitList_L
 
-Status HeadInsert(LinkList *L, ElemType e)
+Status HeadInsert_L(Linklist *L, ElemType e)
 {
     // 创建新结点.
     LNode *p = malloc(sizeof(LNode));
@@ -35,9 +35,9 @@ Status HeadInsert(LinkList *L, ElemType e)
     (*L)->next = p;
 
     return OK;
-} // HeadInsert
+} // HeadInsert_L
 
-Status TailInsert(LinkList *L, ElemType e)
+Status TailInsert_L(Linklist *L, ElemType e)
 {
     LNode *p = malloc(sizeof(LNode));
     p->data = e;
@@ -68,7 +68,7 @@ Status TailInsert(LinkList *L, ElemType e)
     return OK;
 } // TailInsert
 
-LNode *GetElem(LinkList L, int i)
+LNode *GetElem_L(Linklist L, int i)
 {
     // p 指向第一个结点.
     LNode *p = L->next;
@@ -97,9 +97,9 @@ LNode *GetElem(LinkList L, int i)
 
     // 返回找到的第 i 个结点的指针, 若 i 大于表长则返回 NULL.
     return p;
-} // GetElem
+} // GetElem_L
 
-LNode *LocateElem_L(LinkList L, ElemType e)
+LNode *LocateElem_L(Linklist L, ElemType e)
 {
     // p 指向第一个元素.
     LNode *p = L->next;
@@ -112,12 +112,12 @@ LNode *LocateElem_L(LinkList L, ElemType e)
     return p;
 } // LocateElem_L
 
-Status ListInsert_L(LinkList *L, int i, ElemType e)
+Status ListInsert_L(Linklist *L, int i, ElemType e)
 {
     LNode *p;
 
     // 获取第 i - 1 个结点的位置, 并将其返回给 p
-    p = GetElem(*L, i - 1);
+    p = GetElem_L(*L, i - 1);
 
     if (!p)
     {
@@ -134,9 +134,9 @@ Status ListInsert_L(LinkList *L, int i, ElemType e)
     return OK;
 } // ListInsert_L
 
-Status ListDelete_L(LinkList *L, int i)
+Status ListDelete_L(Linklist *L, int i)
 {
-    LNode *p = GetElem(*L, i - 1);
+    LNode *p = GetElem_L(*L, i - 1);
 
     // 被删结点.
     LNode *q = p->next;
@@ -150,7 +150,7 @@ Status ListDelete_L(LinkList *L, int i)
     return OK;
 } // ListDelete_L
 
-int ListLength_L(LinkList L)
+int ListLength_L(Linklist L)
 {
     LNode *p = L->next;
 
@@ -165,7 +165,7 @@ int ListLength_L(LinkList L)
     return length;
 } // ListLength
 
-void PrintList_L(LinkList L)
+void PrintList_L(Linklist L)
 {
     // L 是头结点, p 指向第一个结点.
     LNode *p = L->next;
@@ -204,7 +204,7 @@ void PrintList_L(LinkList L)
  * int main()
  * {
  *      ...
- *      LinkList my_list;
+ *      Linklist my_list;
  *      InitList_L(&my_list);
  *      ...
  * }
@@ -212,24 +212,8 @@ void PrintList_L(LinkList L)
  * 修改主函数中的变量了, 不同于值传递的形参复制一份实参.
  */
 
-// // 打印链表数据.
-// void PrintList(LinkList L)
-// {
-//     if (L->head->next == NULL)
-//     {
-//         printf("list is empty\n");
-//         return;
-//     }
-
-//     for (LNode *ptr = L->head->next; ptr != NULL; ptr = ptr->next)
-//         printf(" %d ", ptr->data);
-//     printf("\n");
-
-//     return;
-// } // PrintList
-
 // // 依次对 L 的每个元素调用函数 visit(). 一旦 visit() 失败, 则操作失败.
-// Status ListTraverse(LinkList L, Status (*visit)(ElemType))
+// Status ListTraverse(Linklist L, Status (*visit)(ElemType))
 // {
 //     Link visiting = L.head->next;
 
@@ -244,30 +228,9 @@ void PrintList_L(LinkList L)
 
 // /***************************利用基本操作实现的高级操作******************************/
 
-// // 在线性链表 L 第 i 个元素之前插入数据元素 e
-// Status ListInsert_L(LinkList *L, int i, ElemType e)
-// {
-//     Link ptr;
-
-//     // 获取第 i - 1 个结点的位置, 并将其返回给 ptr
-//     if (!LocatePos(*L, i - 1, &ptr))
-//         return ERROR;
-
-//     Link new_node;
-
-//     if (!MakeNode(&new_node, e))
-//         return ERROR;
-
-//     // 对于要新插入的结点, ptr 是它的头结点,
-//     // ptr 会被插入到 ptr 之后.
-//     InsFirst(ptr, new_node);
-
-//     return OK;
-// } // ListInsert_L
-
 // // 已知单线性链表 La 和 Lb 的元素按值非递减排列.
 // // 归并 La 和 Lb 得到新的单线性链表 Lc, Lc 的元素也按值非线性递减排列.
-// Status MergeList_L(LinkList *La, LinkList *Lb, LinkList *Lc, Status (*compare)(ElemType, ElemType))
+// Status MergeList_L(Linklist *La, Linklist *Lb, Linklist *Lc, Status (*compare)(ElemType, ElemType))
 // {
 //     // 存储空间分配失败
 //     if (!InitList_L(Lc))
