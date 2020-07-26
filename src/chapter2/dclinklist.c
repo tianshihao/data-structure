@@ -2,19 +2,19 @@
 
 Status InitList_DC(DCLinklist *L)
 {
+    // 为头结点分配内存空间.
     *L = malloc(sizeof(DCNode));
+    // 内存分配失败.
     if (!(*L))
     {
         exit(OVERFLOW);
     }
 
     (*L)->data = -1;
-
     (*L)->next = (*L);
     (*L)->prior = (*L);
 
     return OK;
-
 } // InitList_DC
 
 Status HeadInsert_DC(DCLinklist *L, ElemType e)
@@ -42,52 +42,42 @@ Status HeadInsert_DC(DCLinklist *L, ElemType e)
 
 Status TailInsert_DC(DCLinklist *L, ElemType e)
 {
-    // 不能是 p = (*L)->next, 可能会令 p 指向尾结点.
-    DCNode *p = (*L);
-
-    // 找到到合适的位置.
-    while (p->next && p->next->data != -1)
-    {
-        p = p->next;
-    }
-
     // 这是新结点.
     DCNode *s = malloc(sizeof(DCNode));
     s->data = e;
 
-    // 这里和 HeadInsert_DC() 一样了.
+    // 由于 L 是双向循环链表, 所以不用 O(n) 遍历找到合适的位置.
 
     // 1. 新结点指向后继结点.
-    s->next = p->next;
-
-    // 2. 后继结点指向新结点.
-    p->next->prior = s;
+    s->next = (*L);
 
     // 3. 新结点指向前驱结点.
-    s->prior = p;
+    s->prior = (*L)->prior;
 
     // 4. 前驱结点指向新结点.
-    p->next = s;
+    (*L)->prior->next = s;
+
+    // 2. 后继结点指向新结点.
+    (*L)->prior = s;
 
     return OK;
 } // TailInsert_DC
 
 DCNode *GetElem_DC(DCLinklist L, int i)
 {
-    if (i < 0 || i > ListLength_DC(L) - 1)
+    if (i < 0 || i > ListLength_DC(L))
     {
         printf("索引越界\n");
         return NULL;
     }
 
+    int counter = 0;
     DCNode *p = L;
 
-    int counter = 0;
-
-    while (p && counter < i)
+    while (counter < i)
     {
         p = p->next;
-        counter++;
+        ++counter;
     }
 
     return p;
@@ -97,7 +87,7 @@ DCNode *LocateElem_DC(DCLinklist L, ElemType e)
 {
     DCNode *p = L->next;
 
-    while (p && p->data != e)
+    while (p->data != e)
     {
         p = p->next;
     }
@@ -107,19 +97,23 @@ DCNode *LocateElem_DC(DCLinklist L, ElemType e)
 
 Status ListInsert_DC(DCLinklist *L, int i, ElemType e)
 {
-    DCNode *p;
-
-    p = GetElem_DC(*L, i - 1);
-
-    if (!p)
+    if (i < 1 || i > ListLength_DC(*L) + 1)
     {
         printf("插入位置非法\n");
+        return ERROR;
     }
 
+    // 新结点的前驱结点.
+    DCNode *p = GetElem_DC(*L, i - 1);
+
+    // 这是要插入的结点.
     DCNode *s = malloc(sizeof(DCNode));
     s->data = e;
 
+    // 1. 新结点指向后继结点.
     s->next = p->next;
+
+    // 2. 前驱结点指向新结点.
     p->next = s;
 
     return OK;
@@ -127,22 +121,22 @@ Status ListInsert_DC(DCLinklist *L, int i, ElemType e)
 
 Status ListDelete_DC(DCLinklist *L, int i)
 {
-    DCNode *p;
-
-    p = GetElem_DC(*L, i - 1);
-
-    if (!p)
+    if (i < 1 || i > ListLength_DC(*L))
     {
-        printf("插入位置非法\n");
+        printf("删除位置非法\n");
+        return ERROR;
     }
+
+    // 被删除结点的前驱结点.
+    DCNode *p = GetElem_DC(*L, i - 1);
 
     // 这是要删除的结点.
     DCNode *q = p->next;
 
-    // 跳过被删除结点.
+    // 前驱结点跳过被删除的结点.
     p->next = q->next;
 
-    // 新的后继结点前驱指向 p.
+    // 后继结点跳过被删除的结点.
     q->next->prior = p;
 
     // 删除结点 q.
@@ -153,13 +147,12 @@ Status ListDelete_DC(DCLinklist *L, int i)
 
 int ListLength_DC(DCLinklist L)
 {
+    int length = 0;
     DCNode *p = L->next;
 
-    int length = 0;
-
-    while (p && p->data != -1)
+    while (p->data != -1)
     {
-        length++;
+        ++length;
         p = p->next;
     }
 
@@ -168,11 +161,9 @@ int ListLength_DC(DCLinklist L)
 
 void PrintList_DC(DCLinklist L)
 {
-    // L 是头结点, p 指向第一个结点.
     DCNode *p = L->next;
 
-    // 若第一个结点不为空, 则打印数据.
-    while (p != NULL && p->data != -1)
+    while (p->data != -1)
     {
         printf("%d->", p->data);
         p = p->next;
