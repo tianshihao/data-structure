@@ -104,6 +104,18 @@ void UseDLinklist()
     TailInsert_DL(&L, 4);
     TailInsert_DL(&L, 5);
 
+    ListInsert_DL(&L, 6, 100);
+
+    PrintList_DL(L);
+
+    printf(">>>%d\n", ListLength_DL(L));
+
+    ListDelete_DL(&L, 2);
+
+    PrintList_DL(L);
+
+    printf(">>>%d\n", ListLength_DL(L));
+
     return;
 }
 

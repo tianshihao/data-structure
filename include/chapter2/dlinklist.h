@@ -64,7 +64,7 @@ DNode *LocateElem_DL(DLinklist L, ElemType e);
 Status ListInsert_DL(DLinklist *L, int i, ElemType e);
 
 /**
- * 在线性双链表 L 第 i 个元素之前插入数据元素 e.
+ * 删除线性链表中第 i 个元素.
  * @param L 指向已存在双链表.
  * @param i 插入的位置. 取值范围 1 <= i <= length.
  * @param e 要插入的元素.
