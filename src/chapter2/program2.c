@@ -5,18 +5,22 @@
  * @date  : 2020-07-22
  * */
 
+#include <chapter2/dlinklist.h>
 #include <chapter2/linklist.h>
 #include <chapter2/sqlist.h>
 
 void UseSqlist();
 void UseLinklist();
+void UseDLinklist();
 Status MyCompare(ElemType e1, ElemType e2);
 
 int main()
 {
     // UseSqlist();
 
-    UseLinklist();
+    // UseLinklist();
+
+    UseDLinklist();
 
     return 0;
 }
@@ -59,19 +63,19 @@ void UseSqlist()
 
 void UseLinklist()
 {
-    LinkList odd, even;
+    Linklist odd, even;
 
     InitList_L(&odd);
     InitList_L(&even);
 
     for (int i = 1, e = 1; i <= 5; ++i, e += 2)
     {
-        TailInsert(&odd, e);
+        TailInsert_L(&odd, e);
     }
 
     for (int i = 1, e = 2; i <= 5; ++i, e += 2)
     {
-        TailInsert(&even, e);
+        TailInsert_L(&even, e);
     }
 
     ListInsert_L(&odd, 4, 100);
@@ -80,10 +84,25 @@ void UseLinklist()
 
     printf("\nlength = %d\n", ListLength_L(odd));
 
-    // LinkList sequence;
+    // Linklist sequence;
     // MergeList_L(&odd, &even, &sequence, MyCompare);
 
     // PrintList(sequence);
+
+    return;
+}
+
+void UseDLinklist()
+{
+    DLinklist L;
+
+    InitList_DL(&L);
+
+    HeadInsert_DL(&L, 5);
+    HeadInsert_DL(&L, 4);
+    HeadInsert_DL(&L, 3);
+    HeadInsert_DL(&L, 2);
+    HeadInsert_DL(&L, 1);
 
     return;
 }
