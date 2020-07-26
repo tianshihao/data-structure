@@ -65,7 +65,7 @@ LNode *LocateElem_L(Linklist L, ElemType e);
 Status ListInsert_L(Linklist *L, int i, ElemType e);
 
 /**
- * 在线性链表 L 第 i 个元素之前插入数据元素 e.
+ * 删除线性链表中第 i 个元素.
  * @param L 指向已存在链表.
  * @param i 插入的位置. 取值范围 1 <= i <= length.
  * @param e 要插入的元素.
