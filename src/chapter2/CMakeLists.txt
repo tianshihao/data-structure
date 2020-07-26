@@ -2,8 +2,10 @@
    STATIC
    sqlist.c
    linklist.c
+   clinklist.c
    dlinklist.c
    dclinklist.c
+   slinklist.c
 )
 
 set_target_properties(chapter2 PROPERTIES ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/obj")

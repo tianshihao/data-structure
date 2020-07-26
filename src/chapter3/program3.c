@@ -8,7 +8,9 @@ void UseLinkqueue();
 
 int main()
 {
-    UseSqstack();
+    // UseSqstack();
+
+    UseSqqueue();
 
     return 0;
 }
@@ -27,50 +29,33 @@ void UseSqstack()
     return;
 }
 
-// void UseSqqueue()
-// {
-//     SqQueue Q;
-//     InitQueue_Sq(&Q);
+void UseSqqueue()
+{
+    SqQueue Q;
+    InitQueue_Sq(&Q);
 
-//     PrintQueue_Sq(Q);
+    EnQueue_Sq(&Q, 100);
+    EnQueue_Sq(&Q, 2);
+    EnQueue_Sq(&Q, 3);
+    EnQueue_Sq(&Q, 4);
+    EnQueue_Sq(&Q, 5);
 
-//     EnQueue_Sq(&Q, 1);
-//     EnQueue_Sq(&Q, 2);
-//     EnQueue_Sq(&Q, 3);
-//     EnQueue_Sq(&Q, 4);
-//     EnQueue_Sq(&Q, 5);
+    PrintQueue_Sq(Q);
 
-//     PrintQueue_Sq(Q);
+    QElemType e;
 
-//     QElemType e;
+    GetHead_Sq(Q, &e);
+    printf(">>>%d\n", e);
 
-//     DeQueue_Sq(&Q, &e);
-//     PrintQueue_Sq(Q);
-//     printf("front of queue is %d\n", e);
-//     printf("length = %d\n", QueueLength_Sq(Q));
-//     DeQueue_Sq(&Q, &e);
-//     PrintQueue_Sq(Q);
-//     printf("front of queue is %d\n", e);
-//     printf("length = %d\n", QueueLength_Sq(Q));
-//     DeQueue_Sq(&Q, &e);
-//     PrintQueue_Sq(Q);
-//     printf("front of queue is %d\n", e);
-//     printf("length = %d\n", QueueLength_Sq(Q));
-//     DeQueue_Sq(&Q, &e);
-//     PrintQueue_Sq(Q);
-//     printf("front of queue is %d\n", e);
-//     printf("length = %d\n", QueueLength_Sq(Q));
-//     DeQueue_Sq(&Q, &e);
-//     PrintQueue_Sq(Q);
-//     printf("front of queue is %d\n", e);
-//     printf("length = %d\n", QueueLength_Sq(Q));
-//     DeQueue_Sq(&Q, &e);
-//     PrintQueue_Sq(Q);
-//     printf("front of queue is %d\n", e);
-//     printf("length = %d\n", QueueLength_Sq(Q));
+    DeQueue_Sq(&Q, &e);
 
-//     return;
-// }
+    PrintQueue_Sq(Q);
+    GetHead_Sq(Q, &e);
+
+    printf(">>>%d\n", e);
+
+    return;
+}
 
 void UseLinkqueue()
 {

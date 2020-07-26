@@ -5,6 +5,7 @@
  * @date  : 2020-07-22
  * */
 
+#include <chapter2/clinklist.h>
 #include <chapter2/dclinklist.h>
 #include <chapter2/dlinklist.h>
 #include <chapter2/linklist.h>
@@ -12,6 +13,7 @@
 
 void UseSqlist();
 void UseLinklist();
+void UseCLinklist();
 void UseDLinklist();
 void UseDCLinklist();
 Status MyCompare(ElemType e1, ElemType e2);
@@ -22,9 +24,11 @@ int main()
 
     // UseLinklist();
 
-    // UseDLinklist();
+    // UseCLinklist();
 
-    UseDCLinklist();
+    UseDLinklist();
+
+    // UseDCLinklist();
 
     return 0;
 }
@@ -82,7 +86,7 @@ void UseLinklist()
         TailInsert_L(&even, e);
     }
 
-    ListInsert_L(&odd, 4, 100);
+    ListInsert_L(&odd, 6, 100);
 
     PrintList_L(odd);
 
@@ -92,6 +96,27 @@ void UseLinklist()
     // MergeList_L(&odd, &even, &sequence, MyCompare);
 
     // PrintList(sequence);
+
+    return;
+}
+
+void UseCLinklist()
+{
+    CLinklist L;
+
+    InitList_C(&L);
+
+    TailInsert_C(&L, 1);
+    TailInsert_C(&L, 2);
+    TailInsert_C(&L, 3);
+    TailInsert_C(&L, 4);
+    TailInsert_C(&L, 5);
+
+    PrintList_C(L);
+
+    ListDelete_C(&L, 6);
+
+    PrintList_C(L);
 
     return;
 }
@@ -108,13 +133,13 @@ void UseDLinklist()
     TailInsert_DL(&L, 4);
     TailInsert_DL(&L, 5);
 
-    ListInsert_DL(&L, 5, 100);
+    ListInsert_DL(&L, 6, 100);
 
     PrintList_DL(L);
 
     printf(">>>%d\n", ListLength_DL(L));
 
-    ListDelete_DL(&L, 2);
+    ListDelete_DL(&L, 0);
 
     PrintList_DL(L);
 
@@ -135,17 +160,11 @@ void UseDCLinklist()
     TailInsert_DC(&L, 4);
     TailInsert_DC(&L, 5);
 
-    ListInsert_DC(&L, 5, 100);
-
     PrintList_DC(L);
 
-    printf(">>>%d\n", ListLength_DC(L));
-
-    ListDelete_DC(&L, 2);
+    ListInsert_DC(&L, 7, 999);
 
     PrintList_DC(L);
-
-    printf(">>>%d\n", ListLength_DC(L));
 
     return;
 }

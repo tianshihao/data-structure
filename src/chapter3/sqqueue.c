@@ -1,73 +1,92 @@
 ﻿#include <chapter3/sqqueue.h>
 
-// 构造一个空队列.
 Status InitQueue_Sq(SqQueue *Q)
 {
-    Q->base = (QElemType *)malloc(sizeof(MAXQSIZE * sizeof(QElemType)));
-
+    //
+    Q->base = malloc(sizeof(MAX_SIZE * sizeof(QElemType)));
     if (!Q->base)
+    {
         exit(OVERFLOW);
+    }
 
+    //
     Q->front = Q->rear = 0;
 
     return OK;
 } // InitQueue_Sq
-
-// 返回 Q 的元素个数, 即队列的长度.
-int QueueLength_Sq(SqQueue Q)
-{
-    return (Q.rear - Q.front + MAXQSIZE) % MAXQSIZE;
-} // QueueLength_Sq
-
-// 插入元素 e 为 Q 的新的队尾元素
-Status EnQueue_Sq(SqQueue *Q, QElemType e)
-{
-    // 队列满
-    if ((Q->rear + 1) % MAXQSIZE == Q->front)
-        return ERROR;
-
-    Q->base[Q->rear] = e;
-
-    Q->rear = (Q->rear + 1) % MAXQSIZE;
-
-    return OK;
-} // EnQueue_Sq
-
-// 若队列不空, 则删除 Q 的队头元素, 用 e 返回其值, 并返回 OK;
-// 否则返回 ERROR.
-Status DeQueue_Sq(SqQueue *Q, QElemType *e)
-{
-    if (Q->front == Q->rear)
-        return ERROR;
-
-    *e = Q->base[Q->front];
-
-    Q->front = (Q->front + 1) % MAXQSIZE;
-
-    return OK;
-} // DeQueue_Sq
 
 Status QueueEmpty_Sq(SqQueue Q)
 {
     return Q.front == Q.rear;
 } // QueueEmpty_Sq
 
-// 打印循环队列元素.
+Status EnQueue_Sq(SqQueue *Q, QElemType e)
+{
+    // 队头指针在队尾指针的下一位是队满的标志,
+    // 这样做会牺牲一位存储空间.
+    if ((Q->rear + 1) % MAX_SIZE == Q->front)
+    {
+        return ERROR;
+    }
+
+    // 新元素入队尾.
+    Q->base[Q->rear] = e;
+
+    // 队尾指针进一.
+    Q->rear = (Q->rear + 1) % MAX_SIZE;
+
+    return OK;
+} // EnQueue_Sq
+
+Status DeQueue_Sq(SqQueue *Q, QElemType *e)
+{
+    // 如果队列为空.
+    if (Q->front == Q->rear)
+    {
+        return ERROR;
+    }
+
+    // 队头元素出队.
+    *e = Q->base[Q->front];
+
+    // 队头进一.
+    Q->front = (Q->front + 1) % MAX_SIZE;
+
+    return OK;
+} // DeQueue_Sq
+
+Status GetHead_Sq(SqQueue Q, QElemType *e)
+{
+    if (Q.front == Q.rear)
+    {
+        return ERROR;
+    }
+
+    *e = Q.base[Q.front];
+
+    return OK;
+} // GetHead_Sq
+
+int QueueLength_Sq(SqQueue Q)
+{
+    return (Q.rear - Q.front + MAX_SIZE) % MAX_SIZE;
+} // QueueLength_Sq
+
 void PrintQueue_Sq(SqQueue Q)
 {
     if (Q.front == Q.rear)
     {
-        printf("queue is empty\n");
         return;
     }
 
-    QElemType ptr = Q.front;
+    QElemType p = Q.front;
 
-    while (ptr != Q.rear)
+    while (p != Q.rear)
     {
-        printf(" %d ", Q.base[ptr]);
+        printf(" %d ", Q.base[p]);
 
-        ptr = (ptr + 1) % MAXQSIZE;
+        // 队列指针进一.
+        p = (p + 1) % MAX_SIZE;
     } // while
     printf("\n");
 

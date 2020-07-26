@@ -1,6 +1,7 @@
 ﻿add_library (chapter3
    STATIC
    sqstack.c
+   sqqueue.c
 )
 
 set_target_properties(chapter3 PROPERTIES ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/obj")
