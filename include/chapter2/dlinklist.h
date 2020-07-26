@@ -1,6 +1,6 @@
 ﻿/**
- * @file  : linklist.h
- * @brief : 双链表
+ * @file  : dlinklist.h
+ * @brief : 双向链表
  * @author: 田世豪
  * @date  : 2020-7-26
  * */

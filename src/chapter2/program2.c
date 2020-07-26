@@ -104,7 +104,7 @@ void UseDLinklist()
     TailInsert_DL(&L, 4);
     TailInsert_DL(&L, 5);
 
-    ListInsert_DL(&L, 6, 100);
+    ListInsert_DL(&L, 5, 100);
 
     PrintList_DL(L);
 

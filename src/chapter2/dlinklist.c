@@ -80,7 +80,7 @@ Status TailInsert_DL(DLinklist *L, ElemType e)
 
 DNode *GetElem_DL(DLinklist L, int i)
 {
-    if (i < 0 || i > ListLength_DL(L) - 1)
+    if (i < 0 || i > ListLength_DL(L))
     {
         printf("索引越界\n");
         return NULL;
