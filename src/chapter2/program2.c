@@ -5,6 +5,7 @@
  * @date  : 2020-07-22
  * */
 
+#include <chapter2/dclinklist.h>
 #include <chapter2/dlinklist.h>
 #include <chapter2/linklist.h>
 #include <chapter2/sqlist.h>
@@ -12,6 +13,7 @@
 void UseSqlist();
 void UseLinklist();
 void UseDLinklist();
+void UseDCLinklist();
 Status MyCompare(ElemType e1, ElemType e2);
 
 int main()
@@ -20,7 +22,9 @@ int main()
 
     // UseLinklist();
 
-    UseDLinklist();
+    // UseDLinklist();
+
+    UseDCLinklist();
 
     return 0;
 }
@@ -115,6 +119,33 @@ void UseDLinklist()
     PrintList_DL(L);
 
     printf(">>>%d\n", ListLength_DL(L));
+
+    return;
+}
+
+void UseDCLinklist()
+{
+    DCLinklist L;
+
+    InitList_DC(&L);
+
+    TailInsert_DC(&L, 1);
+    TailInsert_DC(&L, 2);
+    TailInsert_DC(&L, 3);
+    TailInsert_DC(&L, 4);
+    TailInsert_DC(&L, 5);
+
+    ListInsert_DC(&L, 5, 100);
+
+    PrintList_DC(L);
+
+    printf(">>>%d\n", ListLength_DC(L));
+
+    ListDelete_DC(&L, 2);
+
+    PrintList_DC(L);
+
+    printf(">>>%d\n", ListLength_DC(L));
 
     return;
 }
