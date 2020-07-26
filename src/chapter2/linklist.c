@@ -12,7 +12,13 @@ Status InitList_L(Linklist *L)
      *      https://blog.csdn.net/bestone0213/article/details/40829203
      **/
 
+    // 为头结点分配内存空间.
     (*L) = malloc(sizeof(LNode)); // 创建头结点.
+    // 内存分配失败.
+    if (!(*L))
+    {
+        exit(OVERFLOW);
+    }
 
     (*L)->data = 0; // 初始为空链表.
     (*L)->next = NULL;
@@ -23,70 +29,63 @@ Status InitList_L(Linklist *L)
 Status HeadInsert_L(Linklist *L, ElemType e)
 {
     // 创建新结点.
-    LNode *p = malloc(sizeof(LNode));
+    LNode *s = malloc(sizeof(LNode));
 
     // 为新结点赋值.
-    p->data = e;
+    s->data = e;
 
-    // L 是头结点, p 指向原来的第一个元素.
-    p->next = (*L)->next;
+    // 1. 新结点指向后继结点.
+    s->next = (*L)->next;
 
-    // 头结点指向新的第一个元素.
-    (*L)->next = p;
+    // 2. 前驱结点指向新结点.
+    (*L)->next = s;
 
     return OK;
 } // HeadInsert_L
 
 Status TailInsert_L(Linklist *L, ElemType e)
 {
-    LNode *p = malloc(sizeof(LNode));
-    p->data = e;
-    p->next = NULL;
+    // 这是新结点.
+    LNode *s = malloc(sizeof(LNode));
+    s->data = e;
+    s->next = NULL;
 
     /**
-     * r 存储的是链表中每个结点的地址, 每次使用 r = r->next 会更新 r 为下一个结点
-     * 的地址. r 只是一个存储地址的变量, 和原来的链表没有关系, 所以这样做也不会
-     * 影响原来的链表. 但是使用 r->next = p, 则会影响原来的链表, 因为 r->next
-     * 就是地址 r 指向的内存块中 next 的值, 改变它就是改变原来的链表.
+     * p 存储的是链表中每个结点的地址, 每次使用 p = p->next 会更新 p 为下一个结点
+     * 的地址. p 只是一个存储地址的变量, 和原来的链表没有关系, 所以这样做也不会
+     * 影响原来的链表. 但是使用 p->next = s, 则会影响原来的链表, 因为 p->next
+     * 就是地址 p 指向的内存块中 next 的值, 改变它就是改变原来的链表.
      * 
      * 可以画一个内存块感受一下, 指针存储的是地址, 地址就可以看作是数, 这个数再
      * 怎么运算也不会影响其指向的内存中存储的数据, 除非使用运算符 -> 访问并修改
      * 内存块中的数据.
      */
 
-    LNode *r = (*L);
+    // 这是表尾结点, 即新结点的前驱结点.
+    LNode *p = (*L);
 
     // 找到最后一个不为空的结点.
-    while (r->next != NULL)
+    while (p->next != NULL)
     {
-        r = r->next;
+        p = p->next;
     }
 
     // 将新结点链接到链表尾.
-    r->next = p;
+    p->next = s;
 
     return OK;
 } // TailInsert
 
 LNode *GetElem_L(Linklist L, int i)
 {
-    // p 指向第一个结点.
-    LNode *p = L->next;
-
-    // 计数器.
-    int counter = 1;
-
-    // i == 0, 返回头结点.
-    if (i == 0)
+    if (i < 0 || i > ListLength_L(L))
     {
-        return L;
-    }
-
-    // 若 i 无效, 返回 NULL;
-    if (i < 1)
-    {
+        printf("索引越界\n");
         return NULL;
     }
+
+    int counter = 0;
+    LNode *p = L;
 
     // 从第一个结点开始找, 查找第 i 个结点.
     while (p && counter < i)
@@ -95,13 +94,11 @@ LNode *GetElem_L(Linklist L, int i)
         ++counter;
     }
 
-    // 返回找到的第 i 个结点的指针, 若 i 大于表长则返回 NULL.
     return p;
 } // GetElem_L
 
 LNode *LocateElem_L(Linklist L, ElemType e)
 {
-    // p 指向第一个元素.
     LNode *p = L->next;
 
     while (p && p->data != e)
@@ -114,21 +111,23 @@ LNode *LocateElem_L(Linklist L, ElemType e)
 
 Status ListInsert_L(Linklist *L, int i, ElemType e)
 {
-    LNode *p;
-
-    // 获取第 i - 1 个结点的位置, 并将其返回给 p
-    p = GetElem_L(*L, i - 1);
-
-    if (!p)
+    if (i < 1 || i > ListLength_L(*L) + 1)
     {
-        printf("插入位置非法.\n");
+        printf("插入位置非法\n");
+        return ERROR;
     }
 
-    LNode *s;
-    s = malloc(sizeof(LNode));
+    // 新结点的前驱结点.
+    LNode *p = GetElem_L(*L, i - 1);
+
+    // 这是要插入的结点.
+    LNode *s = malloc(sizeof(LNode));
     s->data = e;
 
+    // 1. 新结点指向后继结点.
     s->next = p->next;
+
+    // 2. 前驱结点指向新结点.
     p->next = s;
 
     return OK;
@@ -136,15 +135,22 @@ Status ListInsert_L(Linklist *L, int i, ElemType e)
 
 Status ListDelete_L(Linklist *L, int i)
 {
+    if (i < 1 || i > ListLength_L(*L))
+    {
+        printf("删除位置非法\n");
+        return ERROR;
+    }
+
+    // 被删除结点的前驱结点.
     LNode *p = GetElem_L(*L, i - 1);
 
-    // 被删结点.
+    // 这是要删除的结点.
     LNode *q = p->next;
 
-    // 跳过被删结点.
+    // 前驱结点跳过被删除的结点.
     p->next = q->next;
 
-    // 释放被删结点内存.
+    // 删除结点 q.
     free(q);
 
     return OK;
@@ -152,13 +158,12 @@ Status ListDelete_L(Linklist *L, int i)
 
 int ListLength_L(Linklist L)
 {
-    LNode *p = L->next;
-
     int length = 0;
+    LNode *p = L->next;
 
     while (p)
     {
-        length++;
+        ++length;
         p = p->next;
     }
 
@@ -167,10 +172,8 @@ int ListLength_L(Linklist L)
 
 void PrintList_L(Linklist L)
 {
-    // L 是头结点, p 指向第一个结点.
     LNode *p = L->next;
 
-    // 若第一个结点不为空, 则打印数据.
     while (p != NULL)
     {
         printf("%d->", p->data);
