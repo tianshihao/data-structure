@@ -2,6 +2,7 @@
 
 Status InitList_DL(DLinklist *L)
 {
+    // 为头结点分配内存空间.
     *L = malloc(sizeof(DNode));
     if (!(*L))
     {
