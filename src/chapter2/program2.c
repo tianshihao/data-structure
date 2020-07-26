@@ -98,11 +98,11 @@ void UseDLinklist()
 
     InitList_DL(&L);
 
-    HeadInsert_DL(&L, 5);
-    HeadInsert_DL(&L, 4);
-    HeadInsert_DL(&L, 3);
-    HeadInsert_DL(&L, 2);
-    HeadInsert_DL(&L, 1);
+    TailInsert_DL(&L, 1);
+    TailInsert_DL(&L, 2);
+    TailInsert_DL(&L, 3);
+    TailInsert_DL(&L, 4);
+    TailInsert_DL(&L, 5);
 
     return;
 }

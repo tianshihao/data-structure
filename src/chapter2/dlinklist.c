@@ -12,7 +12,7 @@ Status InitList_DL(DLinklist *L)
 
     // 为了保证可是使用头插法建立链表, 还要加入尾结点.
     DNode *rear = malloc(sizeof(DNode));
-    rear->data = 0;
+    rear->data = -1; // 尾结点标记.
     rear->prior = (*L);
     rear->next = NULL;
 
@@ -26,22 +26,54 @@ Status InitList_DL(DLinklist *L)
 Status HeadInsert_DL(DLinklist *L, ElemType e)
 {
     // 创建新结点.
-    DNode *p = malloc(sizeof(DNode));
+    DNode *s = malloc(sizeof(DNode));
 
     // 为新结点赋值.
-    p->data = e;
+    s->data = e;
 
-    // 1. p 指向原来的第一个元素.
-    p->next = (*L)->next;
+    // 1. 新结点指向后继结点.
+    s->next = (*L)->next;
 
-    // 2. 修改原来的第一个元素前驱指向新元素.
-    (*L)->next->prior = p;
+    // 2. 后继结点指向新结点.
+    (*L)->next->prior = s;
 
-    // 3. 新元素前驱为头结点.
-    p->prior = (*L);
+    // 3. 新结点指向前驱结点.
+    s->prior = (*L);
 
-    // 4. 头结点指向新的第一个元素.
-    (*L)->next = p;
+    // 4. 前驱结点指向新结点.
+    (*L)->next = s;
 
     return OK;
 } // HeadInsert_DL
+
+Status TailInsert_DL(DLinklist *L, ElemType e)
+{
+    // 不能是 p = (*L)->next, 可能会令 p 指向尾结点.
+    DNode *p = (*L);
+
+    // 找到到合适的位置.
+    while (p->next && p->next->data != -1)
+    {
+        p = p->next;
+    }
+
+    // 这是新结点.
+    DNode *s = malloc(sizeof(DNode));
+    s->data = e;
+
+    // 这里和 HeadInsert_DL() 一样了.
+
+    // 1. 新结点指向后继结点.
+    s->next = p->next;
+
+    // 2. 后继结点指向新结点.
+    p->next->prior = s;
+
+    // 3. 新结点指向前驱结点.
+    s->prior = p;
+
+    // 4. 前驱结点指向新结点.
+    p->next = s;
+
+    return OK;
+} // TailInsert_DL
