@@ -4,12 +4,11 @@ Status InitList_DL(DLinklist *L)
 {
     // 为头结点分配内存空间.
     *L = malloc(sizeof(DNode));
+    // 内存分配失败.
     if (!(*L))
     {
         exit(OVERFLOW);
     }
-
-    (*L)->data = 0;
 
     // 为了保证可是使用头插法建立链表, 还要加入尾结点.
     DNode *rear = malloc(sizeof(DNode));
@@ -17,11 +16,11 @@ Status InitList_DL(DLinklist *L)
     rear->prior = (*L);
     rear->next = NULL;
 
+    (*L)->data = 0;
     (*L)->next = rear;
     (*L)->prior = NULL;
 
     return OK;
-
 } // InitList_DL
 
 Status HeadInsert_DL(DLinklist *L, ElemType e)
@@ -53,7 +52,7 @@ Status TailInsert_DL(DLinklist *L, ElemType e)
     DNode *p = (*L);
 
     // 找到到合适的位置.
-    while (p->next && p->next->data != -1)
+    while (p->next->data != -1)
     {
         p = p->next;
     }
@@ -87,14 +86,13 @@ DNode *GetElem_DL(DLinklist L, int i)
         return NULL;
     }
 
-    DNode *p = L;
-
     int counter = 0;
+    DNode *p = L;
 
     while (p && counter < i)
     {
+        ++counter;
         p = p->next;
-        counter++;
     }
 
     return p;
@@ -114,19 +112,23 @@ DNode *LocateElem_DL(DLinklist L, ElemType e)
 
 Status ListInsert_DL(DLinklist *L, int i, ElemType e)
 {
-    DNode *p;
-
-    p = GetElem_DL(*L, i - 1);
-
-    if (!p)
+    if (i < 1 || i > ListLength_DL(*L) + 1)
     {
         printf("插入位置非法\n");
+        return ERROR;
     }
 
+    // 新结点的前驱结点.
+    DNode *p = GetElem_DL(*L, i - 1);
+
+    // 这是要插入的结点.
     DNode *s = malloc(sizeof(DNode));
     s->data = e;
 
+    // 1. 新结点指向后继结点.
     s->next = p->next;
+
+    // 2. 前驱结点指向新结点.
     p->next = s;
 
     return OK;
@@ -134,22 +136,22 @@ Status ListInsert_DL(DLinklist *L, int i, ElemType e)
 
 Status ListDelete_DL(DLinklist *L, int i)
 {
-    DNode *p;
-
-    p = GetElem_DL(*L, i - 1);
-
-    if (!p)
+    if (i < 1 || i > ListLength_DL(*L))
     {
-        printf("插入位置非法\n");
+        printf("删除位置非法\n");
+        return ERROR;
     }
+
+    // 被删除结点的前驱结点.
+    DNode *p = GetElem_DL(*L, i - 1);
 
     // 这是要删除的结点.
     DNode *q = p->next;
 
-    // 跳过被删除结点.
+    // 前驱结点跳过被删除的结点.
     p->next = q->next;
 
-    // 新的后继结点前驱指向 p.
+    // 后继结点跳过被删除的结点.
     q->next->prior = p;
 
     // 删除结点 q.
@@ -160,13 +162,12 @@ Status ListDelete_DL(DLinklist *L, int i)
 
 int ListLength_DL(DLinklist L)
 {
+    int length = 0;
     DNode *p = L->next;
 
-    int length = 0;
-
-    while (p && p->data != -1)
+    while (p->data != -1)
     {
-        length++;
+        ++length;
         p = p->next;
     }
 
@@ -175,11 +176,9 @@ int ListLength_DL(DLinklist L)
 
 void PrintList_DL(DLinklist L)
 {
-    // L 是头结点, p 指向第一个结点.
     DNode *p = L->next;
 
-    // 若第一个结点不为空, 则打印数据.
-    while (p != NULL && p->data != -1)
+    while (p->data != -1)
     {
         printf("%d->", p->data);
         p = p->next;
