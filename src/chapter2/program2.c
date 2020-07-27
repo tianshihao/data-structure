@@ -22,13 +22,15 @@ int main()
 {
     // UseSqlist();
 
-    // UseLinklist();
+    UseLinklist();
 
     // UseCLinklist();
 
-    UseDLinklist();
+    // UseDLinklist();
 
     // UseDCLinklist();
+
+    // UseSLinklist();
 
     return 0;
 }
@@ -88,7 +90,7 @@ void UseLinklist()
 
     ListInsert_L(&odd, 6, 100);
 
-    PrintList_L(odd);
+    RPrintList_L(odd);
 
     printf("\nlength = %d\n", ListLength_L(odd));
 

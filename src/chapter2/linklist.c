@@ -183,6 +183,18 @@ void PrintList_L(Linklist L)
     return;
 } // PrintList_L
 
+void RPrintList_L(Linklist L)
+{
+    if (L->next != NULL)
+    {
+        RPrintList_L(L->next); // 递归.
+    }
+    if (L != NULL)
+    {
+        printf("%d->", L->data); // 输出函数.
+    }
+} // RPrintList_L
+
 // Status MakeNode(Link *p, ElemType e)
 // {
 //     (*p) = malloc(sizeof(LNode));
