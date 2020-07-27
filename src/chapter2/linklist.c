@@ -195,6 +195,51 @@ void RPrintList_L(Linklist L)
     }
 } // RPrintList_L
 
+Linklist Reverse_L1(Linklist L)
+{
+    LNode *p, *r; // p 为工作指针, r 为 p 得后继, 以防断链.
+
+    p = L->next; // 从第一个元素开始.
+
+    L->next = NULL; // 先将头结点剥离出来.
+
+    while (p != NULL) // 依次将元素摘下.
+    {
+        r = p->next;       // 暂存 p 的后继.
+        p->next = L->next; // 头插法, 插入 p.
+        L->next = p;
+        p = r;
+    }
+
+    return L;
+} // Reverse_L1
+
+Linklist Reverse_L2(Linklist L)
+{
+    // 三个指针, p 为要反转的结点, pre 为 p 前面的结点, r 是保存 p 后继的指针.
+    // 初始状态 p 指向第一个元素, r 指向第二个元素.
+    LNode *pre, *p = L->next, *r = p->next;
+
+    // 将要第一个结点后继链接断开.
+    p->next = NULL;
+
+    // 如果 r 不为空, 三个指针前进一个单位.
+    // 否则链表只有一个结点, 直接执行 while 后的 L->next = p.
+    // 循环中将 p 反转指向其前面的结点 pre, r 是 p 的后继.
+    // 假设链表有 n 个元素, 则循环可将前 n - 1 个元素逆置, 之后 p 指向第 n 个元素,
+    while (r != NULL)
+    {
+        pre = p;
+        p = r;
+        r = r->next;
+        p->next = pre; // 反转.
+    }
+
+    L->next = p;
+
+    return L;
+} // Reverse_L2
+
 // Status MakeNode(Link *p, ElemType e)
 // {
 //     (*p) = malloc(sizeof(LNode));

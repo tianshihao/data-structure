@@ -90,7 +90,11 @@ void UseLinklist()
 
     ListInsert_L(&odd, 6, 100);
 
-    RPrintList_L(odd);
+    PrintList_L(odd);
+
+    Linklist r = Reverse_L2(odd);
+
+    PrintList_L(r);
 
     printf("\nlength = %d\n", ListLength_L(odd));
 

@@ -85,11 +85,25 @@ int ListLength_L(Linklist L);
  */
 void PrintList_L(Linklist L);
 
+/*******************************2021王道数据结构习题*******************************
+
 /**
- * @brief 逆序打印单向链表.
+ * @brief 3 逆序打印单向链表.
  * @param L 待打印单向链表.
  */
 void RPrintList_L(Linklist L);
+
+/**
+ * @brief 5 逆置链表.
+ * @param L 待逆置单向链表.
+ * */
+Linklist Reverse_L1(Linklist L);
+
+/**
+ * @brief 5 逆置链表.
+ * @param L 待逆置单向链表.
+ * */
+Linklist Reverse_L2(Linklist L);
 // // 依次对 L 的每个元素调用函数 visit(). 一旦 visit() 失败, 则操作失败.
 // Status ListTraverse(Linklist L, Status (*visit)(ElemType));
 
