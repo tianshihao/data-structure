@@ -240,6 +240,46 @@ Linklist Reverse_L2(Linklist L)
     return L;
 } // Reverse_L2
 
+void Sort(Linklist *L)
+{
+    // pre 指向已经构造好的有序递增链表的尾结点.
+    LNode *p = (*L)->next, *pre;
+    LNode *r = p->next; // r 用以保存 *p 的后继结点指针.
+
+    // 断开第一个结点的后继, 相当于先构造只有一个结点的有序表.
+    p->next = NULL;
+
+    // 这时候之前保存的 r = p->next 就有用了.
+    // p 指向后继结点, 第二个结点, 即断开第一个结点的后继后得到的无序表的第一个结点.
+    p = r;
+
+    while (p != NULL)
+    {
+        // 先保存下来, 后面将 p 插入到有序表时会修改 p->next.
+        r = p->next;
+
+        // pre 指向有序表头结点.
+        pre = (*L);
+
+        // pre 在有序表中遍历, 找到合适的位置.
+        // 要么是 pre->next = NULL 的有序表尾结点, 要么是 pre->data < p->data &&
+        // pre->next->data >= p->data 的合适的位置.
+        while (pre->next != NULL && pre->next->data < p->data)
+        {
+            pre = pre->next;
+        }
+
+        // 将 p 插入到 pre 后.
+        p->next = pre->next;
+        pre->next = p;
+
+        // 下一个结点.
+        p = r;
+    }
+
+    return;
+} // Sort
+
 // Status MakeNode(Link *p, ElemType e)
 // {
 //     (*p) = malloc(sizeof(LNode));

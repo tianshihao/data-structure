@@ -73,35 +73,23 @@ void UseSqlist()
 
 void UseLinklist()
 {
-    Linklist odd, even;
+    Linklist L;
 
-    InitList_L(&odd);
-    InitList_L(&even);
+    InitList_L(&L);
 
-    for (int i = 1, e = 1; i <= 5; ++i, e += 2)
-    {
-        TailInsert_L(&odd, e);
-    }
+    TailInsert_L(&L, 5);
+    TailInsert_L(&L, 9);
+    TailInsert_L(&L, 3);
+    TailInsert_L(&L, 2);
+    TailInsert_L(&L, 1);
 
-    for (int i = 1, e = 2; i <= 5; ++i, e += 2)
-    {
-        TailInsert_L(&even, e);
-    }
+    PrintList_L(L);
 
-    ListInsert_L(&odd, 6, 100);
+    printf("测试单向链表排序函数 Sort()\n");
 
-    PrintList_L(odd);
+    Sort(&L);
 
-    Linklist r = Reverse_L2(odd);
-
-    PrintList_L(r);
-
-    printf("\nlength = %d\n", ListLength_L(odd));
-
-    // Linklist sequence;
-    // MergeList_L(&odd, &even, &sequence, MyCompare);
-
-    // PrintList(sequence);
+    PrintList_L(L);
 
     return;
 }

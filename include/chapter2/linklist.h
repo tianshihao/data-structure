@@ -104,6 +104,12 @@ Linklist Reverse_L1(Linklist L);
  * @param L 待逆置单向链表.
  * */
 Linklist Reverse_L2(Linklist L);
+
+/**
+ * @brief 使单向链表元素递增.
+ * @param L 待排序单向链表.
+ * */
+void Sort(Linklist *L);
 // // 依次对 L 的每个元素调用函数 visit(). 一旦 visit() 失败, 则操作失败.
 // Status ListTraverse(Linklist L, Status (*visit)(ElemType));
 
