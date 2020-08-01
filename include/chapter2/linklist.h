@@ -106,10 +106,36 @@ Linklist Reverse_L1(Linklist L);
 Linklist Reverse_L2(Linklist L);
 
 /**
- * @brief 使单向链表元素递增.
+ * @brief 6, 使单向链表元素递增.
  * @param L 待排序单向链表.
  * */
 void Sort(Linklist *L);
+
+/**
+ * @brief 7, 删除单向链表中所有介于给定的两个值之间的元素的元素.
+ * @param L 待删除元素单向链表.
+ * @param min 删除范围左值.
+ * @param max 删除范围右值.
+ * */
+Status RangeDelete(Linklist *L, ElemType min, ElemType max);
+
+/**
+ * @brief 10, 将单向链表 A 分解成两个单向链表 A 和 B, 使得 A 表中含有原表中序号为
+ * 奇数的元素, 而 B 表中含有原表中序号为偶数的元素, 并使其相对顺序保持不变.
+ * @param A 待拆分单向链表.
+ * @return 包含原表偶数位结点的单向链表.
+ * */
+Linklist Split(Linklist *A);
+
+/**
+ * @brief 11, 将单向链表 A 分解成两个单向链表 A 和 B, 使得 A 表中含有原表中序号为
+ * 奇数的元素, 而 B 表中含有原表中序号为偶数的元素, A 中元素保持原相对位置不变,
+ * B 中元素相对位置为原表逆序.
+ * @param A 待拆分单向链表.
+ * @return 包含原表偶数位结点且逆序的单向链表.
+ * */
+Linklist Split2(Linklist *A);
+
 // // 依次对 L 的每个元素调用函数 visit(). 一旦 visit() 失败, 则操作失败.
 // Status ListTraverse(Linklist L, Status (*visit)(ElemType));
 

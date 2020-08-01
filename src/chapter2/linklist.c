@@ -280,6 +280,138 @@ void Sort(Linklist *L)
     return;
 } // Sort
 
+Status RangeDelete(Linklist *L, ElemType min, ElemType max)
+{
+    // p 是检测指针, pr 为其前驱.
+    LNode *p = (*L)->next, *pr = (*L);
+
+    // 若当前指针指向的结点不为空.
+    while (p != NULL)
+    {
+        // 比较是否满足删除要求.
+        // 若满足,
+        if (p->data > min && p->data < max)
+        {
+            // 前驱 pr 跳过 p.
+            pr->next = p->next;
+
+            // 释放 p 所指的内存空间.
+            free(p);
+
+            // 使 p 指向新的结点.
+            p = pr->next;
+        }
+        // 否则,
+        else
+        {
+            // pr 和 p 进一.
+            pr = p;
+            p = p->next;
+        }
+    }
+
+    return OK;
+} // RangeDelete
+
+Linklist Split(Linklist *A)
+{
+    // 初始化单向链表 B.
+    Linklist B = malloc(sizeof(LNode));
+    B->next = NULL;
+
+    // 指向 A 和 B 尾结点的指针.
+    LNode *ra = (*A);
+    LNode *rb = B;
+
+    // p 为工作指针.
+    LNode *p = (*A)->next;
+
+    // 原表 A 拆分出头结点.
+    (*A)->next = NULL;
+
+    // i 记录 A 中的序号.
+    int i = 0;
+
+    while (p != NULL)
+    {
+        // 序号增加.
+        ++i;
+
+        // 偶数.
+        if (i % 2 == 0)
+        {
+            // 新加尾结点.
+            rb->next = p;
+
+            // 更新尾结点.
+            rb = p;
+        }
+        // 奇数.
+        else
+        {
+            ra->next = p;
+            ra = p;
+        }
+
+        // 工作指针前进一.
+        p = p->next;
+    }
+
+    // 确保尾结点后继为 NULL.
+    ra->next = NULL;
+    rb->next = NULL;
+
+    return B;
+} // Split
+
+Linklist Split2(Linklist *A)
+{
+    // 初始化单向链表 B.
+    Linklist B = malloc(sizeof(LNode));
+    B->next = NULL;
+
+    // 指向原表 A 尾结点的指针.
+    LNode *ra = (*A);
+
+    // 工作指针.
+    LNode *p = (*A)->next;
+    // 保存工作指针后继的指针.
+    LNode *q;
+
+    // 剥离原表头结点.
+    (*A)->next = NULL;
+
+    // 假若 p 是要被分给 A 的结点.
+    while (p != NULL)
+    {
+        // 将 p 链接至 A 表尾, 并更新 ra.
+        ra->next = p;
+        ra = p;
+
+        // 工作指针前进一, 此时工作指针指向要被分给 B 的结点.
+        p = p->next;
+
+        // 如果要分给 B 的结点存在,
+        if (p != NULL)
+        {
+            // 则保存其后继.
+            q = p->next;
+        }
+
+        // 将工作指针头插入 B 中.
+        p->next = B->next;
+        B->next = p;
+
+        // 读取工作指针后继, 在下次循环中, 若其不为空, 则应分配给 A.
+        p = q;
+    }
+
+    // 确保 A 表尾后继正确; 由于 B 是逆序头插入, 所以无须考虑表尾后继指向.
+    ra->next = NULL;
+
+    return B;
+} // Split2
+
 // Status MakeNode(Link *p, ElemType e)
 // {
 //     (*p) = malloc(sizeof(LNode));

@@ -77,19 +77,26 @@ void UseLinklist()
 
     InitList_L(&L);
 
-    TailInsert_L(&L, 5);
-    TailInsert_L(&L, 9);
-    TailInsert_L(&L, 3);
-    TailInsert_L(&L, 2);
+    TailInsert_L(&L, 0);
     TailInsert_L(&L, 1);
+    TailInsert_L(&L, 2);
+    TailInsert_L(&L, 3);
+    TailInsert_L(&L, 4);
+    TailInsert_L(&L, 5);
+    TailInsert_L(&L, 6);
+    TailInsert_L(&L, 7);
+    TailInsert_L(&L, 8);
+    TailInsert_L(&L, 9);
 
     PrintList_L(L);
 
-    printf("测试单向链表排序函数 Sort()\n");
+    printf("测试 Split2()\n");
 
-    Sort(&L);
+    Linklist B = Split2(&L);
 
     PrintList_L(L);
+
+    PrintList_L(B);
 
     return;
 }
