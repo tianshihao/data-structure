@@ -136,6 +136,12 @@ Linklist Split(Linklist *A);
  * */
 Linklist Split2(Linklist *A);
 
+/**
+ * @brief 12, 删除单项链表 L 中重复出现的元素.
+ * @param L 单向链表.
+ * */
+Status DeleteRepeat(Linklist *L);
+
 // // 依次对 L 的每个元素调用函数 visit(). 一旦 visit() 失败, 则操作失败.
 // Status ListTraverse(Linklist L, Status (*visit)(ElemType));
 

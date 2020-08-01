@@ -412,6 +412,36 @@ Linklist Split2(Linklist *A)
     return B;
 } // Split2
 
+Status DeleteRepeat(Linklist *L)
+{
+    // p 为工作指针.
+    LNode *p = (*L)->next;
+
+    if (p == NULL)
+    {
+        return OK;
+    }
+
+    while (p->next != NULL)
+    {
+        // q 指向 p 的后继结点.
+        LNode *q = p->next;
+
+        // 如果 p 的下一个结点
+        if (p->data == q->data)
+        {
+            p->next = q->next;
+            free(q);
+        }
+        else
+        {
+            p = p->next;
+        }
+    }
+
+    return OK;
+} // DeleteRepeat
+
 // Status MakeNode(Link *p, ElemType e)
 // {
 //     (*p) = malloc(sizeof(LNode));
