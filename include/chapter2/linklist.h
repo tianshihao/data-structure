@@ -155,17 +155,20 @@ Linklist MergeList(Linklist *A, Linklist *B);
  * @brief 14, 从两个有序递增的单向链表中找到公共元素产生新的单向链表, 且不破坏原表.
  * @param A 待合并单向链表.
  * @param B 待合并单向链表.
+ * @note 时间复杂度为 O(min(len1, len2)), 空间复杂度为 O(n).
  * @return 合并产生的新链表.
  * */
 Linklist GetCommon(Linklist A, Linklist B);
 
 /**
  * @brief 15, 已知两个元素递增链表, 其中元素不重复, 计算其交集, 存放于原表中.
- * 时间复杂度为 O(len1 + len2). 和 GetCommon() 的区别是更少的空间复杂度 O(1),
- * 没有额外的内存空间, 但是修改了原表.
+ * 时间复杂度为 O(len1 + len2). 
+ * @see GetCommon(), 和它的区别是更少的空间复杂度 O(1), 没有额外的内存空间, 
+ * 但是修改了原表.
  * @param A 待归并单项链表.
  * @param B 待归并单项链表.
- * */
+ * @return Linklist 交集.
+ */
 Linklist Union(Linklist *A, Linklist *B);
 // // 依次对 L 的每个元素调用函数 visit(). 一旦 visit() 失败, 则操作失败.
 // Status ListTraverse(Linklist L, Status (*visit)(ElemType));
