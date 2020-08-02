@@ -543,6 +543,70 @@ Linklist GetCommon(Linklist A, Linklist B)
     return C;
 } // GetCommon
 
+Linklist Union(Linklist *A, Linklist *B)
+{
+    // 工作指针.
+    LNode *pa = (*A)->next, *pb = (*B)->next;
+    // 回收指针.
+    LNode *r = NULL;
+    // 指向 A 尾结点. A 用于存储求交集之后的结果, 所以尾结点是头结点.
+    LNode *ra = (*A);
+
+    (*A)->next = NULL;
+
+    while (pa && pb)
+    {
+        if (pa->data < pb->data)
+        {
+            r = pa;
+            pa = pa->next;
+            free(r);
+        }
+        else if (pa->data > pb->data)
+        {
+            r = pb;
+            pb = pb->next;
+            free(r);
+        }
+        else
+        {
+            // 找到符合要求的结点. 链接到 A 后.
+            ra->next = pa;
+            ra = pa;
+
+            // pa 前进一.
+            pa = pa->next;
+
+            // 释放 pb 内存空间.
+            r = pb;
+            pb = pb->next;
+            free(r);
+        }
+    }
+
+    // 释放剩余结点的内存.
+    while (pa)
+    {
+        r = pa;
+        pa = pa->next;
+        free(r);
+    }
+    while (pb)
+    {
+        r = pb;
+        pb = pb->next;
+        free(r);
+    }
+
+    // 注意新链表尾结点. 也可以在链接时处理处理后继, 但比较麻烦, 这里一句就行.
+    ra->next = NULL;
+
+    // 释放 B 头结点.
+    free((*B));
+
+    return (*A);
+} // Union
+
 // Status MakeNode(Link *p, ElemType e)
 // {
 //     (*p) = malloc(sizeof(LNode));
