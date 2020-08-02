@@ -90,7 +90,7 @@ CNode *LocateElem_C(CLinklist L, ElemType e)
 
 Status ListInsert_C(CLinklist *L, int i, ElemType e)
 {
-    if (i < 1 || i > ListLength_DC(*L) + 1)
+    if (i < 1 || i > ListLength_C(*L) + 1)
     {
         printf("插入位置非法\n");
         return ERROR;
@@ -114,7 +114,7 @@ Status ListInsert_C(CLinklist *L, int i, ElemType e)
 
 Status ListDelete_C(CLinklist *L, int i)
 {
-    if (i < 1 || i > ListLength_DC(*L))
+    if (i < 1 || i > ListLength_C(*L))
     {
         printf("删除位置非法\n");
         return ERROR;
