@@ -170,6 +170,16 @@ Linklist GetCommon(Linklist A, Linklist B);
  * @return Linklist 交集.
  */
 Linklist Union(Linklist *A, Linklist *B);
+
+/**
+ * @brief 16, 判断序列 B 是否是序列 A 的连续子序列.
+ * @param A 单向链表.
+ * @param B 单向链表.
+ * @return TRUE B 是 A 的连续子序列.
+ * @return FALSE  B 不是 A 的连续子序列.
+ */
+Status Pattern(Linklist A, Linklist B);
+
 // // 依次对 L 的每个元素调用函数 visit(). 一旦 visit() 失败, 则操作失败.
 // Status ListTraverse(Linklist L, Status (*visit)(ElemType));
 

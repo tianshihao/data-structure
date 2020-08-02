@@ -607,6 +607,44 @@ Linklist Union(Linklist *A, Linklist *B)
     return (*A);
 } // Union
 
+Status Pattern(Linklist A, Linklist B)
+{
+    // 工作指针.
+    LNode *pa = A->next, *pb = B->next;
+    // 记录 A 表的比较起点.
+    LNode *start = pa;
+
+    while (pa && pb)
+    {
+        // 匹配, pa 和 pb 共同前进一.
+        if (pb->data == pa->data)
+        {
+            pa = pa->next;
+            pb = pb->next;
+        }
+        // 否则证明至少 A[i] 不是 B 开头, 下一次从 A[i+1] 开始匹配.
+        else
+        {
+            // 更新 A 的比较起点.
+            start = start->next;
+            pa = start;
+
+            // 重置 B 的比较起点.
+            pb = B->next;
+        }
+    }
+
+    // 若 B 是 A 的连续子序列, 则比较完后 pb 应为 NULL.
+    if (pb)
+    {
+        return FALSE;
+    }
+    else
+    {
+        return TRUE;
+    }
+} // Pattern
+
 // Status MakeNode(Link *p, ElemType e)
 // {
 //     (*p) = malloc(sizeof(LNode));
@@ -653,11 +691,14 @@ Linklist Union(Linklist *A, Linklist *B)
 //     return OK;
 // } // ListTraverse
 
-// /***************************利用基本操作实现的高级操作******************************/
+// /***************************利用基本操作实现的高级操作**********************/
 
 // // 已知单线性链表 La 和 Lb 的元素按值非递减排列.
 // // 归并 La 和 Lb 得到新的单线性链表 Lc, Lc 的元素也按值非线性递减排列.
-// Status MergeList_L(Linklist *La, Linklist *Lb, Linklist *Lc, Status (*compare)(ElemType, ElemType))
+// Status MergeList_L(Linklist *La,
+//                    Linklist *Lb,
+//                    Linklist *Lc,
+//                    Status (*compare)(ElemType, ElemType))
 // {
 //     // 存储空间分配失败
 //     if (!InitList_L(Lc))
