@@ -442,6 +442,62 @@ Status DeleteRepeat(Linklist *L)
     return OK;
 } // DeleteRepeat
 
+Linklist MergeList(Linklist *A, Linklist *B)
+{
+    // 工作指针 pa 和 pb, 指向.
+    LNode *pa = (*A)->next, *pb = (*B)->next;
+
+    // 保存 pa 或 pb 的后继.
+    LNode *q;
+
+    // 使用 A 作为新链表的头结点.
+    (*A)->next = NULL;
+
+    while (pa && pb)
+    {
+        if (pa->data <= pb->data)
+        {
+            // 保存 pa 后继.
+            q = pa->next;
+
+            // 因为要求是降序, 所以使用头插法, 从最小的元素开始插入.
+            pa->next = (*A)->next;
+            (*A)->next = pa;
+
+            // 读取后继.
+            pa = q;
+        }
+        else
+        {
+            q = pb->next;
+
+            pb->next = (*A)->next;
+            (*A)->next = pb;
+
+            pb = q;
+        }
+    }
+
+    // 妙啊, A 和 B 的剩余是互斥的: A 剩余了 B 就不会剩余, 此时让 pb 指向 pa;
+    // B 剩余 A 不会剩余, 此时跳过 if.
+    if (pa)
+    {
+        pb = pa;
+    }
+
+    while (pb)
+    {
+        q = pb->next;
+        pb->next = (*A)->next;
+        (*A)->next = pb;
+        pb = q;
+    }
+
+    free((*B));
+
+    return (*A);
+} // MergeList
+
 // Status MakeNode(Link *p, ElemType e)
 // {
 //     (*p) = malloc(sizeof(LNode));

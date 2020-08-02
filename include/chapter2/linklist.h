@@ -142,6 +142,14 @@ Linklist Split2(Linklist *A);
  * */
 Status DeleteRepeat(Linklist *L);
 
+/**
+ * @brief 13, 将两个元素按值递增的线性表归并为一个元素按值递减的元素的单链表, 并
+ * 用原来的两个单链表的结点存放归并后的单链表.
+ * @param A 待归并递增单向链表.
+ * @param B 待归并递增单向链表.
+ * */
+Linklist MergeList(Linklist *A, Linklist *B);
+
 // // 依次对 L 的每个元素调用函数 visit(). 一旦 visit() 失败, 则操作失败.
 // Status ListTraverse(Linklist L, Status (*visit)(ElemType));
 
