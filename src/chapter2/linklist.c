@@ -498,6 +498,51 @@ Linklist MergeList(Linklist *A, Linklist *B)
     return (*A);
 } // MergeList
 
+Linklist GetCommon(Linklist A, Linklist B)
+{
+    // 初始化新单向链表 C.
+    Linklist C = malloc(sizeof(LNode));
+    C->data = -1;
+    C->next = NULL;
+
+    // rc 指向 C 尾结点.
+    LNode *rc = C;
+
+    // 工作指针.
+    LNode *pa = A->next, *pb = B->next;
+
+    while (pa && pb)
+    {
+        if (pa->data < pb->data)
+        {
+            pa = pa->next;
+        }
+        else if (pa->data > pb->data)
+        {
+            pb = pb->next;
+        }
+        else
+        {
+            // 找到了公共结点, 准备一个新结点.
+            LNode *s = malloc(sizeof(LNode));
+            s->data = pa->data;
+            s->next = NULL;
+
+            // 尾插法.
+            rc->next = s;
+            rc = s;
+
+            // 工作指针前进一.
+            pa = pa->next;
+            pb = pb->next;
+        }
+    }
+
+    // rc = NULL;
+
+    return C;
+} // GetCommon
+
 // Status MakeNode(Link *p, ElemType e)
 // {
 //     (*p) = malloc(sizeof(LNode));

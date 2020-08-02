@@ -150,6 +150,14 @@ Status DeleteRepeat(Linklist *L);
  * */
 Linklist MergeList(Linklist *A, Linklist *B);
 
+/**
+ * @brief 从两个有序递增的单向链表中找到公共元素产生新的单向链表, 且不破坏原表.
+ * @param A 待合并单向链表.
+ * @param B 待合并单向链表.
+ * @return 合并产生的新链表.
+ * */
+Linklist GetCommon(Linklist A, Linklist B);
+
 // // 依次对 L 的每个元素调用函数 visit(). 一旦 visit() 失败, 则操作失败.
 // Status ListTraverse(Linklist L, Status (*visit)(ElemType));
 
