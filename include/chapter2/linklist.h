@@ -147,11 +147,12 @@ Status DeleteRepeat(Linklist *L);
  * 用原来的两个单链表的结点存放归并后的单链表.
  * @param A 待归并递增单向链表.
  * @param B 待归并递增单向链表.
+ * @return 归并后的单向链表.
  * */
 Linklist MergeList(Linklist *A, Linklist *B);
 
 /**
- * @brief 从两个有序递增的单向链表中找到公共元素产生新的单向链表, 且不破坏原表.
+ * @brief 14, 从两个有序递增的单向链表中找到公共元素产生新的单向链表, 且不破坏原表.
  * @param A 待合并单向链表.
  * @param B 待合并单向链表.
  * @return 合并产生的新链表.
