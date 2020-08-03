@@ -82,3 +82,11 @@ int ListLength_DC(DCLinklist L);
  * @param L 待打印双向循环链表.
  */
 void PrintList_DC(DCLinklist L);
+
+/**
+ * @brief 17, 判断双向循环链表是否对称.
+ * @param L 双向循环链表.
+ * @return True 对称.
+ * @return FALSE 不对称.
+ */
+Status Symmetry(DCLinklist L);

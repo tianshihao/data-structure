@@ -171,3 +171,27 @@ void PrintList_DC(DCLinklist L)
 
     return;
 } // PrintList_DC
+
+Status Symmetry(DCLinklist L)
+{
+    // 工作指针, p 指向第一个结点, q 指向为最后一个结点.
+    DCNode *p = L->next, *q = L->prior;
+
+    // p == q 和 q->next == p 分别是奇数个结点和偶数个结点情况下循环结束的条件.
+    while (p != q && q->next != p)
+    {
+        // 结点值相同则继续比较.
+        if (p->data == q->data)
+        {
+            p = p->next;
+            q = q->prior;
+        }
+        // 否则链表不对称, 返回 FLASE.
+        else
+        {
+            return FALSE;
+        }
+    }
+
+    return TRUE;
+} // Symmetry
