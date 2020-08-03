@@ -82,3 +82,12 @@ int ListLength_C(CLinklist L);
  * @param L 待打印单向循环链表.
  */
 void PrintList_C(CLinklist L);
+
+/**
+ * @brief 19, 在一个结点值均为正整数的单向循环链表中, 反复找出最小值并输出,然后
+ * 将该结点从链表中删除, 直到链表为空, 在删除头结点.
+ * 
+ * @param L 单向循环链表.
+ * @return OK 操作完成返回 OK.
+ */
+Status DelAll(CLinklist *L);

@@ -161,3 +161,46 @@ void PrintList_C(CLinklist L)
 
     return;
 } // PirintList_C
+
+Status DelAll(CLinklist *L)
+{
+    CNode *p, *pre;
+    CNode *minp, *minpre;
+
+    // ! 当链表不为空时, 是 != (*L) 不是 != NULL.
+    while ((*L)->next != (*L))
+    {
+        // p 为工作指针, pre 指向 p 的前驱.
+        p = (*L)->next, pre = (*L);
+
+        // minp 指向数据元素最小的结点, minpre 记录其前驱.
+        minp = p, minpre = pre;
+
+        // 循环一趟.
+        while (p != (*L))
+        {
+            // 找到更小的结点, 更新 minp 和 minpre.
+            if (p->data < minp->data)
+            {
+                minp = p;
+                minpre = pre;
+            }
+
+            // 工作之中前进一.
+            pre = p;
+            p = p->next;
+        }
+
+        // 输出找到的最小值.
+        printf("%d,", minp->data);
+
+        // 并且删除最小值结点.
+        minpre->next = minp->next;
+        free(minp);
+    }
+
+    // 最后删除头结点.
+    free((*L));
+
+    return OK;
+} // DelAll
