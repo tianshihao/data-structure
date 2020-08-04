@@ -180,6 +180,25 @@ Linklist Union(Linklist *A, Linklist *B);
  */
 Status Pattern(Linklist A, Linklist B);
 
+/**
+ * @brief 21, 查找单向链表中倒数第 k 个位置上的结点. 若查找成功, 算法输出这个结点 data
+ * 域的值, 并返回 1, 否则返回 0.
+ * 
+ * @param L 单向链表.
+ * @param k 位置参数, 1 <= k <= length
+ * @return TRUE 查找成功.
+ * @return FALSE 查找失败.
+ */
+Status SearchK(Linklist L, int k);
+
+/**
+ * @brief 判断一个单向链表是否有环, 如果有, 找出还的入口点并返回, 否则返回 NULL.
+ * 
+ * @param L 单向链表.
+ * @return LNode* 找到的入口点的位置.
+ */
+LNode *FindLoopStart(Linklist L);
+
 // // 依次对 L 的每个元素调用函数 visit(). 一旦 visit() 失败, 则操作失败.
 // Status ListTraverse(Linklist L, Status (*visit)(ElemType));
 

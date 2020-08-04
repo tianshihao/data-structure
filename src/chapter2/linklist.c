@@ -1,4 +1,4 @@
-#include <chapter2/linklist.h>
+﻿#include <chapter2/linklist.h>
 
 Status InitList_L(Linklist *L)
 {
@@ -654,6 +654,93 @@ Status Pattern(Linklist A, Linklist B)
         return TRUE;
     }
 } // Pattern
+
+Status SearchK(Linklist L, int k)
+{
+    // p 和 q 均为工作指针, 指向第一个结点.
+    LNode *p = L->next, *q = L->next;
+
+    // 计数器.
+    int count = 1;
+
+    /**
+     * 指针 p 前进 k 个单位, 指向第 k + 1 个位置, 之后 p 和 q 同时前进, 直到 p
+     * 指向表尾, 这样 q 会处于在正数第 n - k 个结点上, 倒数第 n - (n - k) = k 个
+     * 结点上. 具体实现还要注意计数器的计数是从 0 开始还是从 1 开始, 小于还是
+     * 小于等于.
+     * */
+
+    while (p)
+    {
+        // 从 1 开始计数, 让 p 前进 k 次, 即 p 指向第 k + 1 个结点. p 之后的结点
+        // 还有 n - k - 1 个, p 还可以前进 n - k - 1 次.
+        if (count <= k)
+        {
+            ++count;
+            p = p->next;
+        }
+        // 然后 q 前进 n - k - 1 次, 指向正数第 n - k 个结点, 即倒数第 k 个.
+        else
+        {
+            p = p->next;
+            q = q->next;
+        }
+    }
+
+    // 1 <= count <= length, 若 count <= k, 则表示 length <= k, k 越界.
+    if (count <= k)
+    {
+        return FALSE;
+    }
+    else
+    {
+        printf("the %dth element from the bottom is %d.\n", k, q->data);
+        return TRUE;
+    }
+} // SearchK
+
+LNode *FindLoopStart(Linklist L)
+{
+    // 设置快慢指针.
+    LNode *fast = L, *slow = L;
+
+    while (slow != NULL && fast->next != NULL)
+    {
+        slow = slow->next;
+        fast = fast->next->next;
+
+        // 快慢指针相遇.
+        if (slow == fast)
+        {
+            break;
+        }
+    }
+
+    // 没有环, 返回 NULL.
+    if (slow == NULL || fast->next == NULL)
+    {
+        return NULL;
+    }
+
+    /**
+     * 假设环长为 r, 头结点到环的入口点的距离为 a, 环的入口点沿着环的方向到相遇
+     * 点的距离为 x, 相遇时 fast 绕过了 n 圈, 则 2(a + n) = a + n * r + x.
+     * 解得 a = n * r - x, 即头结点到环的入口点的距离为 n 倍环长减去环的入口点到
+     * 相遇点的距离, 当 n == 1, 时, a = r - x, r - x 为相遇点继续沿着环的方向到
+     * 相遇点的距离. 因此, 可令 p1, p2 分别指向头结点和相遇点, 共同前进 r - x,
+     * p1 和 p2 就会在入口点相遇, p1 == p2.
+     * */
+
+    // p1 指向开始点, p2 指向相遇点.
+    LNode *p1 = L, *p2 = slow;
+    while (p1 != p2)
+    {
+        p1 = p1->next;
+        p2 = p2->next;
+    }
+
+    return p1;
+} // FindLoopStart
 
 // Status MakeNode(Link *p, ElemType e)
 // {
