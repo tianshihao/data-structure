@@ -43,7 +43,8 @@ Status TailInsert_L(Linklist *L, ElemType e);
 /**
  * @brief 按序号查找结点值.
  * @param L 单向链表.
- * @param i 序号. 取值范围 0 <= i <= length.
+ * @param i 序号. 取值范围 0 <= i <= length. i == 0 时, 返回头结点, i == length
+ * 时, 返回最后一个结点.
  * @return 返回指向符合要求结点的指针, 否则返回 NULL.
  */
 LNode *GetElem_L(Linklist L, int i);
