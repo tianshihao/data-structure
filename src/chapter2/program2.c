@@ -77,26 +77,19 @@ void UseLinklist()
 
     InitList_L(&L);
 
-    TailInsert_L(&L, 0);
-    TailInsert_L(&L, 0);
     TailInsert_L(&L, 1);
     TailInsert_L(&L, 2);
     TailInsert_L(&L, 3);
     TailInsert_L(&L, 4);
     TailInsert_L(&L, 5);
     TailInsert_L(&L, 6);
-    TailInsert_L(&L, 6);
     TailInsert_L(&L, 7);
-    TailInsert_L(&L, 8);
-    TailInsert_L(&L, 8);
     TailInsert_L(&L, 8);
     TailInsert_L(&L, 9);
 
     PrintList_L(L);
 
-    printf("测试 DeleteRepeat()\n");
-
-    DeleteRepeat(&L);
+    ChangeList(&L);
 
     PrintList_L(L);
 
@@ -109,17 +102,13 @@ void UseCLinklist()
 
     InitList_C(&L);
 
-    TailInsert_C(&L, 1);
-    TailInsert_C(&L, 2);
-    TailInsert_C(&L, 3);
-    TailInsert_C(&L, 4);
     TailInsert_C(&L, 5);
+    TailInsert_C(&L, 4);
+    TailInsert_C(&L, 7865);
+    TailInsert_C(&L, 124);
+    TailInsert_C(&L, 65);
 
-    PrintList_C(L);
-
-    ListDelete_C(&L, 6);
-
-    PrintList_C(L);
+    DelAll(&L);
 
     return;
 }
@@ -136,17 +125,21 @@ void UseDLinklist()
     TailInsert_DL(&L, 4);
     TailInsert_DL(&L, 5);
 
-    ListInsert_DL(&L, 6, 100);
+    PrintList_DL(L);
+
+    DNode *node = LccateElem_DL2(&L, 1);
+    node = LccateElem_DL2(&L, 2);
+    node = LccateElem_DL2(&L, 3);
+    node = LccateElem_DL2(&L, 4);
+    node = LccateElem_DL2(&L, 1);
+    node = LccateElem_DL2(&L, 2);
+    node = LccateElem_DL2(&L, 3);
+    node = LccateElem_DL2(&L, 4);
+    node = LccateElem_DL2(&L, 5);
 
     PrintList_DL(L);
 
-    printf(">>>%d\n", ListLength_DL(L));
-
-    ListDelete_DL(&L, 0);
-
-    PrintList_DL(L);
-
-    printf(">>>%d\n", ListLength_DL(L));
+    printf("\n->>>%d\n", node->prior->freq);
 
     return;
 }
@@ -160,14 +153,19 @@ void UseDCLinklist()
     TailInsert_DC(&L, 1);
     TailInsert_DC(&L, 2);
     TailInsert_DC(&L, 3);
-    TailInsert_DC(&L, 4);
-    TailInsert_DC(&L, 5);
+    TailInsert_DC(&L, 2);
+    TailInsert_DC(&L, 1);
 
     PrintList_DC(L);
 
-    ListInsert_DC(&L, 7, 999);
-
-    PrintList_DC(L);
+    if (Symmetry(L))
+    {
+        printf("yes\n");
+    }
+    else
+    {
+        printf("no\n");
+    }
 
     return;
 }
