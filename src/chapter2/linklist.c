@@ -742,6 +742,91 @@ LNode *FindLoopStart(Linklist L)
     return p1;
 } // FindLoopStart
 
+Status ChangeList(Linklist *L)
+{
+    // 1. 找出链表 L 的中间结点.
+
+    // 设置工作指针 p 和 q.
+    LNode *p = (*L), *q = (*L), *r = NULL;
+
+    /**
+     * 找到了中间结点 p, p 步长为 1, q 步长为 2, q 到达表尾时, p 正好是中间结点.
+     * 若结点数量为偶数, 则 p 指向第 n / 2 - 1 个结点, 前后等长;
+     * 若结点数量为奇数, 则 p 指向第 n / 2 + 1 个结点, 且前半段比后半段长, 更改
+     * p, q 前进顺序和规则但不改变步长, 可以实现让前半段比后半段短.
+     * */
+    while (q->next != NULL)
+    {
+        p = p->next;
+        q = q->next;
+
+        if (q->next)
+        {
+            q = q->next;
+        }
+    }
+
+    // 2. 将链表后半段逆置.
+
+    // 中间结点 p 是链表前半段的最后一个结点, q 指向后半段第一个结点, 即 p->next.
+    q = p->next;
+    // 断开链表.
+    p->next = NULL;
+
+    // 头插法, 把 p 当作头结点.
+    while (q != NULL)
+    {
+        // r 保存 q 的后继.
+        r = q->next;
+
+        // 头插法.
+        q->next = p->next;
+        p->next = q;
+
+        // 读取后继.
+        q = r;
+    }
+
+    // 3. 后半段插入到前半段中的合适位置.
+
+    // q 指向链表后半段的第一个结点.
+    q = p->next;
+    // 把链表一分为二.
+    p->next = NULL;
+    // p 指向链表前半段的第一个结点.
+    p = (*L)->next;
+
+    /**
+     * 这时候的链表前半段 [a1,am], 后半段 [a(m+1),an].
+     * a1->a2->a3->(...)->am->an->a(m-1)->a(n-2)->(...)->a(m+2)->a(m+1)
+     * ↑                      ↑   ↑
+     * p                      q   r
+     * a1->an->a2->a3->(...)->am->a(m-1)->a(n-2)->(...)->a(m+2)->a(m+1)
+     * ↑   ↑                      ↑
+     * p   q                      r
+     * a1->an->a2->a3->(...)->am->a(m-1)->a(n-2)->(...)->a(m+2)->a(m+1)
+     *         ↑                  ↑       ↑
+     *         p                  q/r     r
+     */
+    while (q)
+    {
+        // r 保存 q 的后继.
+        r = q->next;
+
+        // 将 q 插入到 p 之后.
+        q->next = p->next;
+        p->next = q;
+
+        // 更新插入点位置.
+        p = q->next;
+
+        // 读取后继.
+        q = r;
+    }
+
+    return OK;
+} // ChangeList
+
 // Status MakeNode(Link *p, ElemType e)
 // {
 //     (*p) = malloc(sizeof(LNode));

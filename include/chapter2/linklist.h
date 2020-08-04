@@ -200,6 +200,15 @@ Status SearchK(Linklist L, int k);
  */
 LNode *FindLoopStart(Linklist L);
 
+/**
+ * @brief 将 a1->a2->a3->(...)->a(n-2)->a(n-1)->an 变成 a1->an->a2->a(n-1)->a3->
+ * a(n-2)->(...).
+ * 
+ * @param L 单向链表.
+ * @return OK 操作完成.
+ */
+Status ChangeList(Linklist *L);
+
 // // 依次对 L 的每个元素调用函数 visit(). 一旦 visit() 失败, 则操作失败.
 // Status ListTraverse(Linklist L, Status (*visit)(ElemType));
 
