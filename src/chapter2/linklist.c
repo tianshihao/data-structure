@@ -1,4 +1,4 @@
-﻿#include <chapter2/linklist.h>
+#include <chapter2/linklist.h>
 
 Status InitList_L(Linklist *L)
 {
@@ -176,7 +176,17 @@ void PrintList_L(Linklist L)
 
     while (p != NULL)
     {
-        printf("%d->", p->data);
+        printf("%d", p->data);
+
+        if (p->next == NULL)
+        {
+            printf("\n");
+        }
+        else
+        {
+            printf("->");
+        }
+
         p = p->next;
     }
 
