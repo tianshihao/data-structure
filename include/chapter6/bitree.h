@@ -27,7 +27,7 @@ typedef struct BiTNode
  * 
  * @param T 指向二叉树
  * @return OK 操作成功返回 OK.
- * @return ERROE 操作失败返回 ERROR.
+ * @return ERROR 操作失败返回 ERROR.
  */
 Status InitTree(BiTree *T);
 
@@ -70,7 +70,7 @@ Status PreOrderTraverse(BiTree T, Status (*Visit)(ElemType e));
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR.
  */
-Status InOrderTaverse(BiTree , Status (*Visit)(ElemType e));
+Status InOrderTraverse(BiTree T, Status (*Visit)(ElemType e));
 
 /**
  * @brief 采用二叉链表存储结构, Visit 是对结点操作的应用函数. 后序遍历二叉树 T,
