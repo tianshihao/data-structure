@@ -18,8 +18,8 @@ typedef int ElemType;
  */
 typedef struct BiTNode
 {
-    ElemType data; // data field.
-    struct BiTNode *lchild, *rchild;
+  ElemType data; // data field.
+  struct BiTNode *lchild, *rchild;
 } BiTNode, *BiTree;
 
 /**
@@ -62,6 +62,16 @@ void CreateTree(BiTree *T, FILE *PreSeq);
 Status PreOrderTraverse(BiTree T, Status (*Visit)(ElemType e));
 
 /**
+ * @brief 借助顺序栈, 非递归地先序遍历二叉树.
+ * 
+ * @param T 非空二叉树.
+ * @param Visit 应用函数.
+ * @return OK 操作成功返回 OK.
+ * @return ERROR 操作失败返回 ERROR.
+ */
+Status PreOrderTraverse2(BiTree T, Status (*Visit)(ElemType e));
+
+/**
  * @brief 采用二叉表存储结构, Visit 是对结操作的应用函数. 中序遍历二叉 T, 对每个
  * 结点调用函数 Visit 一次且仅一次. 一旦 Visit() 失败, 则操作失败.
  * 
@@ -73,6 +83,16 @@ Status PreOrderTraverse(BiTree T, Status (*Visit)(ElemType e));
 Status InOrderTraverse(BiTree T, Status (*Visit)(ElemType e));
 
 /**
+ * @brief 借助顺序栈, 非递归地中序遍历二叉树.
+ * 
+ * @param T 非空二叉树.
+ * @param Visit 应用函数.
+ * @return OK 操作成功返回 OK.
+ * @return ERROR 操作失败返回 ERROR.
+ */
+Status InOrderTraverse2(BiTree T, Status (*Visit)(ElemType e));
+
+/**
  * @brief 采用二叉链表存储结构, Visit 是对结点操作的应用函数. 后序遍历二叉树 T,
  * 对每个结点调用函数 Visit 一次且仅一次. 一旦 Visit() 失败, 则操作失败.
  * 
@@ -82,3 +102,13 @@ Status InOrderTraverse(BiTree T, Status (*Visit)(ElemType e));
  * @return ERROR 操作失败返回 ERROR.
  */
 Status PostOrderTraverse(BiTree T, Status (*Visit)(ElemType e));
+
+/**
+ * @brief 借助顺序栈, 非递归地后序遍历二叉树.
+ * 
+ * @param T 非空二叉树.
+ * @param Visit 应用函数.
+ * @return OK 操作成功返回 OK.
+ * @return ERROR 操作失败返回 ERROR.
+ */
+Status PostOrderTraverse2(BiTree T, Status (*Visit)(ElemType e));

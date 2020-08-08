@@ -10,6 +10,7 @@
  */
 
 #include <chapter6/bitree.h>
+#include <chapter6/sqstack.h>
 
 Status InitTree(BiTree *T)
 {
@@ -75,7 +76,7 @@ void CreateTree(BiTree *T, FILE *PreSeq)
         {
             exit(OVERFLOW);
         }
-        
+
         (*T)->data = ch;
         CreateTree(&((*T)->lchild), PreSeq); // 创建左子树
         CreateTree(&((*T)->rchild), PreSeq); // 创建右子树
@@ -104,6 +105,40 @@ Status PreOrderTraverse(BiTree T, Status (*Visit)(ElemType e))
     }
 } // PreOrderTraverse
 
+Status PreOrderTraverse2(BiTree T, Status (*Visit)(ElemType e))
+{
+    SqStack S;
+    InitStack(&S);
+
+    // 工作指针.
+    BiTNode *p = T;
+
+    // 指针 p 不为空或栈不为空时.
+    while (p || !StackEmpty(S))
+    {
+        /**
+         * 1. 沿着根的左子, 一遍访问, 一遍入栈, 直至当前结点为空, 为空时说明该访
+         * 问右子了.
+         * */
+        if (p)
+        {
+            Visit(p->data); // 先访问当前结点.
+            Push(&S, *p);   // 入栈.
+            p = p->lchild;  // 再向左
+        }
+        /**
+         * 2. 将结点从栈中弹出, 若其右子为空, 则继续执行 2, 否则右子树继续执行 1. 
+         * */
+        else
+        {
+            Pop(&S, &p);
+            p = p->rchild;
+        }
+    } // while
+
+    return OK;
+} // PreOrderTraverse2
+
 Status InOrderTraverse(BiTree T, Status (*Visit)(ElemType e))
 {
     if (T)
@@ -126,6 +161,41 @@ Status InOrderTraverse(BiTree T, Status (*Visit)(ElemType e))
     }
 } // InOrderTraverse
 
+Status InOrderTraverse2(BiTree T, Status (*Visit)(ElemType e))
+{
+    // 初始化顺序栈.
+    SqStack S;
+    InitStack(&S);
+
+    // 工作指针.
+    BiTNode *p = T;
+
+    while (p || !StackEmpty(S))
+    {
+        /**
+         * 1. 沿着根的左子, 依次入栈, 直至左子为空, 说明已找到可以输出的结点.
+         */
+        if (p) // 一路向左.
+        {
+            Push(&S, *p);  // 当前结点入栈.
+            p = p->lchild; // 左子不空, 一直向左走.
+        }
+
+        /**
+         * 2. 可以输出的结点从栈中弹出, 若其右子为空, 则继续执行 2, 否则右子树继续
+         * 执行 1.
+         * */
+        else // 出栈, 并转向出栈结点的右子树.
+        {
+            Pop(&S, &p);    // 栈顶元素出栈.
+            Visit(p->data); // 访问出栈结点.
+            p = p->rchild;  // 向右子树走, p 赋值为当前结点的右子.
+        }
+    } // while
+
+    return OK;
+} // InOrderTraverse2
+
 Status PostOrderTraverse(BiTree T, Status (*Visit)(ElemType e))
 {
     if (T)
@@ -147,3 +217,69 @@ Status PostOrderTraverse(BiTree T, Status (*Visit)(ElemType e))
         return OK;
     }
 } // PostOrderTraverse
+
+Status PostOrderTraverse2(BiTree T, Status (*Visit)(ElemType e))
+{
+    SqStack S;
+    InitStack(&S);
+
+    // p 是工作指针.
+    BiTNode *p = T;
+
+    // r 记录最近访问过的结点.
+    BiTNode *r = NULL;
+
+    /**
+     * 后续非递归遍历二叉树是先访问左子树, 再访问右子树, 最后访问根结点.
+     */
+
+    while (p || !StackEmpty(S))
+    {
+        /**
+         * 1. 沿着根结点的左子, 依次入栈, 直至左子为空.
+        */
+        if (p)
+        {
+            Push(&S, *p);
+            p = p->lchild;
+        }
+        /**
+         * 左子为空之后再判断右子, 如果右子也为空, 则需要将栈顶元素出栈. 否则,
+         * 右子树也要执行 1.
+         */
+        else
+        {
+            GetTop(S, &p);
+            /**
+             * 2. 若栈顶元素右子非空且未访问过, 则将右子执行 1.
+             */
+            /**
+             * 注意, 原来 Push() 只是将结点复制了一份存到了栈中, 所以 r 记录的上
+             * 次访问过的结点和栈中相对应的结点并不相同, 不能直接使用
+             * p->rchild != r 比较, 可以比较 data. 但是二叉树中可能会出现重复的
+             * 元素, 比较 data 会出现误差, 所以修改 Push() 为向栈中存放二叉树中
+             * 结点本身, 而不是拷贝.
+             * 
+             * 刚才试了一下, 还是直接比较 data 方便.
+             */
+            if (p->rchild && p->rchild->data != r->data)
+            {
+                p = p->rchild;
+                Push(&S, *p);  // 右子入栈.
+                p = p->lchild; // 检查右子左子.
+            }
+            /**
+             * 否则栈顶元素出栈, 并访问.
+             */
+            else
+            {
+                Pop(&S, &p);
+                Visit(p->data);
+                r = p;    // 更新最近访问结点.
+                p = NULL; // 结点访问之后置 p 为 NULL.
+            }
+        }
+    }
+
+    return OK;
+} // PostOrderTraverse2
