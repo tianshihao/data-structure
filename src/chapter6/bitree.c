@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file bitree.c
  * @author tianshihao
  * @brief implementation of binary tree function.
@@ -259,7 +259,7 @@ Status PostOrderTraverse2(BiTree T, Status (*Visit)(ElemType e))
              * 次访问过的结点和栈中相对应的结点并不相同, 不能直接使用
              * p->rchild != r 比较, 可以比较 data. 但是二叉树中可能会出现重复的
              * 元素, 比较 data 会出现误差, 所以修改 Push() 为向栈中存放二叉树中
-             * 结点本身, 而不是拷贝.
+             * 结点本身, 而不是拷贝比较好.
              * 
              * 刚才试了一下, 还是直接比较 data 方便.
              */
@@ -271,6 +271,15 @@ Status PostOrderTraverse2(BiTree T, Status (*Visit)(ElemType e))
             }
             /**
              * 否则栈顶元素出栈, 并访问.
+             */
+            /**
+             * @see LevelOrderTraverse(BiTree T, Status (*Visit)(ElemType e))
+             * 
+             * 这里 Pop 中第二个参数是类型是 BiTNode **, 即指向 BiTNode 指针的指
+             * 针, 并不是我需要修改栈中的存储的元素本身, 而是只用当指针 p 为 NULL
+             * 时, 才会使用 Pop(), 而 NULL 并没有指向的内容, 不能修改 p 指向的内
+             * 容, 也就无法复制栈中的元素, 而在 Pop() 中为 p malloc 存储空间又改
+             * 变了指针本身, 所以将参数改为 BiTNode **, 直接修改 *p, 即 BiTNode*.
              */
             else
             {
@@ -293,6 +302,34 @@ Status LevelOrderTraverse(BiTree T, Status (*Visit)(ElemType e))
 
     // 二叉树根结点入队, 根结点为第一层.
     EnQueue_Sq(&Q, *T);
+
+    /**
+     * @see PostOrderTraverse2(BiTree T, Status (*Visit)(ElemType e))
+     * 
+     * 层序遍历 LevelOrderTraverse() 中队列出队操作没有像出栈操作一样修该为传递
+     * 指针的指针, 原因是出队之前, 工作指针 p 未被初始化为 NULL, 算法也使得 p 不
+     * 可能为 NULL, 所以在 DeQueue_Sq() 中, 子函数修改了已经指向某块内存的指针 (
+     * 不管这个指针指向什么, 即使是指向初始化时的随机内存单元) 所指向的内容, 并
+     * 没有修改指针本身, 所以原来的算法可以继续使用, 无需修改. 这样做带来的副作用
+     * 是, 初始化指针 p 时, p 可能指向任何内存单元, 向这个内存单元写入数据, 把原
+     * 来的数据覆盖掉, 可能会导致系统崩溃. 我发现的副作用是多次执行这个函数, 输出
+     * 的结果可能不同.
+     * 
+     * 但实际上, 编译器会将未初始化的指针指向固定的, 不用的地址. 可以试一试如下
+     * 代码:
+     * 
+     * int *p;
+     * 
+     * printf(">>>>>>>>>>> *p = %d <<<<<<<<<<<\n", *p);
+     * 
+     * system("pause");
+     * 
+     * 相信每次的输出结果都是一样的, 例如:
+     * 
+     * >>>>>>>>>>> *p = 17744 <<<<<<<<<<<
+     * 请按任意键继续. . . 
+     *
+     */
 
     // 工作指针.
     BiTNode *p;

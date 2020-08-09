@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file sqstack.c
  * @author tianshihao
  * @brief 顺序栈的实现.
