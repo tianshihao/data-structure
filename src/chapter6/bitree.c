@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file bitree.c
  * @author tianshihao
  * @brief implementation of binary tree function.
@@ -10,6 +10,7 @@
  */
 
 #include <chapter6/bitree.h>
+#include <chapter6/sqqueue.h>
 #include <chapter6/sqstack.h>
 
 Status InitTree(BiTree *T)
@@ -283,3 +284,39 @@ Status PostOrderTraverse2(BiTree T, Status (*Visit)(ElemType e))
 
     return OK;
 } // PostOrderTraverse2
+
+Status LevelOrderTraverse(BiTree T, Status (*Visit)(ElemType e))
+{
+    // 初始化辅助队列.
+    SqQueue Q;
+    InitQueue_Sq(&Q);
+
+    // 二叉树根结点入队, 根结点为第一层.
+    EnQueue_Sq(&Q, *T);
+
+    // 工作指针.
+    BiTNode *p;
+
+    while (!QueueEmpty_Sq(Q))
+    {
+        // 队头结点出队.
+        DeQueue_Sq(&Q, p);
+
+        // 访问出队结点.
+        Visit(p->data);
+
+        // 左子树不为空, 则左子树根结点入队.
+        if (p->lchild != NULL)
+        {
+            EnQueue_Sq(&Q, *p->lchild);
+        }
+
+        // 右子树不为空, 则右子树根结点入队.
+        if (p->rchild != NULL)
+        {
+            EnQueue_Sq(&Q, *p->rchild);
+        }
+    } // while
+
+    return OK;
+} // LevelOrderTraverse

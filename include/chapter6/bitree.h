@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file  : bitree.h
  * @brief : binary tree header.
  * @author: 田世豪
@@ -112,3 +112,13 @@ Status PostOrderTraverse(BiTree T, Status (*Visit)(ElemType e));
  * @return ERROR 操作失败返回 ERROR.
  */
 Status PostOrderTraverse2(BiTree T, Status (*Visit)(ElemType e));
+
+/**
+ * @brief 层序遍历二叉树.
+ * 
+ * @param T 非空二叉树.
+ * @param Visit 应用函数.
+ * @return OK 操作成功返回 OK.
+ * @return ERROR 操作失败返回 ERROR.
+ */
+Status LevelOrderTraverse(BiTree T, Status (*Visit)(ElemType e));
