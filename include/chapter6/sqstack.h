@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file sqstack.h
  * @author tianshihao
  * @brief 非递归遍历树时用到的顺序栈.
@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include "bitree.h"
 #include <chapter1/status.h>
+#include <chapter6/bitree.h>
 #include <stdio.h>
 #include <stdlib.h>
 
