@@ -1,6 +1,9 @@
 ﻿add_library (chapter6
    STATIC
    bitree.c
+   sqstack.c
+   sqqueue.c
+   threadtree.c
 )
 
 set_target_properties(chapter6 PROPERTIES ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/obj")
