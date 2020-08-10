@@ -13,7 +13,7 @@
 #include <chapter6/sqqueue.h>
 #include <chapter6/sqstack.h>
 
-Status InitTree(BiTree *T)
+Status InitTree_Binary(BiTree *T)
 {
     // *T 即为指向二叉树根结点的指针.
     if (*T == NULL) // 若已经指向空, 操作失败, 报错.
@@ -24,7 +24,7 @@ Status InitTree(BiTree *T)
     *T = NULL; // 使得指针指向 NULL.
 
     return OK;
-} // InitTree
+} // InitTree_Binary
 
 /**
  * 即使 BiTree 类型和 BiTNode * 等价, 表面上是指针, 但是在指针传递时, 仍要取
@@ -36,7 +36,7 @@ Status InitTree(BiTree *T)
  * 指针总是没有错的, 不论传递的参数是什么, 包括指针.
  */
 
-Status CreateBiTree(BiTree *T, const char *path)
+Status CreateBinaryTree(BiTree *T, const char *path)
 {
     // 打开存储二叉树先序序列的文件.
     FILE *fp = fopen(path, "r");
@@ -48,14 +48,14 @@ Status CreateBiTree(BiTree *T, const char *path)
     }
 
     // 传递的还是二叉树指针的指针.
-    CreateTree(T, fp);
+    CreateTree_Binary(T, fp);
 
     fclose(fp);
 
     return OK;
-} // CreateBiTree
+} // CreateBinaryTree
 
-void CreateTree(BiTree *T, FILE *PreSeq)
+void CreateTree_Binary(BiTree *T, FILE *PreSeq)
 {
     char ch = 0;
 
@@ -79,20 +79,20 @@ void CreateTree(BiTree *T, FILE *PreSeq)
         }
 
         (*T)->data = ch;
-        CreateTree(&((*T)->lchild), PreSeq); // 创建左子树
-        CreateTree(&((*T)->rchild), PreSeq); // 创建右子树
+        CreateTree_Binary(&((*T)->lchild), PreSeq); // 创建左子树
+        CreateTree_Binary(&((*T)->rchild), PreSeq); // 创建右子树
     }
-} // CreateTree
+} // CreateTree_Binary
 
-Status PreOrderTraverse(BiTree T, Status (*Visit)(ElemType e))
+Status PreOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
 {
     if (T)
     {
         if (Visit(T->data))
         {
-            if (PreOrderTraverse(T->lchild, Visit))
+            if (PreOrderTraverse_Binary(T->lchild, Visit))
             {
-                if (PreOrderTraverse(T->rchild, Visit))
+                if (PreOrderTraverse_Binary(T->rchild, Visit))
                 {
                     return OK;
                 }
@@ -104,9 +104,9 @@ Status PreOrderTraverse(BiTree T, Status (*Visit)(ElemType e))
     {
         return OK;
     }
-} // PreOrderTraverse
+} // PreOrderTraverse_Binary
 
-Status PreOrderTraverse2(BiTree T, Status (*Visit)(ElemType e))
+Status PreOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e))
 {
     SqStack S;
     InitStack(&S);
@@ -138,17 +138,17 @@ Status PreOrderTraverse2(BiTree T, Status (*Visit)(ElemType e))
     } // while
 
     return OK;
-} // PreOrderTraverse2
+} // PreOrderTraverse_Binary2
 
-Status InOrderTraverse(BiTree T, Status (*Visit)(ElemType e))
+Status InOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
 {
     if (T)
     {
-        if (InOrderTraverse(T->lchild, Visit))
+        if (InOrderTraverse_Binary(T->lchild, Visit))
         {
             if (Visit(T->data))
             {
-                if (InOrderTraverse(T->rchild, Visit))
+                if (InOrderTraverse_Binary(T->rchild, Visit))
                 {
                     return OK;
                 }
@@ -160,9 +160,9 @@ Status InOrderTraverse(BiTree T, Status (*Visit)(ElemType e))
     {
         return OK;
     }
-} // InOrderTraverse
+} // InOrderTraverse_Binary
 
-Status InOrderTraverse2(BiTree T, Status (*Visit)(ElemType e))
+Status InOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e))
 {
     // 初始化顺序栈.
     SqStack S;
@@ -195,15 +195,15 @@ Status InOrderTraverse2(BiTree T, Status (*Visit)(ElemType e))
     } // while
 
     return OK;
-} // InOrderTraverse2
+} // InOrderTraverse_Binary2
 
-Status PostOrderTraverse(BiTree T, Status (*Visit)(ElemType e))
+Status PostOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
 {
     if (T)
     {
-        if (PostOrderTraverse(T->lchild, Visit))
+        if (PostOrderTraverse_Binary(T->lchild, Visit))
         {
-            if (PostOrderTraverse(T->rchild, Visit))
+            if (PostOrderTraverse_Binary(T->rchild, Visit))
             {
                 if (Visit(T->data))
                 {
@@ -217,9 +217,9 @@ Status PostOrderTraverse(BiTree T, Status (*Visit)(ElemType e))
     {
         return OK;
     }
-} // PostOrderTraverse
+} // PostOrderTraverse_Binary
 
-Status PostOrderTraverse2(BiTree T, Status (*Visit)(ElemType e))
+Status PostOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e))
 {
     SqStack S;
     InitStack(&S);
@@ -273,7 +273,7 @@ Status PostOrderTraverse2(BiTree T, Status (*Visit)(ElemType e))
              * 否则栈顶元素出栈, 并访问.
              */
             /**
-             * @see LevelOrderTraverse(BiTree T, Status (*Visit)(ElemType e))
+             * @see LevelOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
              * 
              * 这里 Pop 中第二个参数是类型是 BiTNode **, 即指向 BiTNode 指针的指
              * 针, 并不是我需要修改栈中的存储的元素本身, 而是只用当指针 p 为 NULL
@@ -292,9 +292,9 @@ Status PostOrderTraverse2(BiTree T, Status (*Visit)(ElemType e))
     }
 
     return OK;
-} // PostOrderTraverse2
+} // PostOrderTraverse_Binary2
 
-Status LevelOrderTraverse(BiTree T, Status (*Visit)(ElemType e))
+Status LevelOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
 {
     // 初始化辅助队列.
     SqQueue Q;
@@ -304,9 +304,9 @@ Status LevelOrderTraverse(BiTree T, Status (*Visit)(ElemType e))
     EnQueue_Sq(&Q, *T);
 
     /**
-     * @see PostOrderTraverse2(BiTree T, Status (*Visit)(ElemType e))
+     * @see PostOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e))
      * 
-     * 层序遍历 LevelOrderTraverse() 中队列出队操作没有像出栈操作一样修该为传递
+     * 层序遍历 LevelOrderTraverse_Binary() 中队列出队操作没有像出栈操作一样修该为传递
      * 指针的指针, 原因是出队之前, 工作指针 p 未被初始化为 NULL, 算法也使得 p 不
      * 可能为 NULL, 所以在 DeQueue_Sq() 中, 子函数修改了已经指向某块内存的指针 (
      * 不管这个指针指向什么, 即使是指向初始化时的随机内存单元) 所指向的内容, 并
@@ -356,4 +356,4 @@ Status LevelOrderTraverse(BiTree T, Status (*Visit)(ElemType e))
     } // while
 
     return OK;
-} // LevelOrderTraverse
+} // LevelOrderTraverse_Binary
