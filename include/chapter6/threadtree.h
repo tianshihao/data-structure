@@ -81,6 +81,34 @@ Status PreOrderTraverse_Thread(ThreadTree T, Status (*Visit)(ElemType e));
 Status InOrderTraverse_Thread(ThreadTree T, Status (*Visit)(ElemType e));
 
 /**
+ * @brief 通过先序遍历建立先序线索二叉树的主过程算法.
+ * 
+ * @param T 线索二叉树.
+ * @param Head 线索二叉树头结点.
+ * @return OK 操作成功返回 OK.
+ * @return ERROR 操作失败返回 ERROR.
+ */
+Status PreOrderThreading(ThreadTree *T);
+
+/**
+ * @brief 先序线索化.
+ * 
+ * @param p 正在访问的结点.
+ * @param pre 刚刚访问过的结点.
+ */
+void PreThreading(ThreadTree p, ThreadNode **pre);
+
+/**
+ * @brief 先序线索化遍历, 通过建立的线索, 输出先序遍历的结果.
+ * 
+ * @param T 线索二叉树.
+ * @param Visit 应用函数.
+ * @return OK 操作成功返回 OK.
+ * @return ERROR 操作失败返回 ERROR.
+ */
+Status PreOrder(ThreadTree T, Status (*Visit)(ElemType e));
+
+/**
  * @brief 通过中序遍历建立中序线索二叉树的主过程算法.
  * 
  * @param T 线索二叉树.
@@ -98,7 +126,7 @@ Status InOrderThreading(ThreadTree *T);
  * 改进方法有两个, 设置全局变量 pre, 或者将函数参数改为传递 pre 的地址, 这样
  */
 /**
- * @brief 线索化.
+ * @brief 中序线索化.
  * 
  * @param p 正在访问的结点.
  * @param pre 刚刚访问过的结点.
@@ -106,7 +134,7 @@ Status InOrderThreading(ThreadTree *T);
 void InThreading(ThreadTree p, ThreadNode **pre);
 
 /**
- * @brief 通过建立的线索, 输出中序遍历的结果.
+ * @brief 中序线索化遍历, 通过建立的线索, 输出中序遍历的结果.
  * 
  * @param T 线索二叉树.
  * @param Visit 应用函数.
@@ -114,3 +142,31 @@ void InThreading(ThreadTree p, ThreadNode **pre);
  * @return ERROR 操作失败返回 ERROR.
  */
 Status InOrder(ThreadTree T, Status (*Visit)(ElemType e));
+
+/**
+ * @brief 通过后序遍历建立后序线索二叉树的主过程算法.
+ * 
+ * @param T 线索二叉树.
+ * @param Head 线索二叉树头结点.
+ * @return OK 操作成功返回 OK.
+ * @return ERROR 操作失败返回 ERROR.
+ */
+Status PostOrderThreading(ThreadTree *T);
+
+/**
+ * @brief 后序线索化.
+ * 
+ * @param p 正在访问的结点.
+ * @param pre 刚刚访问过的结点.
+ */
+void PostThreading(ThreadTree p, ThreadNode **pre);
+
+/**
+ * @brief 后序线索化遍历, 通过建立的线索, 输出后序遍历的结果.
+ * 
+ * @param T 线索二叉树.
+ * @param Visit 应用函数.
+ * @return OK 操作成功返回 OK.
+ * @return ERROR 操作失败返回 ERROR.
+ */
+Status PostOrder(ThreadTree T, Status (*Visit)(ElemType e));
