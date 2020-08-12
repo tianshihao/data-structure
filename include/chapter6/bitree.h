@@ -24,7 +24,6 @@ typedef struct BiTNode
 
 /**
  * @brief 构造一个空的二叉树 T. 其实就是将指向而差的的指针置空.
- * 
  * @param T 指向二叉树
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR.
@@ -34,7 +33,6 @@ Status InitTree_Binary(BiTree *T);
 /**
   @brief 按先序次序输入二叉树中结点的值, ^字符表示空树, 构造二叉链表表示的
  * 二叉树 T. 参考了
- * 
  * @param T 指向二叉树的指针.
  * @param path 存储二叉树序列的 .txt 文件的路径.
  * @return OK 操作成功返回 OK.
@@ -44,7 +42,6 @@ Status CreateBinaryTree(BiTree *T, const char *path);
 
 /**
  * @brief 从文件中先序次序读取二叉树序列, 递归地建立二叉树.
- * 
  * @param T pointer to binary tree.
  * @param fp 存储二叉树信息的文件.
  */
@@ -53,7 +50,6 @@ void CreateTree_Binary(BiTree *T, FILE *PreSeq);
 /**
  * @brief 采用二叉链表存储结构, Visit 是对结点操作的应用函数. 先序遍历二叉树 T,
  * 对每个结点调用函数 Visit 一次且仅一次. 一旦 Visit() 失败, 则操作失败.
- * 
  * @param T 非空二叉树.
  * @param Visit 应用函数.
  * @return OK 操作成功返回 OK.
@@ -63,7 +59,6 @@ Status PreOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e));
 
 /**
  * @brief 借助顺序栈, 非递归地先序遍历二叉树.
- * 
  * @param T 非空二叉树.
  * @param Visit 应用函数.
  * @return OK 操作成功返回 OK.
@@ -74,7 +69,6 @@ Status PreOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e));
 /**
  * @brief 采用二叉表存储结构, Visit 是对结操作的应用函数. 中序遍历二叉 T, 对每个
  * 结点调用函数 Visit 一次且仅一次. 一旦 Visit() 失败, 则操作失败.
- * 
  * @param T 非空二叉树.
  * @param Visit 应用函数.
  * @return OK 操作成功返回 OK.
@@ -84,7 +78,6 @@ Status InOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e));
 
 /**
  * @brief 借助顺序栈, 非递归地中序遍历二叉树.
- * 
  * @param T 非空二叉树.
  * @param Visit 应用函数.
  * @return OK 操作成功返回 OK.
@@ -95,7 +88,6 @@ Status InOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e));
 /**
  * @brief 采用二叉链表存储结构, Visit 是对结点操作的应用函数. 后序遍历二叉树 T,
  * 对每个结点调用函数 Visit 一次且仅一次. 一旦 Visit() 失败, 则操作失败.
- * 
  * @param T 非空二叉树.
  * @param Visit 应用函数.
  * @return OK 操作成功返回 OK.
@@ -105,7 +97,6 @@ Status PostOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e));
 
 /**
  * @brief 王道数据结构3, 借助顺序栈, 非递归地后序遍历二叉树.
- * 
  * @param T 非空二叉树.
  * @param Visit 应用函数.
  * @return OK 操作成功返回 OK.
@@ -115,7 +106,6 @@ Status PostOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e));
 
 /**
  * @brief 层序遍历二叉树.
- * 
  * @param T 非空二叉树.
  * @param Visit 应用函数.
  * @return OK 操作成功返回 OK.
@@ -125,10 +115,17 @@ Status LevelOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e));
 
 /**
  * @brief 王道数据结构4, 自下而上, 自右向左遍历二叉树.
- * 
+ * @note 调试没问题, 直接运行内存溢出.
  * @param T 非空二叉树.
  * @param Visit 应用函数.
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR.
  */
 Status InvertLevelTraverse_Binary(BiTree T, Status (*Visit)(ElemType e));
+
+/**
+ * @brief 王道数据结构5, 非递归算法求二叉树高度.
+ * @param T 非空二叉树.
+ * @return int 返回二叉树高度.
+ */
+int BiTreeDepth(BiTree T);

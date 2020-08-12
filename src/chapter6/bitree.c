@@ -400,3 +400,52 @@ Status InvertLevelTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
         return ERROR;
     }
 } // InvertLevelTraverse_Binary
+
+int BiTreeDepth(BiTree T)
+{
+    if (T != NULL)
+    {
+        SqQueue Q;
+        InitQueue_Sq(&Q);
+
+        EnQueue_Sq(&Q, *T);
+
+        // 二叉树高度.
+        int depth = 0;
+
+        // 工作指针.
+        BiTNode *p = T;
+
+        // 指针指向每层最右边结点在队列中的位置.
+        int last = Q.rear;
+
+        while (!QueueEmpty_Sq(Q))
+        {
+            DeQueue_Sq(&Q, p);
+
+            if (p->lchild != NULL)
+            {
+                EnQueue_Sq(&Q, *p->lchild);
+            }
+
+            if (p->rchild != NULL)
+            {
+                EnQueue_Sq(&Q, *p->rchild);
+            }
+
+            // 上一层元素都出队了.
+            if (Q.front == last)
+            {
+                depth++;
+                last = Q.rear;
+            }
+        }
+
+        return depth;
+    }
+    else
+    {
+        // 树空, 高度为 0.
+        return 0;
+    }
+} // BiTreeDepth
