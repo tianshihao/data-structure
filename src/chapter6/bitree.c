@@ -357,3 +357,46 @@ Status LevelOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
 
     return OK;
 } // LevelOrderTraverse_Binary
+
+Status InvertLevelTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
+{
+    if (T != NULL)
+    {
+        SqQueue Q;
+        InitQueue_Sq(&Q);
+        EnQueue_Sq(&Q, *T);
+
+        SqStack S;
+        InitStack(&S);
+
+        BiTNode *p = T;
+
+        while (!QueueEmpty_Sq(Q))
+        {
+            DeQueue_Sq(&Q, p);
+
+            Push(&S, *p);
+
+            if (p->lchild != NULL)
+            {
+                EnQueue_Sq(&Q, *p->lchild);
+            }
+
+            if (p->rchild != NULL)
+            {
+                EnQueue_Sq(&Q, *p->rchild);
+            }
+        } // while
+
+        while (!StackEmpty(S))
+        {
+            Pop(&S, &p);
+            Visit(p->data);
+        }
+        return OK;
+    }
+    else
+    {
+        return ERROR;
+    }
+} // InvertLevelTraverse_Binary

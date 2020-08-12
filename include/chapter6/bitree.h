@@ -104,7 +104,7 @@ Status InOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e));
 Status PostOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e));
 
 /**
- * @brief 借助顺序栈, 非递归地后序遍历二叉树.
+ * @brief 王道数据结构3, 借助顺序栈, 非递归地后序遍历二叉树.
  * 
  * @param T 非空二叉树.
  * @param Visit 应用函数.
@@ -122,3 +122,13 @@ Status PostOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e));
  * @return ERROR 操作失败返回 ERROR.
  */
 Status LevelOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e));
+
+/**
+ * @brief 王道数据结构4, 自下而上, 自右向左遍历二叉树.
+ * 
+ * @param T 非空二叉树.
+ * @param Visit 应用函数.
+ * @return OK 操作成功返回 OK.
+ * @return ERROR 操作失败返回 ERROR.
+ */
+Status InvertLevelTraverse_Binary(BiTree T, Status (*Visit)(ElemType e));
