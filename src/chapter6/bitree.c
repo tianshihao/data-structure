@@ -332,10 +332,12 @@ Status LevelOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
      */
 
     // 工作指针.
-    BiTNode *p;
-
     while (!QueueEmpty_Sq(Q))
     {
+        BiTNode *p = malloc(sizeof(BiTNode));
+        p->lchild = NULL;
+        p->rchild = NULL;
+
         // 队头结点出队.
         DeQueue_Sq(&Q, p);
 
@@ -449,3 +451,52 @@ int BiTreeDepth(BiTree T)
         return 0;
     }
 } // BiTreeDepth
+
+BiTree PreInCreate(ElemType *Pre, ElemType *In,
+                   int preL, int preR, int InL, int InR)
+{
+    // 创建根结点.
+    BiTree root = malloc(sizeof(BiTNode));
+
+    // 先序遍历序列第一个值是根结点的值.
+    root->data = Pre[preL];
+
+    // 在中序遍历序列中找到根结点的位置.
+    int i = InL;
+    while (In[i] != root->data)
+    {
+        ++i;
+    }
+
+    // 左子树长度
+    int leftLen = i - InL;
+
+    // 右子树长度
+    int rightLen = InR - i;
+
+    // 左子树不为空.
+    if (leftLen > 0)
+    {
+        root->lchild = PreInCreate(Pre, In,
+                                   preL + 1, preL + leftLen,
+                                   InL, InL + leftLen - 1);
+    }
+    else
+    {
+        root->lchild = NULL;
+    }
+
+    // 右子树不为空.
+    if (rightLen > 0)
+    {
+        root->rchild = PreInCreate(Pre, In,
+                                   preR - rightLen + 1, preR,
+                                   InR - rightLen + 1, InR);
+    }
+    else
+    {
+        root->rchild = NULL;
+    }
+
+    return root;
+} // PreInCreate

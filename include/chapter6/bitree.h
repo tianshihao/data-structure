@@ -129,3 +129,16 @@ Status InvertLevelTraverse_Binary(BiTree T, Status (*Visit)(ElemType e));
  * @return int 返回二叉树高度.
  */
 int BiTreeDepth(BiTree T);
+
+/**
+ * @brief 由先序遍历序列和中序遍历序列构建二叉树.
+ * @param pre 先序遍历序列.
+ * @param In 中序遍历学列.
+ * @param preL 先序遍历序列第一个结点下标.
+ * @param preR 先序遍历序列最后一个结点序列.
+ * @param InL 中序遍历序列第一个结点下标.
+ * @param InR 中序遍历序列最后一个结点序列.
+ * @return BiTree 构建好的二叉树.
+ */
+BiTree PreInCreate(ElemType *Pre, ElemType *In,
+                   int preL, int preR, int InL, int InR);
