@@ -45,14 +45,18 @@ void UseSqqueue()
     QElemType e;
 
     GetHead_Sq(Q, &e);
-    printf(">>>%d\n", e);
 
     DeQueue_Sq(&Q, &e);
 
     PrintQueue_Sq(Q);
-    GetHead_Sq(Q, &e);
+    // GetHead_Sq(Q, &e);
 
-    printf(">>>%d\n", e);
+    DestoryQueue_Sq(&Q);
+
+    SqQueue P;
+    InitQueue_Sq(&P);
+
+    DestoryQueue_Sq(&Q);
 
     return;
 }
