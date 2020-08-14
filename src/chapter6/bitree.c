@@ -545,3 +545,59 @@ Status Swap(BiTree T)
 
     return OK;
 } // Swap
+
+Status FindAncestor(BiTree T, ElemType x)
+{
+    // 临时的栈.
+    typedef struct stack
+    {
+        BiTNode *node;
+        int tag; // 标志域, 结点 *node 右子被访问 tag = 1, 否则为 0.
+    } stack;
+
+    // 算法本质是后序遍历过程, 所以栈的深度不会超过树的深度.
+    stack s[BiTreeDepth(T) + 1];
+    // 栈顶指针. 从 1 开始, 0 表示空栈.
+    int top = 0;
+
+    // 工作指针 p.
+    BiTNode *p = T;
+
+    while (p != NULL || top > 0)
+    {
+        // 一路向左, 将结点入栈.
+        while (p != NULL && p->data != x)
+        {
+            s[++top].node = p;
+            s[top].tag = 0;
+            p = p->lchild; // 向左.
+        }
+
+        // 如果找到了 x. 注意上面的循环出来时 p 可以为空, 还要判空.
+        if (p != NULL && p->data == x)
+        {
+            printf("the all ancestors of node %c is: ", x);
+            for (int i = 1; i <= top; ++i)
+            {
+                printf("%c%c", s[i].node->data, i == top ? '\n' : ',');
+            }
+            exit(OK);
+        }
+
+        // 退栈.
+        while (top > 0 && s[top].tag == 1)
+        {
+            top--;
+        }
+
+        // 沿着右分支向下遍历.
+        if (top != 0)
+        {
+            s[top].tag = 1;          // 栈顶元素右子被访问了.
+            p = s[top].node->rchild; // 跳到右子.
+        }
+
+    } // while (p != NULL || top > 0)
+
+    return ERROR;
+} // FindAncestor

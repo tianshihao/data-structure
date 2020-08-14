@@ -1,6 +1,6 @@
 ﻿/**
  * @file  : bitree.h
- * @brief : binary tree header.
+ * @brief : binary tree header. 这个二叉树的结点存储的是字符型变量, 方便输出查看.
  * @author: 田世豪
  * @date  : 2020-2-11
  * */
@@ -150,3 +150,12 @@ BiTree PreInCreate(ElemType *Pre, ElemType *In,
  * @return ERROR 操作失败返回 ERROR.
  */
 Status Swap(BiTree T);
+
+/**
+ * @brief 在二叉树中查找值为 x 的结点, 打印其所有祖先, 假定值为 x 的结点不止一个.
+ * @param T 二叉树.
+ * @param x 要寻找其祖先的结点.
+ * @return OK 操作成功返回 OK.
+ * @return ERROR 操作失败返回 ERROR.
+ */
+Status FindAncestor(BiTree T, ElemType x);

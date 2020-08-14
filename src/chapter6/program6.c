@@ -43,6 +43,11 @@ void UseBinaryTree()
 
     printf("depth = %d\n", BiTreeDepth(T));
 
+    InvertLevelTraverse_Binary(T, MyVisit);
+    printf("\n");
+
+    FindAncestor(T, 'E');
+
     // // printf("tree depth = %d\n", BiTreeDepth(T));
     // // printf("\n");
 
