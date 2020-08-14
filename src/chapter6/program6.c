@@ -18,15 +18,15 @@ Status MyVisit(ElemType e);
 
 int main()
 {
-    // UseBinaryTree();
+    UseBinaryTree();
 
     // int *p;
 
     // printf(">>>>>>>>>>> *p = %d <<<<<<<<<<<\n", *p);
 
-    // system("pause");
+    system("pause");
 
-    UseThreadTree();
+    // UseThreadTree();
 
     return 0;
 }
@@ -38,13 +38,20 @@ void UseBinaryTree()
 
     CreateBinaryTree(&T, "input1.txt");
 
-    LevelOrderTraverse_Binary(T, MyVisit);
+    // LevelOrderTraverse_Binary(T, MyVisit);
     printf("\n");
-    PreOrderTraverse_Binary(T, MyVisit);
-    printf("\n");
-    InOrderTraverse_Binary(T, MyVisit);
-    printf("\n");
-    PostOrderTraverse_Binary(T, MyVisit);
+
+    printf("depth = %d\n", BiTreeDepth(T));
+
+    // // printf("tree depth = %d\n", BiTreeDepth(T));
+    // // printf("\n");
+
+    // ElemType pre[5] = {'A', 'B', 'D', 'E', 'C'};
+    // ElemType in[5] = {'D', 'B', 'E', 'A', 'C'};
+
+    // BiTree T = PreInCreate(pre, in, 0, 4, 0, 4);
+
+    // LevelOrderTraverse_Binary(T, MyVisit);
 
     return;
 }

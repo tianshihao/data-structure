@@ -1,6 +1,6 @@
 ﻿/**
  * @file sqqueue.c
- * @author your name (you@domain.com)
+ * @author tianshihao
  * @brief 二叉树使用的队列.
  * @version 0.1
  * @date 2020-08-09
@@ -14,7 +14,7 @@
 Status InitQueue_Sq(SqQueue *Q)
 {
     //
-    Q->base = malloc(sizeof(MAX_SIZE * sizeof(QElemType)));
+    Q->base = (QElemType *)malloc(sizeof(MAX_SIZE * sizeof(QElemType)));
     if (!Q->base)
     {
         exit(OVERFLOW);
@@ -25,6 +25,13 @@ Status InitQueue_Sq(SqQueue *Q)
 
     return OK;
 } // InitQueue_Sq
+
+Status DeleteQueue_Sq(SqQueue *Q)
+{
+    free(Q->base);
+    Q->base = NULL;
+    return OK;
+} // DeleteQueue_Sq
 
 Status QueueEmpty_Sq(SqQueue Q)
 {
@@ -40,8 +47,9 @@ Status EnQueue_Sq(SqQueue *Q, QElemType e)
         return ERROR;
     }
 
+    memcpy(Q->base + Q->rear, &e, sizeof(e));
     // 新元素入队尾.
-    Q->base[Q->rear] = e;
+    // *(Q->base + Q->rear) = e;
 
     // 队尾指针进一.
     Q->rear = (Q->rear + 1) % MAX_SIZE;

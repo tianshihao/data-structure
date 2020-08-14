@@ -15,6 +15,7 @@
 #include <chapter6/bitree.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MAX_SIZE 100
 
@@ -37,6 +38,14 @@ typedef struct SqQueue
  * @param Q 指向空循环的指针.
  * */
 Status InitQueue_Sq(SqQueue *Q);
+
+/**
+ * @brief 删除队列, 释放其内存空间.
+ * @param Q 队列.
+ * @return OK 操作成功返回 OK.
+ * @return ERROR 操作失败返回 ERROR. 
+ */
+Status DeleteQueue_Sq(SqQueue *Q);
 
 /**
  * @brief 判队列空, 若循环队列 Q 为空返回 TRUE, 否则返回 FALSE.

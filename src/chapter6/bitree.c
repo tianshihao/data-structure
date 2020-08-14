@@ -331,12 +331,15 @@ Status LevelOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
      *
      */
 
-    // 工作指针.
+    // // 工作指针.
+
+    BiTNode *p;
+    // BiTNode *p = malloc(sizeof(BiTNode));
+    // p->lchild = NULL;
+    // p->rchild = NULL;
+
     while (!QueueEmpty_Sq(Q))
     {
-        BiTNode *p = malloc(sizeof(BiTNode));
-        p->lchild = NULL;
-        p->rchild = NULL;
 
         // 队头结点出队.
         DeQueue_Sq(&Q, p);
@@ -442,6 +445,10 @@ int BiTreeDepth(BiTree T)
                 last = Q.rear;
             }
         }
+
+        p = NULL;
+
+        DeleteQueue_Sq(&Q);
 
         return depth;
     }
