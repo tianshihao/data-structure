@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file sqqueue.c
  * @author tianshihao
  * @brief 二叉树使用的队列.
@@ -57,7 +57,7 @@ Status EnQueue_Sq(SqQueue *Q, QElemType e)
     return OK;
 } // EnQueue_Sq
 
-Status DeQueue_Sq(SqQueue *Q, QElemType *e)
+Status DeQueue_Sq(SqQueue *Q, QElemType **e)
 {
     // 如果队列为空.
     if (Q->front == Q->rear)
@@ -66,7 +66,11 @@ Status DeQueue_Sq(SqQueue *Q, QElemType *e)
     }
 
     // 队头元素出队.
-    *e = Q->base[Q->front];
+    /**
+     * 这么做的理由同 
+     * @see PostOrderTraverse_Binary2
+     */
+    *e = Q->base + Q->front;
 
     // 队头进一.
     Q->front = (Q->front + 1) % MAX_SIZE;

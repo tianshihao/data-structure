@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file bitree.c
  * @author tianshihao
  * @brief implementation of binary tree function.
@@ -333,7 +333,7 @@ Status LevelOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
 
     // // 工作指针.
 
-    BiTNode *p;
+    BiTNode *p = NULL;
     // BiTNode *p = malloc(sizeof(BiTNode));
     // p->lchild = NULL;
     // p->rchild = NULL;
@@ -342,7 +342,7 @@ Status LevelOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
     {
 
         // 队头结点出队.
-        DeQueue_Sq(&Q, p);
+        DeQueue_Sq(&Q, &p);
 
         // 访问出队结点.
         Visit(p->data);
@@ -378,7 +378,7 @@ Status InvertLevelTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
 
         while (!QueueEmpty_Sq(Q))
         {
-            DeQueue_Sq(&Q, p);
+            DeQueue_Sq(&Q, &p);
 
             Push(&S, *p);
 
@@ -426,7 +426,7 @@ int BiTreeDepth(BiTree T)
 
         while (!QueueEmpty_Sq(Q))
         {
-            DeQueue_Sq(&Q, p);
+            DeQueue_Sq(&Q, &p);
 
             if (p->lchild != NULL)
             {
@@ -448,7 +448,7 @@ int BiTreeDepth(BiTree T)
 
         p = NULL;
 
-        DeleteQueue_Sq(&Q);
+        // DeleteQueue_Sq(&Q);
 
         return depth;
     }
