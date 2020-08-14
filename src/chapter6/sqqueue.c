@@ -13,25 +13,33 @@
 
 Status InitQueue_Sq(SqQueue *Q)
 {
-    //
-    Q->base = (QElemType *)malloc(sizeof(MAX_SIZE * sizeof(QElemType)));
+    // 为顺序队列申请内存空间.
+    Q->base = (QElemType *)malloc(MAX_SIZE * sizeof(QElemType));
     if (!Q->base)
     {
         exit(OVERFLOW);
     }
 
-    //
+    // 初始化指针.
     Q->front = Q->rear = 0;
 
     return OK;
 } // InitQueue_Sq
 
-Status DeleteQueue_Sq(SqQueue *Q)
+Status DestoryQueue_Sq(SqQueue *Q)
 {
-    free(Q->base);
-    Q->base = NULL;
-    return OK;
-} // DeleteQueue_Sq
+    if (Q->base)
+    {
+        free(Q->base);
+        Q->base = NULL;
+        Q->front = Q->rear = 0;
+        return OK;
+    }
+    else
+    {
+        exit(ERROR);
+    }
+} // DestoryQueue_Sq
 
 Status QueueEmpty_Sq(SqQueue Q)
 {
@@ -47,9 +55,10 @@ Status EnQueue_Sq(SqQueue *Q, QElemType e)
         return ERROR;
     }
 
-    memcpy(Q->base + Q->rear, &e, sizeof(e));
+    // memcpy(Q->base + Q->rear, &e, sizeof(e));
     // 新元素入队尾.
-    // *(Q->base + Q->rear) = e;
+    // Q->base[Q->rear] = e;
+    *(Q->base + Q->rear) = e;
 
     // 队尾指针进一.
     Q->rear = (Q->rear + 1) % MAX_SIZE;

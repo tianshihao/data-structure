@@ -33,26 +33,30 @@ int main()
 
 void UseBinaryTree()
 {
-    // BiTree T;
-    // InitTree_Binary(&T);
+    BiTree T;
+    InitTree_Binary(&T);
 
-    // CreateBinaryTree(&T, "input1.txt");
+    CreateBinaryTree(&T, "input1.txt");
 
-    // LevelOrderTraverse_Binary(T, MyVisit);
-    // printf("\n");
+    LevelOrderTraverse_Binary(T, MyVisit);
+    printf("\n");
 
-    // printf("depth = %d\n", BiTreeDepth(T));
+    printf("depth = %d\n", BiTreeDepth(T));
 
     // // printf("tree depth = %d\n", BiTreeDepth(T));
     // // printf("\n");
 
-    ElemType pre[5] = {'A', 'B', 'D', 'E', 'C'};
-    ElemType in[5] = {'D', 'B', 'E', 'A', 'C'};
+    // ElemType pre[5] = {'A', 'B', 'D', 'E', 'C'};
+    // ElemType in[5] = {'D', 'B', 'E', 'A', 'C'};
 
-    BiTree T = PreInCreate(pre, in, 0, 4, 0, 4);
+    // BiTree T = PreInCreate(pre, in, 0, 4, 0, 4);
 
-    // printf("depth = %d\n", BiTreeDepth(T));
-    LevelOrderTraverse_Binary(T, MyVisit);
+    // // printf("depth = %d\n", BiTreeDepth(T));
+    // LevelOrderTraverse_Binary(T, MyVisit);
+    // printf("\n");
+    // Swap(T);
+    // LevelOrderTraverse_Binary(T, MyVisit);
+    // printf("\n");
 
     return;
 }

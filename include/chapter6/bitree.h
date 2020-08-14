@@ -142,3 +142,11 @@ int BiTreeDepth(BiTree T);
  */
 BiTree PreInCreate(ElemType *Pre, ElemType *In,
                    int preL, int preR, int InL, int InR);
+
+/**
+ * @brief 王道数据结构150/9, 交换所有结点的左右子树.
+ * @param T 二叉树.
+ * @return OK 操作成功返回 OK.
+ * @return ERROR 操作失败返回 ERROR.
+ */
+Status Swap(BiTree T);

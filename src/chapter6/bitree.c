@@ -360,7 +360,7 @@ Status LevelOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
         }
     } // while
 
-    DeleteQueue_Sq(&Q);
+    DestoryQueue_Sq(&Q);
 
     return OK;
 } // LevelOrderTraverse_Binary
@@ -450,7 +450,7 @@ int BiTreeDepth(BiTree T)
 
         p = NULL;
 
-        // DeleteQueue_Sq(&Q);
+        // DestoryQueue_Sq(&Q);
 
         return depth;
     }
@@ -509,3 +509,39 @@ BiTree PreInCreate(ElemType *Pre, ElemType *In,
 
     return root;
 } // PreInCreate
+
+Status Swap(BiTree T)
+{
+
+    // 两种写法均可.
+    // 1
+
+    if (T)
+    {
+        Swap(T->lchild);
+
+        Swap(T->rchild);
+
+        BiTNode *tmp = T->lchild;
+        T->lchild = T->rchild;
+        T->rchild = tmp;
+    }
+
+    // 2
+
+    // BiTNode *tmp = T->lchild;
+    // T->lchild = T->rchild;
+    // T->rchild = tmp;
+
+    // if (T->lchild)
+    // {
+    //     Swap(T->lchild);
+    // }
+
+    // if (T->rchild)
+    // {
+    //     Swap(T->rchild);
+    // }
+
+    return OK;
+} // Swap
