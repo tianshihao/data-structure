@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file bitree.c
  * @author tianshihao
  * @brief implementation of binary tree function.
@@ -359,6 +359,8 @@ Status LevelOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
             EnQueue_Sq(&Q, *p->rchild);
         }
     } // while
+
+    DeleteQueue_Sq(&Q);
 
     return OK;
 } // LevelOrderTraverse_Binary

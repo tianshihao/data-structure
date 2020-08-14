@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file sqqueue.h
  * @author tianshihao
  * @brief 二叉树用到的队列.
