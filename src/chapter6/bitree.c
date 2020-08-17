@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file bitree.c
  * @author tianshihao
  * @brief implementation of binary tree function.
@@ -581,7 +581,8 @@ Status FindAncestor(BiTree T, ElemType x)
             {
                 printf("%c%c", s[i].node->data, i == top ? '\n' : ',');
             }
-            exit(OK);
+            // exit(OK);
+            return OK;
         }
 
         // 退栈.
