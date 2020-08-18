@@ -101,6 +101,8 @@ Status PostOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e));
  * @param Visit 应用函数.
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR.
+ * @todo @see FindAncestor, @see FindCommonAncestor, 看是否能将这两个函数中的
+ * 退栈操作在本函数中找到, 如果能, 改写成明确的具有退栈操作的形式.
  */
 Status PostOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e));
 
