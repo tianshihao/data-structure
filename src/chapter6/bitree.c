@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file bitree.c
  * @author tianshihao
  * @brief implementation of binary tree function.
@@ -602,3 +602,87 @@ Status FindAncestor(BiTree T, ElemType x)
 
     return ERROR;
 } // FindAncestor
+
+BiTNode *FindCommonAncestor(BiTree T, BiTNode *p, BiTNode *q)
+{
+    // 临时的栈.
+    typedef struct stack
+    {
+        BiTNode *node;
+        int tag; // 标志域, 结点 *node 右子被访问 tag = 1, 否则为 0.
+    } stack;
+
+    // 算法本质是后序遍历过程, 所以栈的深度不会超过树的深度.
+    stack s[BiTreeDepth(T) + 1];
+    // 栈顶指针. 从 1 开始, 0 表示空栈.
+    int top = 0;
+
+    stack s1[BiTreeDepth(T) + 1];
+    int top1 = 0;
+
+    // 工作指针.
+    BiTNode *ptr = T;
+
+    while (ptr != NULL || top > 0)
+    {
+        // 沿着左子入栈.
+        // ? 书中答案这个外面的 while 是不是是错了?
+        // while (ptr != NULL && ptr != p && ptr != q)
+        {
+            while (ptr != NULL)
+            {
+                s[++top].node = ptr;
+                s[top].tag = 0;
+                ptr = ptr->lchild;
+            }
+        }
+
+        /**
+         * @see FindAncestor(BiTree T, ElemType x)
+         * 退栈, FindAncestor 中退栈上面的操作也可以向下面这样写到退栈循环里面,
+         * 先于 top-- 执行.
+         */
+        while (top > 0 && s[top].tag == 1)
+        {
+            // 找到了结点 p, 复制 s 即 p 的祖先到辅助栈 s1. 再继续寻找 q.
+            if (s[top].node == p)
+            {
+                for (int i = 1; i <= top; ++i)
+                {
+                    s1[i] = s[i];
+                }
+                top1 = top;
+            }
+
+            // 找到 q 时, 栈 s 中为 q 的祖先, 而 s1 中为 p 的祖先, 比较两个栈,
+            // 将 q 的祖先到 p 的祖先中去匹配, 第一个匹配的元素就是 p 和 q 的
+            // 最近公共祖先.
+            if (s[top].node == q)
+            {
+                for (int i = top; i > 0; --i)
+                {
+                    for (int j = top1; j > 0; --j)
+                    {
+                        if (s1[j].node == s[i].node)
+                        {
+                            return s[i].node;
+                        }
+                    }
+                }
+            }
+
+            // 后序遍历中到了访问根结点时, 其左右子均已被访问, 访问完根结点, 根
+            // 结点退栈.
+            top--;
+        } // while
+
+        // 访问右子树.
+        if (top != 0)
+        {
+            s[top].tag = 1;
+            ptr = s[top].node->rchild;
+        }
+    }
+
+    return NULL;
+} // FindCommonAncestor

@@ -152,10 +152,20 @@ BiTree PreInCreate(ElemType *Pre, ElemType *In,
 Status Swap(BiTree T);
 
 /**
- * @brief 在二叉树中查找值为 x 的结点, 打印其所有祖先, 假定值为 x 的结点不止一个.
+ * @brief 王道数据结构150/12, 在二叉树中查找值为 x 的结点, 打印其所有祖先, 假定
+ * 值为 x 的结点不多于一个.
  * @param T 二叉树.
  * @param x 要寻找其祖先的结点.
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR.
  */
 Status FindAncestor(BiTree T, ElemType x);
+
+/**
+ * @brief 王道数据结构150/13, 找到二叉树中任意两个结点的最近公共祖先.
+ * @param T 二叉树.
+ * @param p 指向二叉树结点的指针.
+ * @param q 指向二叉树结点的指针.
+ * @return BiTNode* 最近公共祖先.
+ */
+BiTNode *FindCommonAncestor(BiTree T, BiTNode *p, BiTNode *q);
