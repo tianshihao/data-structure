@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file bitree.c
  * @author tianshihao
  * @brief implementation of binary tree function.
@@ -461,8 +461,10 @@ int BiTreeDepth(BiTree T)
     }
 } // BiTreeDepth
 
-BiTree PreInCreate(ElemType *Pre, ElemType *In,
-                   int preL, int preR, int InL, int InR)
+BiTree PreInCreate(ElemType *Pre,
+                   int preL, int preR,
+                   ElemType *In,
+                   int InL, int InR)
 {
     // 创建根结点.
     BiTree root = malloc(sizeof(BiTNode));
@@ -486,8 +488,9 @@ BiTree PreInCreate(ElemType *Pre, ElemType *In,
     // 左子树不为空.
     if (leftLen > 0)
     {
-        root->lchild = PreInCreate(Pre, In,
+        root->lchild = PreInCreate(Pre,
                                    preL + 1, preL + leftLen,
+                                   In,
                                    InL, InL + leftLen - 1);
     }
     else
@@ -498,8 +501,9 @@ BiTree PreInCreate(ElemType *Pre, ElemType *In,
     // 右子树不为空.
     if (rightLen > 0)
     {
-        root->rchild = PreInCreate(Pre, In,
+        root->rchild = PreInCreate(Pre,
                                    preR - rightLen + 1, preR,
+                                   In,
                                    InR - rightLen + 1, InR);
     }
     else
@@ -576,7 +580,6 @@ Status FindAncestor(BiTree T, ElemType x)
         // 如果找到了 x. 注意上面的循环出来时 p 可以为空, 还要判空.
         if (p != NULL && p->data == x)
         {
-            printf("the all ancestors of node %c is: ", x);
             for (int i = 1; i <= top; ++i)
             {
                 printf("%c%c", s[i].node->data, i == top ? '\n' : ',');
@@ -737,14 +740,31 @@ int BiTreeWidth(BiTree T)
     }
 } // BiTreeWidth
 
-void PreToPost(ElemType *pre, int preL, int preR, ElemType *post, int postL, int postR)
+void PreToPost(ElemType *Pre,
+               int preL, int preR,
+               ElemType *Post,
+               int postL, int postR)
 {
     if (preR >= preL)
     {
+        // 满二叉树左右子树在遍历序列中的长度相等.
         int half = (preR - preL) / 2;
-        post[postR] = pre[preL];
-        PreToPost(pre, preL + 1, preL + half, post, postL, postL + half - 1);
-        PreToPost(pre, preL + half + 1, preR, post, postL + half, postR - 1);
+
+        Post[postR] = Pre[preL];
+
+        /**
+         * 即先序遍历序列的非根结点部分的二分遍历. 每次二分都需要挖去先序序列中
+         * 的最左边的元素 (即根结点), 且每次二分的长度都是上次的 1/2.
+         */
+        PreToPost(Pre,
+                  preL + 1, preL + half,
+                  Post,
+                  postL, postL + half - 1);
+
+        PreToPost(Pre,
+                  preL + half + 1, preR,
+                  Post,
+                  postL + half, postR - 1);
     }
 } // PreToPost
 

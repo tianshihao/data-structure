@@ -142,8 +142,10 @@ int BiTreeDepth(BiTree T);
  * @param InR 中序遍历序列最后一个结点序列.
  * @return BiTree 构建好的二叉树.
  */
-BiTree PreInCreate(ElemType *Pre, ElemType *In,
-                   int preL, int preR, int InL, int InR);
+BiTree PreInCreate(ElemType *Pre,
+                   int preL, int preR,
+                   ElemType *In,
+                   int InL, int InR);
 
 /**
  * @brief 王道数据结构150/9, 交换所有结点的左右子树.
@@ -182,15 +184,18 @@ int BiTreeWidth(BiTree T);
 
 /**
  * @brief 王道数据结构151/15, 由满二叉树的先序遍历序列得到其后续遍历序列.
- * @param pre 先序遍历序列.
- * @param l1 
- * @param r1 
- * @param post 后续遍历序列
- * @param l2 
- * @param r2 
+ * @param Pre 先序遍历序列.
+ * @param preL 
+ * @param preR 
+ * @param Post 后续遍历序列
+ * @param postL 
+ * @param postR 
  * @see PreInCreate
  */
-void PreToPost(ElemType *pre, int l1, int r1, ElemType *post, int l2, int r2);
+void PreToPost(ElemType *Pre,
+               int preL, int preR,
+               ElemType *Post,
+               int postL, int postR);
 
 /**
  * @brief 王道数据结构151/17, 判断两颗二叉树是否相似. 所谓二叉树相似是指 T1 和
