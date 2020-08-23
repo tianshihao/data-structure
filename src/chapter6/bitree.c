@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file bitree.c
  * @author tianshihao
  * @brief implementation of binary tree function.
@@ -686,3 +686,162 @@ BiTNode *FindCommonAncestor(BiTree T, BiTNode *p, BiTNode *q)
 
     return NULL;
 } // FindCommonAncestor
+
+int BiTreeWidth(BiTree T)
+{
+    if (T != NULL)
+    {
+        SqQueue Q;
+        InitQueue_Sq(&Q);
+
+        BiTNode *p = T;
+
+        EnQueue_Sq(&Q, *p);
+
+        int last = Q.rear;
+        int width = 0;
+        int maxWidth = 0;
+
+        while (!QueueEmpty_Sq(Q))
+        {
+            DeQueue_Sq(&Q, &p);
+
+            ++width;
+
+            if (p->lchild != NULL)
+            {
+                EnQueue_Sq(&Q, *p->lchild);
+            }
+
+            if (p->lchild != NULL)
+            {
+                EnQueue_Sq(&Q, *p->rchild);
+            }
+
+            if (last == Q.front)
+            {
+                last = Q.rear;
+                if (width > maxWidth)
+                {
+                    maxWidth = width;
+                }
+                width = 0;
+            }
+        }
+
+        return maxWidth;
+    }
+    else
+    {
+        return 0;
+    }
+} // BiTreeWidth
+
+void PreToPost(ElemType *pre, int preL, int preR, ElemType *post, int postL, int postR)
+{
+    if (preR >= preL)
+    {
+        int half = (preR - preL) / 2;
+        post[postR] = pre[preL];
+        PreToPost(pre, preL + 1, preL + half, post, postL, postL + half - 1);
+        PreToPost(pre, preL + half + 1, preR, post, postL + half, postR - 1);
+    }
+} // PreToPost
+
+Status Similar(BiTree T1, BiTree T2)
+{
+    if (T1 == NULL && T2 == NULL)
+    {
+        return TRUE;
+    }
+    else if (T1 == NULL || T2 == NULL)
+    {
+        return FALSE;
+    }
+    else
+    {
+        return Similar(T1->lchild, T2->lchild) && Similar(T1->rchild, T2->rchild);
+    }
+} // Similar
+
+int WPL(BiTree T)
+{
+    return WPLPreOrder(T, 1);
+} // WPL
+
+int WPLPreOrder(BiTree p, int depth)
+{
+    static int wpl = 0;
+
+    // 若是叶结点, 累计 wpl.
+    if (p->lchild == NULL && p->rchild == NULL)
+    {
+        wpl += depth * p->data;
+    }
+
+    // 若左子树不空, 则对左子树进行递归调用.
+    if (p->lchild != NULL)
+    {
+        WPLPreOrder(p->lchild, depth + 1);
+    }
+
+    // 若右子树不空, 则对右子树进行递归调用.
+    if (p->rchild != NULL)
+    {
+        WPLPreOrder(p->rchild, depth + 1);
+    }
+
+    return wpl;
+} // WPLPreOrder
+
+int WPLLevelOrder(BiTree T)
+{
+    // 顺序队列.
+    SqQueue Q;
+    InitQueue_Sq(&Q);
+
+    // 工作指针 p.
+    BiTNode *p = T;
+
+    // 根结点入队.
+    EnQueue_Sq(&Q, *p);
+
+    // 记录队尾指针, 用于判断一层是否遍历完毕.
+    int last = Q.rear;
+
+    // wpl.
+    int wpl = 0;
+
+    // 当前访问的叶结点深度. 根结点以入队, 所以初始深度为 1.
+    int depth = 1;
+
+    while (!QueueEmpty_Sq(Q))
+    {
+        DeQueue_Sq(&Q, &p);
+
+        // 找到叶子结点, 更新 wpl.
+        if (p->lchild == NULL && p->rchild == NULL)
+        {
+            wpl += depth * p->data;
+        }
+
+        if (p->lchild != NULL)
+        {
+            EnQueue_Sq(&Q, *p->lchild);
+        }
+
+        if (p->rchild != NULL)
+        {
+            EnQueue_Sq(&Q, *p->rchild);
+        }
+
+        if (last == Q.front)
+        {
+            ++depth;
+            last = Q.rear;
+        }
+    }
+
+    return wpl;
+
+} // WPLLevelOrder

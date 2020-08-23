@@ -171,3 +171,57 @@ Status FindAncestor(BiTree T, ElemType x);
  * @return BiTNode* 最近公共祖先.
  */
 BiTNode *FindCommonAncestor(BiTree T, BiTNode *p, BiTNode *q);
+
+/**
+ * @brief 王道数据结构150/14, 求二叉树的宽度. 即拥有结点最多的一层的结点数.
+ * @see LevelOrderTraverse_Binary
+ * @param T 非空二叉树.
+ * @return int 二叉树的宽度.
+ */
+int BiTreeWidth(BiTree T);
+
+/**
+ * @brief 王道数据结构151/15, 由满二叉树的先序遍历序列得到其后续遍历序列.
+ * @param pre 先序遍历序列.
+ * @param l1 
+ * @param r1 
+ * @param post 后续遍历序列
+ * @param l2 
+ * @param r2 
+ * @see PreInCreate
+ */
+void PreToPost(ElemType *pre, int l1, int r1, ElemType *post, int l2, int r2);
+
+/**
+ * @brief 王道数据结构151/17, 判断两颗二叉树是否相似. 所谓二叉树相似是指 T1 和
+ * T2 都是空树或都只有一个根结点; 或 T1 的左子树和 T2 的左子树时相似的, 且 T1 的
+ * 右子树和 T2 的右子树是相似的.
+ * @param T1 二叉树.
+ * @param T2 二叉树.
+ * @return TRUE T1 和 T2 相似.
+ * @return FALSE T1 和 T2 不相似. 
+ */
+Status Similar(BiTree T1, BiTree T2);
+
+/**
+ * @brief 以谍对先序遍历的方式计算二叉树的 WPL.
+ * @param T 二叉树.
+ * @return int WPL.
+ */
+int WPL(BiTree T);
+
+/**
+ * @brief 递归的方式计算 WPL.
+ * @param T 二叉树.
+ * @param depth 当前所在深度.
+ * @return int 
+ */
+int WPLPreOrder(BiTree T, int depth);
+
+/**
+ * @brief 以层序遍历的方式计算 WPL.
+ * @see BiTreeDepth.
+ * @param T 二叉树.
+ * @return int WPL.
+ */
+int WPLLevelOrder(BiTree T);
