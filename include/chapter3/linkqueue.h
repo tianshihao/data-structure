@@ -5,7 +5,8 @@
  * @date  : 2020-1-29
  */
 
-#pragma once
+#ifndef LINKQUEUE_H
+#define LINKQUEUE_H
 
 #include <chapter1/status.h>
 #include <stdio.h>
@@ -184,3 +185,5 @@ void PrintQueue_L(LinkQueue Q)
 
     return;
 } // PrintQueue_L
+
+#endif // LINKQUEUE_H

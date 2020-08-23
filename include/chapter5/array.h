@@ -5,9 +5,10 @@
  * @date  : 2020-1-30
  * ****************************************************************************/
 
-#include "predefconst.h"
+#ifndef ARRAT_H
+#define ARRAY_H
 
-#include <stdarg.h>
+#include <chapter1/status.h>
 
 typedef struct Array
 {
@@ -180,3 +181,5 @@ void PrintArray(Array A)
 {
     return;
 } // PrintArray
+
+#endif // ARRAY_H

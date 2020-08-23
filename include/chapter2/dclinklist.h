@@ -5,7 +5,8 @@
  * @date  : 2020-7-26
  * */
 
-#pragma once
+#ifndef DCLINKLIST_H
+#define DCLINKLIST_H
 
 #include <chapter1/status.h>
 #include <stdio.h>
@@ -90,3 +91,5 @@ void PrintList_DC(DCLinklist L);
  * @return FALSE 不对称.
  */
 Status Symmetry(DCLinklist L);
+
+#endif // DCLINKLIST_H

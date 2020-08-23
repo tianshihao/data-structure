@@ -5,7 +5,8 @@
  * @date  : 2020-1-25
  * */
 
-#pragma once
+#ifndef STATUS_H
+#define STATUS_H
 
 // 函数结果状态代码
 #define TRUE 1
@@ -18,3 +19,5 @@
 
 // Status 是函数的类型, 其值是函数结果状态代码
 typedef int Status;
+
+#endif // STATUS_H

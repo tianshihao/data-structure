@@ -9,7 +9,8 @@
  * 
  */
 
-#pragma once
+#ifndef THREADTREE_H
+#define THREADTREE_H
 
 #include <chapter1/status.h>
 #include <chapter6/bitree.h>
@@ -170,3 +171,5 @@ void PostThreading(ThreadTree p, ThreadNode **pre);
  * @return ERROR 操作失败返回 ERROR.
  */
 Status PostOrder(ThreadTree T, Status (*Visit)(ElemType e));
+
+#endif // THREADTREE_H

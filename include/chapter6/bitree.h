@@ -5,7 +5,8 @@
  * @date  : 2020-2-11
  * */
 
-#pragma once
+#ifndef BITREE_H
+#define BITREE_H
 
 #include <chapter1/status.h>
 #include <stdio.h>
@@ -230,3 +231,5 @@ int WPLPreOrder(BiTree T, int depth);
  * @return int WPL.
  */
 int WPLLevelOrder(BiTree T);
+
+#endif // BITREE_H

@@ -5,7 +5,8 @@
  * @date  : 2020-7-26
  * */
 
-#pragma once
+#ifndef DLINKLIST_H
+#define DLINKLIST_H
 
 #include <chapter1/status.h>
 #include <stdio.h>
@@ -95,3 +96,5 @@ int ListLength_DL(DLinklist L);
  * @param L 待打印双向链表.
  */
 void PrintList_DL(DLinklist L);
+
+#endif // DLINKLIST_H

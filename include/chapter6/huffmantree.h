@@ -5,10 +5,11 @@
  * @date    2020年4月28日
  * */
 
-#pragma once
+#ifndef HUFFMANTREE_H
+#define HUFFMANTREE_H
 
-#include "stdio.h"
-#include "stdlib.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 typedef struct HTNode
 {
@@ -86,3 +87,5 @@ void HuffmanCoding(HuffmanTree &HT, HuffmanCode &HC, int *w, int n)
     }
 
 } // HuffmanCoding
+
+#endif // HUFFMANTREE_H

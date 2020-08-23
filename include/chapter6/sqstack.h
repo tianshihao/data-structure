@@ -9,7 +9,8 @@
  * 
  */
 
-#pragma once
+#ifndef SQSTACK_H
+#define SQSTACK_H
 
 #include <chapter1/status.h>
 #include <chapter6/bitree.h>
@@ -87,3 +88,5 @@ Status DestoryStack(SqStack *S);
 
 //从栈底到栈顶依次对栈中的每个元素调用函数 visit(). 一旦 visit() 失败, 则操作失败.
 Status StackTraverse(SqStack S, Status (*visit)());
+
+#endif // SQSTACK_H

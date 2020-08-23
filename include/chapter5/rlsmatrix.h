@@ -5,9 +5,10 @@
  * @date  : 2020-2-6
  * ****************************/
 
-#pragma once
+#ifndef RLSMATRIX_H
+#define RLSMATRIX_H
 
-#include "predefconst.h"
+#include <chapter1/status.h>
 
 // 假设非零元个数的最大值为 12500
 #define MAX_SIZE 12500
@@ -147,3 +148,5 @@ Status MultSMatrix(RLSMatrix M, RLSMatrix N, RLSMatrix *Q)
 
     return OK;
 } // MultSMatrix
+
+#endif // RLSMATRIX_H

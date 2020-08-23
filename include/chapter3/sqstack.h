@@ -5,7 +5,8 @@
  * @date  : 2020-1-27
  */
 
-#pragma once
+#ifndef SQSTACK_H
+#define SQSTACK_H
 
 #include <chapter1/status.h>
 #include <stdio.h>
@@ -89,3 +90,5 @@ void conversion();
 
 // 括号匹配
 Status MatchBrackets();
+
+#endif // SQSTACK_H

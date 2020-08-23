@@ -5,9 +5,10 @@
  * @date  : 2020-2-6
  * ****************************/
 
-#pragma once
+#ifndef TSMATRIX_H
+#define TSMATRIX_H
 
-#include "predefconst.h"
+#include <chapter1/status.h>
 
 // 假设非零元个数的最大值为 12500
 #define MAX_SIZE
@@ -146,3 +147,5 @@ Status FastTransposeSMatrix(TSMatrix M, TSMatrix *T)
 
     return OK;
 } // FastTransposeSMatrix
+
+#endif // TSMATRIX_H

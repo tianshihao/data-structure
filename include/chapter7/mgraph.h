@@ -1,4 +1,7 @@
-﻿#include "predefconst.h"
+﻿#ifndef MGRAPH_H
+#define MGRAPH_H
+
+#include "predefconst.h"
 #include "sqqueue.h"
 #include <stdio.h>
 
@@ -292,3 +295,5 @@ void BFSTraverse(MGraph G, Status (*Visit)(int v))
 
     return;
 } // BFSTraverse
+
+#endif // MGRAPH_H

@@ -5,7 +5,8 @@
  * @date  : 2020-1-30
  */
 
-#pragma once
+#ifndef SQQUEUE_H
+#define SQQUEUE_H
 
 #include <chapter1/status.h>
 #include <stdio.h>
@@ -83,3 +84,5 @@ int QueueLength_Sq(SqQueue Q);
  * @return ERROR 打印失败.
  */
 Status PrintQueue_Sq(SqQueue Q);
+
+#endif // SQQUEUE_H

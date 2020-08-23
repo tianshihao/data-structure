@@ -1,4 +1,8 @@
-﻿#include "predefconst.h"
+﻿
+#ifndef ALGRAPH_H
+#define ALGRAPH_H
+
+#include "predefconst.h"
 #include "sqqueue.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -264,3 +268,5 @@ void BFSTraverse(ALGraph G, Status (*Visit)(int v))
 
     return;
 } // BFSTraverse
+
+#endif // ALGRAPH_H

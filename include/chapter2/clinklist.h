@@ -5,7 +5,8 @@
  * @date  : 2020-7-26
  * */
 
-#pragma once
+#ifndef CLINKLIST_H
+#define CLINKLIST_H
 
 #include <chapter1/status.h>
 #include <stdio.h>
@@ -91,3 +92,5 @@ void PrintList_C(CLinklist L);
  * @return OK 操作完成返回 OK.
  */
 Status DelAll(CLinklist *L);
+
+#endif // CLINKLIST_H

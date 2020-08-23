@@ -9,7 +9,8 @@
  * 
  */
 
-#pragma once
+#ifndef SQQUEUE_H
+#define SQQUEUE_H
 
 #include <chapter1/status.h>
 #include <chapter6/bitree.h>
@@ -86,3 +87,5 @@ int QueueLength_Sq(SqQueue Q);
  * @param Q 循环队列.
  */
 void PrintQueue_Sq(SqQueue Q);
+
+#endif // SQQUEUE_H

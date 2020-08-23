@@ -5,9 +5,10 @@
  * @date  : 2020-2-8
  * ****************************/
 
-#pragma once
+#ifndef GLLIST_H
+#define GLLIST_H
 
-#include "predefconst.h"
+#include <chapter1/status.h>
 
 typedef int AtomType;
 
@@ -40,3 +41,5 @@ typedef struct GLNode
     // 相当于线性链表的 next, 指向下一个元素结点
     struct GLNode *tp;
 } * GList;
+
+#endif // GLLIST_H

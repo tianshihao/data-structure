@@ -5,7 +5,8 @@
  * @date  : 2020-1-25
  * */
 
-#pragma once
+#ifndef LINKLIST_H
+#define LINKLIST_H
 
 #include <chapter1/status.h>
 #include <stdio.h>
@@ -217,3 +218,5 @@ Status ChangeList(Linklist *L);
 // // 已知单单向链表 La 和 Lb 的元素按值非递减排列.
 // // 归并 La 和 Lb 得到新的单单向链表 Lc, Lc 的元素也按值非线性递减排列.
 // Status MergeList_L(Linklist *La, Linklist *Lb, Linklist *Lc, Status (*compare)(ElemType, ElemType));
+
+#endif // LINKLIST_H
