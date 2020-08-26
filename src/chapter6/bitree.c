@@ -44,8 +44,10 @@ Status CreateBinaryTree(BiTree *T, const char *path)
     // 如果文件打开失败, 返回 ERROR.
     if (fp == NULL)
     {
+        printf("No such file %s\n", path);
         return ERROR;
     }
+    printf("Load binay tree from file %s.\n", path);
 
     // 传递的还是二叉树指针的指针.
     CreateTree_Binary(T, fp);

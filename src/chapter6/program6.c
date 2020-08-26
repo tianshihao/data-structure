@@ -24,10 +24,10 @@ int main()
 
     // printf(">>>>>>>>>>> *p = %d <<<<<<<<<<<\n", *p);
 
-    system("pause");
+    // system("pause");
 
     // UseThreadTree();
-
+    
     return 0;
 }
 
@@ -36,8 +36,7 @@ void UseBinaryTree()
     BiTree T;
     InitTree_Binary(&T);
 
-    printf("Load binay tree from file input1.txt.\n");
-    CreateBinaryTree(&T, "C:/Users/tianshihao/source/repos/input/input1.txt");
+    CreateBinaryTree(&T, "../input/input1.txt");
 
     printf("Traverse tree with level order.\n");
     LevelOrderTraverse_Binary(T, MyVisit);
