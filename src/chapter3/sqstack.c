@@ -154,7 +154,7 @@ Status MatchBrackets()
     InitStack(&S);
 
     char bracket_sequence[20] = "\0";
-    gets(bracket_sequence);
+    // gets(bracket_sequence);
 
     int len = sizeof(bracket_sequence) / sizeof(bracket_sequence[0]);
     for (int i = 0; (i < len) && (bracket_sequence[i] != '\0'); ++i)
