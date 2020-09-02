@@ -13,7 +13,7 @@
 #define SQSTACK_H
 
 #include <chapter1/status.h>
-#include <chapter6/bitree.h>
+#include <chapter6/binarytree/bitree.h>
 #include <stdio.h>
 #include <stdlib.h>
 

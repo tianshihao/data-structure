@@ -9,24 +9,28 @@
  * 
  */
 
-#include <chapter6/bitree.h>
-#include <chapter6/threadtree.h>
+#include <chapter6/binarytree/bitree.h>
+#include <chapter6/bstree/bstree.h>
+#include <chapter6/threadtree/threadtree.h>
 
 void UseBinaryTree();
 void UseThreadTree();
+void UseBinarySearchTree();
 Status MyVisit(ElemType e);
 
 int main()
 {
-    UseBinaryTree();
+    // UseBinaryTree();
 
     // int *p;
 
     // printf(">>>>>>>>>>> *p = %d <<<<<<<<<<<\n", *p);
 
-    system("pause");
+    // system("pause");
 
     // UseThreadTree();
+
+    UseBinarySearchTree();
 
     return 0;
 }
@@ -37,7 +41,7 @@ void UseBinaryTree()
     InitTree_Binary(&T);
 
     printf("Load binay tree from file input1.txt.\n");
-    CreateBinaryTree(&T, "C:/Users/tianshihao/source/repos/input/input1.txt");
+    CreateBinaryTree(&T, "../input/input1.txt");
 
     printf("Traverse tree with level order.\n");
     LevelOrderTraverse_Binary(T, MyVisit);
@@ -101,13 +105,34 @@ void UseThreadTree()
     ThreadTree T;
     InitTree_Thread(&T);
 
-    CreateThreadTree(&T, "input1.txt");
+    CreateThreadTree(&T, "../input/input1.txt");
 
     PreOrderTraverse_Thread(T, MyVisit);
 
     PreOrderThreading(&T);
 
     PreOrder(T, MyVisit);
+
+    return;
+}
+
+void UseBinarySearchTree()
+{
+    BSTree T;
+    InitTree_BS(&T);
+
+    BSTElem arr[8] = {53, 17, 78, 45, 9, 23, 87, 65};
+
+    CreateTree_BST(&T, arr, 8);
+
+    if (SearchElem(T, 87))
+    {
+        printf("found\n");
+    }
+    else
+    {
+        printf("not found\n");
+    }
 
     return;
 }

@@ -9,7 +9,7 @@
  * 
  */
 
-#include <chapter6/sqqueue.h>
+#include <chapter6/binarytree/sqqueue.h>
 
 Status InitQueue_Sq(SqQueue *Q)
 {

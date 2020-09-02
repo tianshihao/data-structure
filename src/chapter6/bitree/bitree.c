@@ -9,18 +9,12 @@
  *
  */
 
-#include <chapter6/bitree.h>
-#include <chapter6/sqqueue.h>
-#include <chapter6/sqstack.h>
+#include <chapter6/binarytree/bitree.h>
+#include <chapter6/binarytree/sqqueue.h>
+#include <chapter6/binarytree/sqstack.h>
 
 Status InitTree_Binary(BiTree *T)
 {
-    // *T 即为指向二叉树根结点的指针.
-    if (*T == NULL) // 若已经指向空, 操作失败, 报错.
-    {
-        return ERROR;
-    }
-
     *T = NULL; // 使得指针指向 NULL.
 
     return OK;
