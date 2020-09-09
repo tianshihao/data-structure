@@ -9,9 +9,9 @@
  *
  */
 
-#include <chapter6/binarytree/bitree.h>
-#include <chapter6/binarytree/sqqueue.h>
-#include <chapter6/binarytree/sqstack.h>
+#include <chapter6/bitree/bitree.h>
+#include <chapter6/bitree/sqqueue.h>
+#include <chapter6/bitree/sqstack.h>
 
 Status InitTree_Binary(BiTree *T)
 {
@@ -859,3 +859,71 @@ int WPLLevelOrder(BiTree T)
     return wpl;
 
 } // WPLLevelOrder
+
+char predt = 0;
+
+Status JudgeBST(BiTree T)
+{
+    if (T == NULL)
+    {
+        return TRUE;
+    }
+    else
+    {
+        // 判断左子树.
+        int left = JudgeBST(T->lchild);
+
+        // 如果左子树不是二叉排序树或者前驱结点即左子的值大于当前结点,
+        if (left == 0 || predt >= T->data)
+        {
+            // 则不是二叉排序树.
+            return FALSE;
+        }
+
+        // 更新前驱结点值.
+        predt = T->data;
+
+        // 判断右子树.
+        int right = JudgeBST(T->rchild);
+        // 返回右子树的结果.
+        return right;
+    }
+}
+
+Status JudgeAVL(BiTree T, int *height, int *balance)
+{
+    int lheight = 0, lbalance = 0, rheight = 0, rbalance = 0;
+
+    // 1. 若 T 为空, 则height = 0, balance = 1.
+    if (T == NULL)
+    {
+        *height = 0;
+        *balance = 1;
+    }
+    // 2. 仅有根结点, 则height = 1, balance = 1.
+    else if (T->lchild == NULL && T->rchild == NULL)
+    {
+        *height = 1;
+        *balance = 1;
+    }
+    // 3. 否则,对 T 的左右子树执行后续遍历递归算法, 返回左右子树的高度和平衡标记.
+    // T 的高度为最高子树的高度加 1. 若左右子树的高度差大于 1, 则 balance = 0;
+    // 若左右子树的高度差小于等于 1, 且左右子树都平衡时, balance = 1, 否则,
+    // balance = 0.
+    else
+    {
+        JudgeAVL(T->lchild, &lheight, &lbalance);
+        JudgeAVL(T->rchild, &rheight, &rbalance);
+
+        *height = (lheight > rheight ? lheight : rheight) + 1;
+
+        if (lheight - rheight < 2 || rheight - lheight < 2)
+        {
+            *balance = lbalance && rbalance;
+        }
+        else
+        {
+            *balance = 0;
+        }
+    }
+}

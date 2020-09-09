@@ -9,7 +9,7 @@
  * 
  */
 
-#include <chapter6/binarytree/bitree.h>
+#include <chapter6/bitree/bitree.h>
 #include <chapter6/bstree/bstree.h>
 #include <chapter6/threadtree/threadtree.h>
 
@@ -20,7 +20,7 @@ Status MyVisit(ElemType e);
 
 int main()
 {
-    // UseBinaryTree();
+    UseBinaryTree();
 
     // int *p;
 
@@ -30,7 +30,7 @@ int main()
 
     // UseThreadTree();
 
-    UseBinarySearchTree();
+    // UseBinarySearchTree();
 
     return 0;
 }
@@ -46,6 +46,20 @@ void UseBinaryTree()
     printf("Traverse tree with level order.\n");
     LevelOrderTraverse_Binary(T, MyVisit);
     printf("\n");
+
+    int height = 0;
+    int balance = 0;
+
+    JudgeAVL(T, &height, &balance);
+
+    if (balance == 1)
+    {
+        printf("This tree is a AVL tree.\n");
+    }
+    else
+    {
+        printf("This tree is not a AVL tree.\n");
+    }
 
     printf("Tree's height or depth is ");
     printf("%d\n", BiTreeDepth(T));

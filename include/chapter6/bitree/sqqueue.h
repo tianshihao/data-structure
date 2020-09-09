@@ -13,7 +13,7 @@
 #define SQQUEUE_H
 
 #include <chapter1/status.h>
-#include <chapter6/binarytree/bitree.h>
+#include <chapter6/bitree/bitree.h>
 #include <stdio.h>
 #include <stdlib.h>
 

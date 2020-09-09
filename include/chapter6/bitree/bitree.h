@@ -232,4 +232,25 @@ int WPLPreOrder(BiTree T, int depth);
  */
 int WPLLevelOrder(BiTree T);
 
+/**
+ * @brief 195/6, 给定一棵二叉树, 判定其是否为二叉排序树. 采用中序遍历递归算法.
+ * @param T 二叉树.
+ * @return TRUE 是二叉排序树.
+ * @return FALSE 不是二叉排序树.
+ */
+Status JudgeBST(BiTree T);
+
+/**
+ * @brief 195/8, 给定一棵二叉树, 判定其是否为平衡二叉树. 采用后续遍历递归算法.
+ * 还可以顺便求出高度.
+ * @param T 二叉树.
+ * @param height 二叉树的高度.
+ * @param balance 平衡标记.
+ * @return TRUE 是平衡二叉树.
+ * @return FALSE 不是平衡二叉树.
+ * @note AVL 树一般是一棵平衡的二叉排序树, 但是这里的 AVL 只注重平衡, 只是平衡二
+ * 叉树.
+ */
+Status JudgeAVL(BiTree T, int *height, int *balance);
+
 #endif // BITREE_H
