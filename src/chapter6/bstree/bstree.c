@@ -77,3 +77,23 @@ Status SearchElem(BSTree T, BSTElem e)
         return SearchElem(T->rchild, e);
     }
 }
+
+void Output(BSTree T, KeyType k)
+{
+    if (T == NULL)
+    {
+        return;
+    }
+    if (T->rchild != NULL)
+    {
+        Output(T->rchild, k);
+    }
+    if (T->data >= k)
+    {
+        printf("%d", T->data);
+    }
+    if (T->lchild != NULL)
+    {
+        Output(T->lchild, k);
+    }
+}

@@ -15,6 +15,7 @@
 #include <stdlib.h>
 
 typedef int BSTElem;
+typedef BSTElem KeyType;
 
 /**
  * @brief 二叉排序树结点.
@@ -60,5 +61,13 @@ Status CreateTree_BST(BSTree *T, BSTElem *str, int n);
  * @return ERROR 操作成功返回 ERROR. 
  */
 Status SearchElem(BSTree T, BSTElem e);
+
+/**
+ * @brief 王道 196/10, 从大到小输出二叉排序树中所有值不小于 k 的关键字. 先遍历
+ * 右子树, 再访问根结点, 后遍历左子树.
+ * @param T 二叉排序树.
+ * @param k 关键字.
+ */
+void Output(BSTree T, KeyType k);
 
 #endif // BSTREE_H

@@ -20,7 +20,7 @@ Status MyVisit(ElemType e);
 
 int main()
 {
-    UseBinaryTree();
+    // UseBinaryTree();
 
     // int *p;
 
@@ -30,7 +30,7 @@ int main()
 
     // UseThreadTree();
 
-    // UseBinarySearchTree();
+    UseBinarySearchTree();
 
     return 0;
 }
@@ -147,6 +147,9 @@ void UseBinarySearchTree()
     {
         printf("not found\n");
     }
+
+    // 从大到小输出值大于 k 的结点.
+    Output(T, 60);
 
     return;
 }
