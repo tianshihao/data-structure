@@ -9,7 +9,7 @@
  * 
  */
 
-#include <chapter6/threadtree.h>
+#include <chapter6/threadtree/threadtree.h>
 
 // 初始化线索二叉树, Thrt 是头节点.
 Status InitTree_Thread(ThreadTree *Thrt)

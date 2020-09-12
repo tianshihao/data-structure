@@ -13,9 +13,11 @@
 #define THREADTREE_H
 
 #include <chapter1/status.h>
-#include <chapter6/bitree.h>
+// #include <chapter6/bitree.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+typedef char ElemType;
 
 // Link == 0 表示指针, Thread == 1 表示线索.
 typedef enum PointerTag

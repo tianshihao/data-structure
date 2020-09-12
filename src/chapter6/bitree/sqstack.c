@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2020
  * 
  */
-#include <chapter6/sqstack.h>
+#include <chapter6/bitree/sqstack.h>
 
 Status InitStack(SqStack *S)
 {
