@@ -11,6 +11,7 @@
 #define MGRAPH_H
 
 #include <chapter1/status.h>
+#include <chapter7/mgraph/sqqueue.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -58,8 +59,8 @@ int FirstVex(MGraph G, VertexType v);
 int NextVex(MGraph G, VertexType v, int w);
 void PrintAdjMatrix(MGraph G);
 void DFSTraverse(MGraph G, Status (*Visit)(VertexType v));
-void DFS(MGraph, VertexType v, Status (*Visit)(VertexType v), int visited[]);
+void DFS(MGraph G, VertexType v, Status (*Visit)(VertexType v), int *visited);
 void BFSTraverse(MGraph G, Status (*Visit)(VertexType v));
-void BFS(MGraph M, VertexType v);
+void BFS(MGraph G, VertexType v, Status (*Visit)(VertexType v), int *visited, SqQueue *Q);
 
 #endif /* MGRAPH_H */

@@ -8,7 +8,6 @@
  */
 
 #include <chapter7/mgraph/mgraph.h>
-#include <chapter7/mgraph/sqqueue.h>
 
 Status CreateGraph_M(MGraph *G)
 {
@@ -199,7 +198,7 @@ void DFSTraverse(MGraph G, Status (*Visit)(VertexType v))
     return;
 }
 
-void DFS(MGraph G, VertexType v, Status (*Visit)(VertexType v), int visited[])
+void DFS(MGraph G, VertexType v, Status (*Visit)(VertexType v), int *visited)
 {
     visited[v] = TRUE;
 
@@ -233,41 +232,28 @@ void BFSTraverse(MGraph G, Status (*Visit)(VertexType v))
     // 队列中存放已经访问过但邻接结点未知的结点.
     InitQueue_Sq(&Q);
 
+    // 从 0 号顶点开始遍历.
     for (int v = 0; v < G.vexnum; ++v)
     {
+        /* 对每个连通分量调用一次 BFS. */
         if (!visited[v])
         {
-            visited[v] = TRUE;
-            Visit(G.vexs[v]);
-
-            // 结点 v 已经访问，将其入队
-            EnQueue_Sq(&Q, v);
-
-            while (!QueueEmpty_Sq(Q))
-            {
-                int u;
-
-                // 队头元素出队并置为u
-                DeQueue_Sq(&Q, &u);
-
-                // 访问已被访问过的结点 u 的邻接点
-                for (int w = FirstVex(G, u); w != 0; w = NextVex(G, u, w))
-                {
-                    if (!visited[w])
-                    {
-                        visited[w] = TRUE;
-                        Visit(G.vexs[w]);
-
-                        EnQueue_Sq(&Q, w);
-                    }
-                }
-            }
-        } // if
+            /* vi 未访问过, 从 vi 开始 BFS. */
+            BFS(G, v, Visit, visited, &Q);
+        }
     }
 
     return;
 }
 
-void BFS(MGraph M, VertexType v)
+void BFS(MGraph G, VertexType v, Status (*Visit)(VertexType v), int *visited, SqQueue *Q)
 {
+    Visit(v);
+    visited[v] = TRUE;
+    EnQueue_Sq(Q, v);
+
+    while (!QueueEmpty_Sq(*Q))
+    {
+        DeQueue_Sq(Q, &v);
+    }
 }
