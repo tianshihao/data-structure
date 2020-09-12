@@ -44,7 +44,7 @@ Status CreateDG_M(MGraph *G)
         scanf("%d", (&G->vexs[i]));
     }
 
-    // 初始化有向图.
+    /* 初始化有向图. */
     for (int i = 0; i < G->vexnum; ++i)
     {
         for (int j = 0; j < G->vexnum; ++j)
@@ -130,32 +130,35 @@ VertexType LocateVex(MGraph G, VertexType v)
     return 0;
 }
 
-// 在图 G 中寻找顶点 v 的第一个邻接点
 int FirstVex(MGraph G, VertexType v)
 {
     for (int i = 0; i < G.vexnum; ++i)
     {
-        if (G.arcs[v][i].adj != INFINITY)
+        /* 若 v 和 i 之间既相连通, 权值也不为无穷. */
+        if (G.arcs[v][i].adj != 0 && G.arcs[v][i].adj != INFINITY)
         {
+            /* 则返回顶点 i. */
             return i;
         }
     }
 
-    return ERROR;
+    return 0;
 }
 
-// 在图 G 中，寻找顶点 v 的下一个邻接点
 int NextVex(MGraph G, VertexType v, int w)
 {
+    /* 在顶点 v 的临接结点中找 w 之后的临接结点. */
     for (int i = w + 1; i < G.vexnum; ++i)
     {
-        if (G.arcs[v][i].adj != INFINITY)
+        /* 若 v 和 i 之间既相连通, 权值也不为无穷. */
+        if (G.arcs[v][i].adj != 0 && G.arcs[v][i].adj != INFINITY)
         {
+            /* 则返回顶点 i. */
             return i;
         }
     }
 
-    return ERROR;
+    return 0;
 }
 
 void PrintAdjMatrix(MGraph G)
@@ -178,61 +181,24 @@ void PrintAdjMatrix(MGraph G)
     }
 }
 
-void DFSTraverse(MGraph G, Status (*Visit)(VertexType v))
-{
-    int visited[G.vexnum];
-
-    for (int i = 0; i < G.vexnum; ++i)
-    {
-        visited[i] = FALSE;
-    }
-
-    for (int v = 0; v < G.vexnum; ++v)
-    {
-        if (!visited[v])
-        {
-            DFS(G, v, Visit, visited);
-        }
-    }
-
-    return;
-}
-
-void DFS(MGraph G, VertexType v, Status (*Visit)(VertexType v), int *visited)
-{
-    visited[v] = TRUE;
-
-    Visit(G.vexs[v]);
-
-    for (int w = FirstVex(G, v); w != 0; w = NextVex(G, v, w))
-    {
-        if (!visited[w])
-        {
-            DFS(G, w, Visit, visited);
-        }
-    }
-
-    return;
-}
-
 void BFSTraverse(MGraph G, Status (*Visit)(VertexType v))
 {
-    // 设置辅助数组, 标记顶点是否被访问.
+    /* 设置辅助数组, 标记顶点是否被访问. */
     int visited[G.vexnum];
 
-    // 初始化辅助数组.
+    /* 初始化辅助数组. */
     for (int i = 0; i < G.vexnum; ++i)
     {
         visited[i] = FALSE;
     }
 
-    // 顺序队列.
+    /* 顺序队列. */
     SqQueue Q;
 
-    // 队列中存放已经访问过但邻接结点未知的结点.
+    /* 队列中存放已经访问过但邻接结点未知的结点. */
     InitQueue_Sq(&Q);
 
-    // 从 0 号顶点开始遍历.
+    /* 从 0 号顶点开始遍历. */
     for (int v = 0; v < G.vexnum; ++v)
     {
         /* 对每个连通分量调用一次 BFS. */
@@ -248,12 +214,84 @@ void BFSTraverse(MGraph G, Status (*Visit)(VertexType v))
 
 void BFS(MGraph G, VertexType v, Status (*Visit)(VertexType v), int *visited, SqQueue *Q)
 {
-    Visit(v);
+    /* 访问初始顶点 v.*/
+    Visit(G.vexs[v]);
+
+    /* 对 v 做已访问标记. */
     visited[v] = TRUE;
+
+    /* 顶点 v 入队列.*/
     EnQueue_Sq(Q, v);
 
     while (!QueueEmpty_Sq(*Q))
     {
+        /* 顶点 v 出队列.*/
         DeQueue_Sq(Q, &v);
+
+        /* 检测 v 的所有邻接点. */
+        for (VertexType w = FirstVex(G, v); w != 0; w = NextVex(G, v, w))
+        {
+            /* w 为 v 的尚未访问的邻接点. */
+            if (!visited[w])
+            {
+                /* 访问顶点 w. */
+                Visit(G.vexs[v]);
+
+                /* 对 w 做已访问标记. */
+                visited[w] = TRUE;
+
+                /* 顶点 w 入队列. */
+                EnQueue_Sq(Q, w);
+            }
+        }
     }
+
+    return;
+}
+
+void DFSTraverse(MGraph G, Status (*Visit)(VertexType v))
+{
+    /* 设置辅助数组, 标记顶点是否被访问. */
+    int visited[G.vexnum];
+
+    /* 初始化辅助数组. */
+    for (int i = 0; i < G.vexnum; ++i)
+    {
+        visited[i] = FALSE;
+    }
+
+    /* 从 0 号顶点开始遍历. */
+    for (int v = 0; v < G.vexnum; ++v)
+    {
+        /* 对每个连通分量调用一次 DFS. */
+        if (!visited[v])
+        {
+            /* vi 未访问过, 从 vi 开始 DFS. */
+            DFS(G, v, Visit, visited);
+        }
+    }
+
+    return;
+}
+
+void DFS(MGraph G, VertexType v, Status (*Visit)(VertexType v), int *visited)
+{
+    /* 访问初始顶点 v. */
+    Visit(G.vexs[v]);
+
+    /* 对 v 做已访问标记. */
+    visited[v] = TRUE;
+
+    /* 检测 v 的所有邻接点. */
+    for (int w = FirstVex(G, v); w != 0; w = NextVex(G, v, w))
+    {
+        /* w 为 v 尚未访问过的邻接点. */
+        if (!visited[w])
+        {
+            /* w 未访问过, 从 w 开始 DFS. */
+            DFS(G, w, Visit, visited);
+        }
+    }
+
+    return;
 }

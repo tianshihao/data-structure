@@ -55,7 +55,7 @@ void ReadGraph(MGraph *G)
     return;
 } // ReadGraph
 
-Status Visit(int i)
+Status Visit(VertexType i)
 {
     printf("%d ", i);
 
