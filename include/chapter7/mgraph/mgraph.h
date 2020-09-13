@@ -135,7 +135,7 @@ void PrintAdjMatrix(MGraph G);
  * @param G 图.
  * @param Visit 访问函数.
  */
-void BFSTraverse(MGraph G, Status (*Visit)(VertexType v));
+void BFSTraverse_M(MGraph G, Status (*Visit)(VertexType v));
 
 /**
  * @brief 从顶点 v 出发, 广度优先遍历图 G.
@@ -152,7 +152,7 @@ void BFS(MGraph G, VertexType v, Status (*Visit)(VertexType v), int *visited, Sq
  * @param G 图.
  * @param Visit 访问函数.
  */
-void DFSTraverse(MGraph G, Status (*Visit)(VertexType v));
+void DFSTraverse_M(MGraph G, Status (*Visit)(VertexType v));
 
 /**
  * @brief 从顶点 v 出发, 深度优先遍历图 G.

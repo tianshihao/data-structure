@@ -29,8 +29,8 @@ void UseMgraph()
 
     PrintAdjMatrix(G);
 
-    DFSTraverse(G, Visit);
-    BFSTraverse(G, Visit);
+    DFSTraverse_M(G, Visit);
+    BFSTraverse_M(G, Visit);
 
     return;
 }

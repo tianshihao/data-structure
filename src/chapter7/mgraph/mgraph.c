@@ -81,7 +81,7 @@ Status CreateUDG_M(MGraph *G)
     printf("Enter arc number of graph: ");
     scanf("%d", &G->arcnum);
 
-    printf("Enter vertex vector of graph: ");
+    printf("Enter vertex vector of graph (e.g. 1 2 3 4 or 0 1 2 3 4): ");
     for (int i = 0; i < G->vexnum; ++i)
     {
         scanf("%d", &G->vexs[i]);
@@ -95,7 +95,7 @@ Status CreateUDG_M(MGraph *G)
         }
     }
 
-    printf("Enter vertex relation:\n");
+    printf("Enter vertex relation (e.g. 2 3 1, means vertex 2 relate to vertex 3 and arc's weight is 1.): \n");
     for (int k = 0; k < G->arcnum; ++k)
     {
         int v1, v2, weight;
@@ -183,7 +183,7 @@ void PrintAdjMatrix(MGraph G)
     }
 }
 
-void BFSTraverse(MGraph G, Status (*Visit)(VertexType v))
+void BFSTraverse_M(MGraph G, Status (*Visit)(VertexType v))
 {
     /* 设置辅助数组, 标记顶点是否被访问. */
     int visited[G.vexnum];
@@ -251,7 +251,7 @@ void BFS(MGraph G, VertexType v, Status (*Visit)(VertexType v), int *visited, Sq
     return;
 }
 
-void DFSTraverse(MGraph G, Status (*Visit)(VertexType v))
+void DFSTraverse_M(MGraph G, Status (*Visit)(VertexType v))
 {
     /* 设置辅助数组, 标记顶点是否被访问. */
     int visited[G.vexnum];

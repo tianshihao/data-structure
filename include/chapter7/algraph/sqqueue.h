@@ -3,7 +3,7 @@
  * @author tianshihao4944@126.com
  * @brief 顺序循环队列.
  * @version 0.1
- * @date 2020-09-12
+ * @date 2020-09-13
  * @copyright Copyright (c) 2020
  */
 
@@ -11,7 +11,6 @@
 #define SQQUEUE_H
 
 #include <chapter1/status.h>
-#include <chapter7/algraph/sqqueue.h>
 #include <stdio.h>
 #include <stdlib.h>
 
