@@ -22,8 +22,6 @@ Status InitQueue_Sq(SqQueue *Q)
     // 初始化指针.
     Q->front = Q->rear = 0;
 
-    printf("[debug] Initialize sequence queue.\n");
-
     return OK;
 } // InitQueue_Sq
 
@@ -34,13 +32,11 @@ Status DestoryQueue_Sq(SqQueue *Q)
         free(Q->base);
         Q->base = NULL;
         Q->front = Q->rear = 0;
-        printf("[debug] Destory sequence queue successfully.\n");
         return OK;
     }
     else
     {
-        printf("[debug] Destory sequence queue failed.\n");
-        exit(ERROR);
+        return ERROR;
     }
 } // DestoryQueue_Sq
 
@@ -65,8 +61,6 @@ Status EnQueue_Sq(SqQueue *Q, QElemType e)
     // 队尾指针进一.
     Q->rear = (Q->rear + 1) % MAX_SIZE;
 
-    printf("[debug] %d enqueue.\n", e);
-
     return OK;
 } // EnQueue_Sq
 
@@ -84,8 +78,6 @@ Status DeQueue_Sq(SqQueue *Q, QElemType *e)
     // 队头进一.
     Q->front = (Q->front + 1) % MAX_SIZE;
 
-    printf("[debug] %d equeue.\n", *e);
-
     return OK;
 } // DeQueue_Sq
 
@@ -97,8 +89,6 @@ Status GetHead_Sq(SqQueue Q, QElemType *e)
     }
 
     *e = Q.base[Q.front];
-
-    printf("[debug] Get head of queue, it is %d.\n", *e);
 
     return OK;
 } // GetHead_Sq
@@ -115,7 +105,6 @@ Status PrintQueue_Sq(SqQueue Q)
         exit(ERROR);
     }
 
-    printf("[debug] Print sequence queue:\n");
     printf("        <-front ");
 
     int p = Q.front;

@@ -29,24 +29,33 @@ typedef enum GraphType
     UDN  /* Undinet, 无向网/无向带权图. */
 } GraphType;
 
-typedef int VRType; /* vertex relation type. */
+/**
+ * @brief 顶点关系类型/权值数据类型.
+ */
+typedef int ArcType;
 
+/**
+ * @brief 顶点类型.
+ */
 typedef int VertexType;
 
 /**
- * @brief 弧.
+ * @brief 弧/边, 临接矩阵存储单元.
  */
 typedef struct ArcCell
 {
-    VRType adj;
+    ArcType adj;
 } ArcCell, AdjMatrix[MAX_VERTEX_NUM][MAX_VERTEX_NUM];
 
+/**
+ * @brief 临接矩阵.
+ */
 typedef struct MGraph
 {
-    VertexType vexs[MAX_VERTEX_NUM]; /* vertex vector */
-    AdjMatrix arcs;                  /* adjacency matrix */
-    int vexnum, arcnum;
-    GraphType type;
+    VertexType vexs[MAX_VERTEX_NUM]; /* vertex vector, 顶点向量, 顶点表 */
+    AdjMatrix arcs;                  /* adjacency matrix, 临接矩阵. */
+    int vexnum, arcnum;              /* 顶点数, 弧数. */
+    GraphType type;                  /* 图类型. */
 } MGraph;
 
 /**
@@ -98,7 +107,7 @@ Status CreateUDN_M(MGraph *G);
 VertexType LocateVex(MGraph G, VertexType v);
 
 /**
- * @brief 在图 G 中寻找顶点 v 的第一个邻接点
+ * @brief 在图 G 中寻找顶点 v 的第一个邻接点, 没有则返回 -1.
  * @param G 图.
  * @param v 顶点.
  * @return VertexType 顶点 v 的第一个邻接点.
@@ -107,7 +116,7 @@ VertexType FirstVex(MGraph G, VertexType v);
 
 /**
  * @brief 在图 G 中，寻找顶点 v 相对于 w 的下一个邻接点. 若 w 是 v 的最后一个
- * 临接结点, 则返回空.
+ * 临接结点, 则返回 -1.
  * @param G 图.
  * @param v 当前顶点.
  * @param w 下一个顶点.

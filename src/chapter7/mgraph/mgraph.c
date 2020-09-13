@@ -130,8 +130,9 @@ VertexType LocateVex(MGraph G, VertexType v)
     return 0;
 }
 
-int FirstVex(MGraph G, VertexType v)
+VertexType FirstVex(MGraph G, VertexType v)
 {
+    /* 检查邻接矩阵的第 v 行. */
     for (int i = 0; i < G.vexnum; ++i)
     {
         /* 若 v 和 i 之间既相连通, 权值也不为无穷. */
@@ -142,12 +143,13 @@ int FirstVex(MGraph G, VertexType v)
         }
     }
 
-    return 0;
+    return -1;
 }
 
-int NextVex(MGraph G, VertexType v, int w)
+VertexType NextVex(MGraph G, VertexType v, int w)
 {
     /* 在顶点 v 的临接结点中找 w 之后的临接结点. */
+    /* 搜索临接矩阵第 v 行. */
     for (int i = w + 1; i < G.vexnum; ++i)
     {
         /* 若 v 和 i 之间既相连通, 权值也不为无穷. */
@@ -158,7 +160,7 @@ int NextVex(MGraph G, VertexType v, int w)
         }
     }
 
-    return 0;
+    return -1;
 }
 
 void PrintAdjMatrix(MGraph G)
@@ -214,7 +216,7 @@ void BFSTraverse(MGraph G, Status (*Visit)(VertexType v))
 
 void BFS(MGraph G, VertexType v, Status (*Visit)(VertexType v), int *visited, SqQueue *Q)
 {
-    /* 访问初始顶点 v.*/
+    /* 访问初始顶点 v. */
     Visit(G.vexs[v]);
 
     /* 对 v 做已访问标记. */
@@ -229,13 +231,13 @@ void BFS(MGraph G, VertexType v, Status (*Visit)(VertexType v), int *visited, Sq
         DeQueue_Sq(Q, &v);
 
         /* 检测 v 的所有邻接点. */
-        for (VertexType w = FirstVex(G, v); w != 0; w = NextVex(G, v, w))
+        for (VertexType w = FirstVex(G, v); w >= 0; w = NextVex(G, v, w))
         {
             /* w 为 v 的尚未访问的邻接点. */
             if (!visited[w])
             {
                 /* 访问顶点 w. */
-                Visit(G.vexs[v]);
+                Visit(G.vexs[w]);
 
                 /* 对 w 做已访问标记. */
                 visited[w] = TRUE;
@@ -283,7 +285,7 @@ void DFS(MGraph G, VertexType v, Status (*Visit)(VertexType v), int *visited)
     visited[v] = TRUE;
 
     /* 检测 v 的所有邻接点. */
-    for (int w = FirstVex(G, v); w != 0; w = NextVex(G, v, w))
+    for (int w = FirstVex(G, v); w >= 0; w = NextVex(G, v, w))
     {
         /* w 为 v 尚未访问过的邻接点. */
         if (!visited[w])
