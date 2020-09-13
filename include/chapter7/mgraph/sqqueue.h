@@ -20,13 +20,13 @@ typedef int QElemType;
 
 typedef struct SqQueue
 {
-    // 初始化的动态分配存储空间
+    /* 初始化的动态分配存储空间. */
     QElemType *base;
 
-    // 头指针, 若队列不空, 指向队头元素
+    /* 头指针, 若队列不空, 指向队头元素. */
     int front;
 
-    // 尾指针, 若队列不空, 指向队尾元素的下一位置
+    /* 尾指针, 若队列不空, 指向队尾元素的下一位置. */
     int rear;
 } SqQueue;
 
@@ -87,4 +87,4 @@ int QueueLength_Sq(SqQueue Q);
  */
 Status PrintQueue_Sq(SqQueue Q);
 
-#endif // SQQUEUE_H
+#endif /* SQQUEUE_H */

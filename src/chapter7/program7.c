@@ -30,7 +30,7 @@ void UseMgraph()
     PrintAdjMatrix(G);
 
     DFSTraverse(G, Visit);
-    // BFSTraverse(G, Visit);
+    BFSTraverse(G, Visit);
 
     return;
 }
@@ -44,7 +44,7 @@ void WriteGraph(MGraph *G)
     fclose(fp);
 
     return;
-} // WriteGraph
+}
 
 void ReadGraph(MGraph *G)
 {
@@ -53,7 +53,7 @@ void ReadGraph(MGraph *G)
     fread(G, sizeof(*G), 1, fp);
 
     return;
-} // ReadGraph
+}
 
 Status Visit(VertexType i)
 {

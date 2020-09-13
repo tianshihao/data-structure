@@ -40,7 +40,7 @@ typedef int ArcType;
 typedef int VertexType;
 
 /**
- * @brief 弧/边, 临接矩阵存储单元.
+ * @brief 弧/边, 临接矩阵存储单元. 不存在权值为负的边.
  */
 typedef struct ArcCell
 {
