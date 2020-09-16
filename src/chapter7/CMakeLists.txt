@@ -8,4 +8,5 @@ set_target_properties(program7 PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINA
 target_link_libraries(program7
     PUBLIC
     mgraph
+    algraph
 )

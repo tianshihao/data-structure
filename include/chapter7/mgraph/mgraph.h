@@ -11,23 +11,16 @@
 #define MGRAPH_H
 
 #include <chapter1/status.h>
+#include <chapter7/graphtype.h>
 #include <chapter7/mgraph/sqqueue.h>
 #include <stdio.h>
 #include <stdlib.h>
 
+/* 定义最大值. */
 #define INFINITY __INT_MAX__
-#define MAX_VERTEX_NUM 20
 
-/**
- * @brief 图的类型.
- */
-typedef enum GraphType
-{
-    DG,  /* Digraph, 有向图. */
-    DN,  /* Dinet, 有向网/有向带权图. */
-    UDG, /* Undigraph, 无向图. */
-    UDN  /* Undinet, 无向网/无向带权图. */
-} GraphType;
+/* 图中顶点数目的最大值. */
+#define MAX_VERTEX_NUM 20
 
 /**
  * @brief 顶点关系类型/权值数据类型.
@@ -40,7 +33,7 @@ typedef int ArcType;
 typedef int VertexType;
 
 /**
- * @brief 弧/边, 临接矩阵存储单元. 不存在权值为负的边.
+ * @brief 弧/边结点, 临接矩阵存储单元. 不存在权值为负的边.
  */
 typedef struct ArcCell
 {
@@ -52,10 +45,10 @@ typedef struct ArcCell
  */
 typedef struct MGraph
 {
-    VertexType vexs[MAX_VERTEX_NUM]; /* vertex vector, 顶点向量, 顶点表 */
-    AdjMatrix arcs;                  /* adjacency matrix, 临接矩阵. */
-    int vexnum, arcnum;              /* 顶点数, 弧数. */
-    GraphType type;                  /* 图类型. */
+    VertexType vertices[MAX_VERTEX_NUM]; /* vertex vector, 顶点向量, 顶点表 */
+    AdjMatrix arcs;                      /* adjacency matrix, 临接矩阵. */
+    int vexnum, arcnum;                  /* 顶点数, 弧数. */
+    GraphType type;                      /* 图类型. */
 } MGraph;
 
 /**
@@ -104,7 +97,7 @@ Status CreateUDN_M(MGraph *G);
  * @param v 要定位的顶点.
  * @return VertexType 顶点在图中的位置.
  */
-VertexType LocateVex(MGraph G, VertexType v);
+VertexType LocateVex_M(MGraph G, VertexType v);
 
 /**
  * @brief 在图 G 中寻找顶点 v 的第一个邻接点, 没有则返回 -1.
@@ -112,7 +105,7 @@ VertexType LocateVex(MGraph G, VertexType v);
  * @param v 顶点.
  * @return VertexType 顶点 v 的第一个邻接点.
  */
-VertexType FirstVex(MGraph G, VertexType v);
+VertexType FirstVex_M(MGraph G, VertexType v);
 
 /**
  * @brief 在图 G 中，寻找顶点 v 相对于 w 的下一个邻接点. 若 w 是 v 的最后一个
@@ -122,13 +115,7 @@ VertexType FirstVex(MGraph G, VertexType v);
  * @param w 下一个顶点.
  * @return VertexType 当前顶点 v 的下一个顶点 w.
  */
-VertexType NextVex(MGraph G, VertexType v, int w);
-
-/**
- * @brief 打印邻接矩阵.
- * @param G 图.
- */
-void PrintAdjMatrix(MGraph G);
+VertexType NextVex_M(MGraph G, VertexType v, int w);
 
 /**
  * @brief 宽度优先搜索.
@@ -145,7 +132,7 @@ void BFSTraverse_M(MGraph G, Status (*Visit)(VertexType v));
  * @param visited 辅助数组.
  * @param Q 顺序队列.
  */
-void BFS(MGraph G, VertexType v, Status (*Visit)(VertexType v), int *visited, SqQueue *Q);
+void BFS_M(MGraph G, VertexType v, Status (*Visit)(VertexType v), int *visited, SqQueue *Q);
 
 /**
  * @brief 深度优先搜索.
@@ -161,6 +148,12 @@ void DFSTraverse_M(MGraph G, Status (*Visit)(VertexType v));
  * @param Visit 访问函数.
  * @param visited 辅助数组.
  */
-void DFS(MGraph G, VertexType v, Status (*Visit)(VertexType v), int *visited);
+void DFS_M(MGraph G, VertexType v, Status (*Visit)(VertexType v), int *visited);
+
+/**
+ * @brief 打印邻接矩阵.
+ * @param G 图.
+ */
+void PrintGraph_M(MGraph G);
 
 #endif /* MGRAPH_H */

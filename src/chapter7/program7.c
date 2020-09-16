@@ -7,16 +7,19 @@
  * @copyright Copyright (c) 2020
  */
 
+#include <chapter7/algraph/algraph.h>
 #include <chapter7/mgraph/mgraph.h>
 
 void WriteGraph(MGraph *G);
 void ReadGraph(MGraph *G);
-Status Visit(int i);
+Status MyVisit(int i);
 void UseMgraph();
+void UseAlgraph();
 
 int main()
 {
-    UseMgraph();
+    // UseMgraph();
+    UseAlgraph();
 
     return 0;
 }
@@ -27,10 +30,26 @@ void UseMgraph()
 
     CreateGraph_M(&G);
 
-    PrintAdjMatrix(G);
+    PrintGraph_M(G);
 
-    DFSTraverse_M(G, Visit);
-    BFSTraverse_M(G, Visit);
+    DFSTraverse_M(G, MyVisit);
+    BFSTraverse_M(G, MyVisit);
+
+    return;
+}
+
+void UseAlgraph()
+{
+    ALGraph G;
+
+    CreateGraph_AL(&G);
+
+    DFSTraverse_AL(G, MyVisit);
+    printf("\n");
+    BFSTraverse_AL(G, MyVisit);
+    printf("\n");
+
+    PrintGraph_AL(G);
 
     return;
 }
@@ -55,7 +74,7 @@ void ReadGraph(MGraph *G)
     return;
 }
 
-Status Visit(VertexType i)
+Status MyVisit(VertexType i)
 {
     printf("%d ", i);
 

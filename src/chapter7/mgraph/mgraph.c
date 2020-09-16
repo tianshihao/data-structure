@@ -1,6 +1,6 @@
 ﻿/**
  * @file mgraph.c
- * @author tianshihao
+ * @author tianshihao4944@126.com
  * @brief 邻接矩阵
  * @version 0.1
  * @date 2020-09-12
@@ -41,7 +41,7 @@ Status CreateDG_M(MGraph *G)
     printf("Enter vertex vector of graph (e.g. 1 2 3 4 or 0 1 2 3 4): ");
     for (int i = 0; i < G->vexnum; ++i)
     {
-        scanf("%d", (&G->vexs[i]));
+        scanf("%d", (&G->vertices[i]));
     }
 
     /* 初始化有向图. */
@@ -60,8 +60,8 @@ Status CreateDG_M(MGraph *G)
 
         scanf("%d %d %d", &v1, &v2, &weight);
 
-        int i = LocateVex(*G, v1);
-        int j = LocateVex(*G, v2);
+        int i = LocateVex_M(*G, v1);
+        int j = LocateVex_M(*G, v2);
 
         G->arcs[i][j].adj = weight;
     }
@@ -84,7 +84,7 @@ Status CreateUDG_M(MGraph *G)
     printf("Enter vertex vector of graph (e.g. 1 2 3 4 or 0 1 2 3 4): ");
     for (int i = 0; i < G->vexnum; ++i)
     {
-        scanf("%d", &G->vexs[i]);
+        scanf("%d", &G->vertices[i]);
     }
 
     for (int i = 0; i < G->vexnum; ++i)
@@ -102,8 +102,8 @@ Status CreateUDG_M(MGraph *G)
 
         scanf("%d %d %d", &v1, &v2, &weight);
 
-        int i = LocateVex(*G, v1);
-        int j = LocateVex(*G, v2);
+        int i = LocateVex_M(*G, v1);
+        int j = LocateVex_M(*G, v2);
 
         G->arcs[i][j].adj = weight;
 
@@ -118,11 +118,11 @@ Status CreateUDN_M(MGraph *G)
     return CreateUDG_M(G);
 }
 
-VertexType LocateVex(MGraph G, VertexType v)
+VertexType LocateVex_M(MGraph G, VertexType v)
 {
     for (int i = 0; i < G.vexnum; ++i)
     {
-        if (G.vexs[i] == v)
+        if (G.vertices[i] == v)
         {
             return i;
         }
@@ -130,7 +130,7 @@ VertexType LocateVex(MGraph G, VertexType v)
     return 0;
 }
 
-VertexType FirstVex(MGraph G, VertexType v)
+VertexType FirstVex_M(MGraph G, VertexType v)
 {
     /* 检查邻接矩阵的第 v 行. */
     for (int i = 0; i < G.vexnum; ++i)
@@ -146,7 +146,7 @@ VertexType FirstVex(MGraph G, VertexType v)
     return -1;
 }
 
-VertexType NextVex(MGraph G, VertexType v, int w)
+VertexType NextVex_M(MGraph G, VertexType v, int w)
 {
     /* 在顶点 v 的临接结点中找 w 之后的临接结点. */
     /* 搜索临接矩阵第 v 行. */
@@ -163,7 +163,7 @@ VertexType NextVex(MGraph G, VertexType v, int w)
     return -1;
 }
 
-void PrintAdjMatrix(MGraph G)
+void PrintGraph_M(MGraph G)
 {
     for (int i = 0; i < G.vexnum; ++i)
     {
@@ -203,21 +203,21 @@ void BFSTraverse_M(MGraph G, Status (*Visit)(VertexType v))
     /* 从 0 号顶点开始遍历. */
     for (int v = 0; v < G.vexnum; ++v)
     {
-        /* 对每个连通分量调用一次 BFS. */
+        /* 对每个连通分量调用一次 BFS_M. */
         if (!visited[v])
         {
-            /* vi 未访问过, 从 vi 开始 BFS. */
-            BFS(G, v, Visit, visited, &Q);
+            /* vi 未访问过, 从 vi 开始 BFS_M. */
+            BFS_M(G, v, Visit, visited, &Q);
         }
     }
 
     return;
 }
 
-void BFS(MGraph G, VertexType v, Status (*Visit)(VertexType v), int *visited, SqQueue *Q)
+void BFS_M(MGraph G, VertexType v, Status (*Visit)(VertexType v), int *visited, SqQueue *Q)
 {
     /* 访问初始顶点 v. */
-    Visit(G.vexs[v]);
+    Visit(G.vertices[v]);
 
     /* 对 v 做已访问标记. */
     visited[v] = TRUE;
@@ -231,13 +231,13 @@ void BFS(MGraph G, VertexType v, Status (*Visit)(VertexType v), int *visited, Sq
         DeQueue_Sq(Q, &v);
 
         /* 检测 v 的所有邻接点. */
-        for (VertexType w = FirstVex(G, v); w >= 0; w = NextVex(G, v, w))
+        for (VertexType w = FirstVex_M(G, v); w >= 0; w = NextVex_M(G, v, w))
         {
-            /* w 为 v 的尚未访问的邻接点. */
+            /* 若 v 的邻接点 w 还没有被访问过. */
             if (!visited[w])
             {
                 /* 访问顶点 w. */
-                Visit(G.vexs[w]);
+                Visit(G.vertices[w]);
 
                 /* 对 w 做已访问标记. */
                 visited[w] = TRUE;
@@ -265,33 +265,33 @@ void DFSTraverse_M(MGraph G, Status (*Visit)(VertexType v))
     /* 从 0 号顶点开始遍历. */
     for (int v = 0; v < G.vexnum; ++v)
     {
-        /* 对每个连通分量调用一次 DFS. */
+        /* 对每个连通分量调用一次 DFS_M. */
         if (!visited[v])
         {
-            /* vi 未访问过, 从 vi 开始 DFS. */
-            DFS(G, v, Visit, visited);
+            /* vi 还没有被访问过, 从 vi 开始 DFS_M. */
+            DFS_M(G, v, Visit, visited);
         }
     }
 
     return;
 }
 
-void DFS(MGraph G, VertexType v, Status (*Visit)(VertexType v), int *visited)
+void DFS_M(MGraph G, VertexType v, Status (*Visit)(VertexType v), int *visited)
 {
     /* 访问初始顶点 v. */
-    Visit(G.vexs[v]);
+    Visit(G.vertices[v]);
 
     /* 对 v 做已访问标记. */
     visited[v] = TRUE;
 
     /* 检测 v 的所有邻接点. */
-    for (int w = FirstVex(G, v); w >= 0; w = NextVex(G, v, w))
+    for (int w = FirstVex_M(G, v); w >= 0; w = NextVex_M(G, v, w))
     {
         /* w 为 v 尚未访问过的邻接点. */
         if (!visited[w])
         {
-            /* w 未访问过, 从 w 开始 DFS. */
-            DFS(G, w, Visit, visited);
+            /* w 未访问过, 从 w 开始 DFS_M. */
+            DFS_M(G, w, Visit, visited);
         }
     }
 
