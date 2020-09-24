@@ -25,7 +25,7 @@
 /**
  * @brief 顶点关系类型/权值数据类型.
  */
-typedef int ArcType;
+typedef int WeightType;
 
 /**
  * @brief 顶点类型.
@@ -37,7 +37,7 @@ typedef int VertexType;
  */
 typedef struct ArcCell
 {
-    ArcType adj;
+    WeightType weight; /* 边权值. */
 } ArcCell, AdjMatrix[MAX_VERTEX_NUM][MAX_VERTEX_NUM];
 
 /**
@@ -149,6 +149,13 @@ void DFSTraverse_M(MGraph G, Status (*Visit)(VertexType v));
  * @param visited 辅助数组.
  */
 void DFS_M(MGraph G, VertexType v, Status (*Visit)(VertexType v), int *visited);
+
+/**
+ * @brief 迪杰斯特拉算法, 计算源点 source 到其余各点的最短距离.
+ * @param G 图.
+ * @param source 源点. 
+ */
+void Dijkstra_M(MGraph G, VertexType source);
 
 /**
  * @brief 打印邻接矩阵.

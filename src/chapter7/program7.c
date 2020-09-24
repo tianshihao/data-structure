@@ -18,8 +18,8 @@ void UseAlgraph();
 
 int main()
 {
-    // UseMgraph();
-    UseAlgraph();
+    UseMgraph();
+    // UseAlgraph();
 
     return 0;
 }
@@ -32,8 +32,7 @@ void UseMgraph()
 
     PrintGraph_M(G);
 
-    DFSTraverse_M(G, MyVisit);
-    BFSTraverse_M(G, MyVisit);
+    Dijkstra_M(G, 1);
 
     return;
 }

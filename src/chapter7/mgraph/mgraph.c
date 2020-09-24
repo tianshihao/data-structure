@@ -49,7 +49,15 @@ Status CreateDG_M(MGraph *G)
     {
         for (int j = 0; j < G->vexnum; ++j)
         {
-            G->arcs[i][j].adj = INFINITY;
+            /* 自己到自己的距离为 0. */
+            if (i == j)
+            {
+                G->arcs[i][j].weight = 0;
+            }
+            else
+            {
+                G->arcs[i][j].weight = INFINITY;
+            }
         }
     }
 
@@ -63,7 +71,7 @@ Status CreateDG_M(MGraph *G)
         int i = LocateVex_M(*G, v1);
         int j = LocateVex_M(*G, v2);
 
-        G->arcs[i][j].adj = weight;
+        G->arcs[i][j].weight = weight;
     }
 
     return OK;
@@ -91,7 +99,15 @@ Status CreateUDG_M(MGraph *G)
     {
         for (int j = 0; j < G->vexnum; ++j)
         {
-            G->arcs[i][j].adj = INFINITY;
+            /* 自己到自己的距离为 0. */
+            if (i == j)
+            {
+                G->arcs[i][j].weight = 0;
+            }
+            else
+            {
+                G->arcs[i][j].weight = INFINITY;
+            }
         }
     }
 
@@ -105,9 +121,9 @@ Status CreateUDG_M(MGraph *G)
         int i = LocateVex_M(*G, v1);
         int j = LocateVex_M(*G, v2);
 
-        G->arcs[i][j].adj = weight;
-
-        G->arcs[j][i].adj = G->arcs[i][j].adj;
+        /* 无向图/网是关于主对角线对称的. */
+        G->arcs[i][j].weight = weight;
+        G->arcs[j][i].weight = G->arcs[i][j].weight;
     }
 
     return OK;
@@ -136,7 +152,7 @@ VertexType FirstVex_M(MGraph G, VertexType v)
     for (int i = 0; i < G.vexnum; ++i)
     {
         /* 若 v 和 i 之间既相连通, 权值也不为无穷. */
-        if (G.arcs[v][i].adj != 0 && G.arcs[v][i].adj != INFINITY)
+        if (G.arcs[v][i].weight != 0 && G.arcs[v][i].weight != INFINITY)
         {
             /* 则返回顶点 i. */
             return i;
@@ -153,7 +169,7 @@ VertexType NextVex_M(MGraph G, VertexType v, int w)
     for (int i = w + 1; i < G.vexnum; ++i)
     {
         /* 若 v 和 i 之间既相连通, 权值也不为无穷. */
-        if (G.arcs[v][i].adj != 0 && G.arcs[v][i].adj != INFINITY)
+        if (G.arcs[v][i].weight != 0 && G.arcs[v][i].weight != INFINITY)
         {
             /* 则返回顶点 i. */
             return i;
@@ -161,26 +177,6 @@ VertexType NextVex_M(MGraph G, VertexType v, int w)
     }
 
     return -1;
-}
-
-void PrintGraph_M(MGraph G)
-{
-    for (int i = 0; i < G.vexnum; ++i)
-    {
-        for (int j = 0; j < G.vexnum; ++j)
-        {
-            if (G.arcs[i][j].adj == INFINITY)
-            {
-                printf("0\t");
-            }
-            else
-            {
-                printf("%d\t", G.arcs[i][j].adj);
-            }
-        }
-
-        printf("\n");
-    }
 }
 
 void BFSTraverse_M(MGraph G, Status (*Visit)(VertexType v))
@@ -296,4 +292,132 @@ void DFS_M(MGraph G, VertexType v, Status (*Visit)(VertexType v), int *visited)
     }
 
     return;
+}
+
+void Dijkstra_M(MGraph G, VertexType source)
+{
+    /* 源点 source 在图的顶点表中对应的索引. */
+    VertexType sourceIndex = LocateVex_M(G, source);
+
+    /**
+     * ! 第一步, 初始化 S. 若 S[i] == TRUE, 说明顶点 i 已在集合 S 中. 
+     */
+
+    /* 初始化 S. */
+    VertexType S[G.vexnum];
+    for (int i = 0; i < G.vexnum; ++i)
+    {
+        S[i] = FALSE;
+    }
+    /* S 的初始元素为源点, 即 sourceIndex. */
+    S[sourceIndex] = TRUE;
+
+    /**
+     * 辅助数组 dist, 记录源点 source 到其它各顶点当前的最短路径长度, 它的初态
+     * 为: 若从 source 到 v 有弧, 则 dist[v] 为弧上的权值; 否则置 dist[v] = INFINITY.
+     * dist[i] = G.arcs[sourceIndex][i].weight.
+     */
+    WeightType dist[G.vexnum];
+
+    /**
+     * 在创建图的时候已经考虑到了 INFINITY 的情况, 直接用 arcs[i][j].weight 赋值
+     * 即可.
+     */
+    for (int i = 0; i < G.vexnum; ++i)
+    {
+        dist[i] = G.arcs[sourceIndex][i].weight;
+    }
+
+    /**
+     * 辅助数组 path, 
+     * 
+     */
+    VertexType path[G.vexnum][G.vexnum];
+
+    for (int i = 0; i < G.vexnum; ++i)
+    {
+        /**
+         * ! 第二步. 从顶点集合 V - S 中选择 vj, 满足
+         * dist[j] = Min{dist[i] | vi ∈ V - S},
+         * vj 就是当前求得的一条从 source 出发的最短路径的终点, 令 S = S ∪ {vj}.
+         */
+
+        /* 集合 V - S 中 dist 最小的元素的索引. */
+        VertexType vertexj;
+        /* 最小值. */
+        VertexType min = INFINITY;
+        /* 循环找最小值. */
+        for (int j = 0; j < G.vexnum; ++j)
+        {
+            /* 从集合 V - S 中选择一点*/
+            if (S[j] == FALSE)
+            {
+                if (dist[j] < min)
+                {
+                    min = dist[j];
+                    vertexj = j;
+                }
+            }
+        }
+
+        /* 将 vj 加入到 S中, S = S ∪ {j}*/
+        S[vertexj] = TRUE;
+
+        /**
+         * ! 第三步. 修改从 source 出发到集合 V - S 上任一顶点 vk 可到达的最短路径
+         * 长度: 若 dist[j] + arcs[j][k] < dist[k], 则更新 dist[k] = dist[j] + arcs[j][k].
+         * 
+         * 这么理解, dist[j] 是源点 source 到顶点 j 的距离, 此距离再加上 arcs[j][k],
+         * 即顶点 vj 到顶点 vk 的距离就是源点 source 到顶点 vk 的距离, 若新的距离
+         * 小于原来的距离 dist[k], 则更新 dist[k].
+         */
+
+        for (int k = 0; k < G.vexnum; ++k)
+        {
+            /* 从集合 V - S 中选择一点*/
+            if (S[k] == FALSE)
+            {
+                /**
+                 * 1. 如果 arcs[vertexj][k].weight 为无穷, 再对其求和会溢出, 导
+                 * 致比较出错; 
+                 * 2. 无穷表示无法从顶点 vj 到达顶点 vk, 即无法通过路径
+                 * source -> ... -> vj 再到达顶点 vk, 自然也没有比较的意义;
+                 * 3. 无穷加任意正数, 仍可以看作无穷, 必不小于原来的 dist[k]. 
+                 */
+                if (G.arcs[vertexj][k].weight != INFINITY)
+                {
+                    if ((dist[vertexj] + G.arcs[vertexj][k].weight) < dist[k])
+                    {
+                        dist[k] = dist[vertexj] + G.arcs[vertexj][k].weight;
+                    }
+                }
+            }
+        }
+
+        /**
+         * 第四步, 重复第二步到第三步操作共 n - 1 次, 直到所有的顶点都包含在 S 中.
+         */
+    }
+
+    return;
+}
+
+void PrintGraph_M(MGraph G)
+{
+    for (int i = 0; i < G.vexnum; ++i)
+    {
+        for (int j = 0; j < G.vexnum; ++j)
+        {
+            if (G.arcs[i][j].weight == INFINITY)
+            {
+                printf("0\t");
+            }
+            else
+            {
+                printf("%d\t", G.arcs[i][j].weight);
+            }
+        }
+
+        printf("\n");
+    }
 }
