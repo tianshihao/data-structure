@@ -297,10 +297,10 @@ void DFS_M(MGraph G, VertexType v, Status (*Visit)(VertexType v), int *visited)
 void Dijkstra_M(MGraph G, VertexType source)
 {
     /* 源点 source 在图的顶点表中对应的索引. */
-    VertexType sourceIndex = LocateVex_M(G, source);
+    int sourceIndex = LocateVex_M(G, source);
 
     /**
-     * ! 第一步, 初始化 S. 若 S[i] == TRUE, 说明顶点 i 已在集合 S 中. 
+     * ! 第一步, 初始化 S. 若 S[i] == TRUE, 说明顶点 vi 已在集合 S 中. 
      */
 
     /* 初始化 S. */
@@ -360,7 +360,7 @@ void Dijkstra_M(MGraph G, VertexType source)
             }
         }
 
-        /* 将 vj 加入到 S中, S = S ∪ {j}*/
+        /* 将 vj 加入到 S中, S = S ∪ {vj}. */
         S[vertexj] = TRUE;
 
         /**
@@ -420,4 +420,6 @@ void PrintGraph_M(MGraph G)
 
         printf("\n");
     }
+
+    return;
 }

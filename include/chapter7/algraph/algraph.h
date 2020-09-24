@@ -186,4 +186,4 @@ void DFS_AL(ALGraph G, int vindex, Status (*Visit)(VertexType v), int *visited);
  */
 void PrintGraph_AL(ALGraph G);
 
-#endif // ALGRAPH_H
+#endif /* ALGRAPH_H */
