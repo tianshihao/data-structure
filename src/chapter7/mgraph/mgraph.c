@@ -402,23 +402,56 @@ void Dijkstra_M(MGraph G, VertexType source)
     return;
 }
 
+void Floyd_M(MGraph G)
+{
+    WeightType dist[G.vexnum][G.vexnum];
+
+    /* 初始化: 方阵 dist = arcs. */
+    for (int i = 0; i < G.vexnum; ++i)
+    {
+        for (int j = 0; j < G.vexnum; ++j)
+        {
+            dist[i][j] = G.arcs[i][j].weight;
+        }
+    }
+
+    /**
+     * 第一轮: 将 v0 作为中间顶点, 对于所有顶点对 {i, j}, 如果有
+     * dist[i][j] > dist[i][0] + dist[0][j],
+     * 则将 dist[i][j] 更新为 dist[i][0] + dist[0][j].
+     * 标记更新之后的方阵为 dist^0.
+     * 
+     * 第 k 轮: 将 vk 作为中间结点, 继续检测全部顶点对 {i, j}, 如果有
+     * dist[i][j] > dist[i][k] + dist[k][j],
+     * 则将 dist[i][j] 更新为 dist[i][k] + dist[k][j].
+     * 标记更新之后的方阵为 dist^k.
+     */
+
+    for (int k = 0; k < G.vexnum; ++k)
+    {
+        for (int i = 0; i < G.vexnum; ++i)
+        {
+            for (int j = 0; j < G.vexnum; ++j)
+            {
+                if (dist[i][j] > dist[i][k] + dist[k][j])
+                {
+                    dist[i][j] = dist[i][k] + dist[k][j];
+                }
+            }
+        }
+    }
+
+    return;
+}
+
 void PrintGraph_M(MGraph G)
 {
     for (int i = 0; i < G.vexnum; ++i)
     {
         for (int j = 0; j < G.vexnum; ++j)
         {
-            if (G.arcs[i][j].weight == INFINITY)
-            {
-                printf("0\t");
-            }
-            else
-            {
-                printf("%d\t", G.arcs[i][j].weight);
-            }
+            printf("%d%c", G.arcs[i][j].weight, j == G.vexnum - 1 ? '\n' : '\t');
         }
-
-        printf("\n");
     }
 
     return;

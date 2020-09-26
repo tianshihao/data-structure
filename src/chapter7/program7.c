@@ -32,7 +32,7 @@ void UseMgraph()
 
     PrintGraph_M(G);
 
-    Dijkstra_M(G, 1);
+    Floyd_M(G);
 
     return;
 }

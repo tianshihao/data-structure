@@ -158,6 +158,12 @@ void DFS_M(MGraph G, VertexType v, Status (*Visit)(VertexType v), int *visited);
 void Dijkstra_M(MGraph G, VertexType source);
 
 /**
+ * @brief 弗洛伊德算法，计算各点之间的最短路径.
+ * @param G 图.
+ */
+void Floyd_M(MGraph G);
+
+/**
  * @brief 打印邻接矩阵.
  * @param G 图.
  */
