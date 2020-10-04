@@ -13,7 +13,7 @@
 Status InitStack(SqStack *S)
 {
     // 栈顶指针指向分配的内存空间的起始地址
-    S->base = malloc(STACK_INIT_SIZE * sizeof(SElemType));
+    S->base = malloc(STACK_INIT_SIZE * sizeof(StackElemType));
 
     // 存储分配失败
     if (!S->base)
@@ -38,12 +38,12 @@ Status StackEmpty(SqStack S)
     return FALSE;
 } // StackEmpty
 
-Status Push(SqStack *S, SElemType e)
+Status Push(SqStack *S, StackElemType e)
 {
     // 栈满, 追加存储空间
     if ((S->top - S->base) >= S->stackSize)
     {
-        S->base = realloc(S->base, (S->stackSize + STACK_INCREMENT) * sizeof(SElemType));
+        S->base = realloc(S->base, (S->stackSize + STACK_INCREMENT) * sizeof(StackElemType));
 
         // 内存分配失败.
         if (!S->base)
@@ -64,7 +64,7 @@ Status Push(SqStack *S, SElemType e)
     return OK;
 } // Push
 
-Status Pop(SqStack *S, SElemType **e)
+Status Pop(SqStack *S, StackElemType **e)
 {
     // 若栈为空.
     if (S->top == S->base)
@@ -80,7 +80,7 @@ Status Pop(SqStack *S, SElemType **e)
     return OK;
 } // Pop
 
-Status GetTop(SqStack S, SElemType **e)
+Status GetTop(SqStack S, StackElemType **e)
 {
     // 空栈
     if (S.top == S.base)
