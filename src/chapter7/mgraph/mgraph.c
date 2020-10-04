@@ -334,6 +334,10 @@ void Dijkstra_M(MGraph G, VertexType source)
      */
     VertexType path[G.vexnum][G.vexnum];
 
+    /**
+     * 第二, 三步各执行一次为一轮.
+     */
+
     for (int i = 0; i < G.vexnum; ++i)
     {
         /**
