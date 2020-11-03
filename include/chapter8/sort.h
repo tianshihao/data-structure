@@ -29,6 +29,6 @@ typedef int ElemType;
  * @param Arr 0 号索引为辅助空间的顺序存储结构, 数组. 
  * @param n 数组长度.
  */
-void InsertSort(ElemType Arr[], int n);
+void InsertionSort(ElemType Arr[], int n);
 
 #endif /* SORT_H */

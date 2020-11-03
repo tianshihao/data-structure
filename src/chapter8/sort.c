@@ -9,7 +9,7 @@
 
 #include <chapter8/sort.h>
 
-void InsertSort(ElemType Arr[], int n)
+void InsertionSort(ElemType Arr[], int n)
 {
     int i, j;
     for (i = 2; i < n; ++i)
