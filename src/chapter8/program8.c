@@ -19,7 +19,8 @@ int main()
         printf("%d%c", Arr[i], i == 8 ? '\n' : ',');
     }
 
-    InsertionSort(Arr, 9);
+    // InsertionSort(Arr, 9);
+    BinaryInsertionSort(Arr, 9);
 
     for (int i = 0; i < 9; ++i)
     {
