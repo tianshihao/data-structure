@@ -78,3 +78,23 @@ void BinaryInsertionSort(ElemType Arr[], int n)
         }
     }
 }
+
+void ShellSort(ElemType Arr[], int n)
+{
+    int i, j, delta;
+    for (delta = n / 2; delta >= 1; delta = delta / 2)
+    {
+        for (i = 1 + delta; i < n; ++i)
+        {
+            if (Arr[i] < Arr[i - delta])
+            {
+                Arr[0] = Arr[i];
+                for (j = i - delta; (j > 0) && (Arr[0] < Arr[j]); j -= delta)
+                {
+                    Arr[j + delta] = Arr[j];
+                }
+                Arr[j + delta] = Arr[0];
+            }
+        }
+    }
+}

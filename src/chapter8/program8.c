@@ -14,15 +14,16 @@ int main()
 {
     ElemType Arr[9] = {0, 49, 38, 65, 97, 76, 13, 27, 49};
 
-    for (int i = 0; i < 9; ++i)
+    for (int i = 1; i < 9; ++i)
     {
         printf("%d%c", Arr[i], i == 8 ? '\n' : ',');
     }
 
     // InsertionSort(Arr, 9);
-    BinaryInsertionSort(Arr, 9);
+    // BinaryInsertionSort(Arr, 9);
+    ShellSort(Arr, 9);
 
-    for (int i = 0; i < 9; ++i)
+    for (int i = 1; i < 9; ++i)
     {
         printf("%d%c", Arr[i], i == 8 ? '\n' : ',');
     }

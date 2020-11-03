@@ -45,4 +45,16 @@ void InsertionSort(ElemType Arr[], int n);
  */
 void BinaryInsertionSort(ElemType Arr[], int n);
 
+/**
+ * @brief 希尔排序, 又称缩小增量排序.
+ * @note 空间效率: 仅使用了常数个辅助单元, 因而空间复杂度为 O(1).
+ * @note 时间效率: 当 n 在某个特定范围时, 希尔排序的时间复杂度约为 O(n^1.3),
+ * 最坏情况下希尔排序的时间复杂度为 O(n^2).
+ * @note 适用性: 仅适用于线性表为顺序存储.
+ * @note 稳定性: 不稳定.
+ * @param Arr 数组.
+ * @param n 数组长度.
+ */
+void ShellSort(ElemType Arr[], int n);
+
 #endif /* SORT_H */
