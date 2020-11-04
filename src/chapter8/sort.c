@@ -125,3 +125,47 @@ void BubbleSort(ElemType Arr[], int n)
         }
     }
 }
+
+void QuickSort(ElemType Arr[], int low, int high)
+{
+    if (low < high)
+    {
+        /* 划分 */
+        int pivotPos = Partition(Arr, low, high);
+
+        /* 依次对两个子表进行排序. */
+        QuickSort(Arr, low, pivotPos - 1);
+        QuickSort(Arr, pivotPos + 1, high);
+    }
+
+    return;
+}
+
+int Partition(ElemType Arr[], int low, int high)
+{
+    /* 将枢轴设置为当前表的第一个元素. */
+    ElemType pivot = Arr[low];
+
+    while (low < high)
+    {
+        /* 将比枢轴小的元素移动到左端. */
+        while (low < high && Arr[high] >= pivot)
+        {
+            --high;
+        }
+        Arr[low] = Arr[high];
+
+        /* 将比枢轴大的元素移动到右端. */
+        while (low < high && Arr[low] <= pivot)
+        {
+            ++low;
+        }
+        Arr[high] = Arr[low];
+    }
+
+    /* 将枢轴放到最终位置. */
+    Arr[low] = pivot;
+
+    /* 返回存放枢轴的最终位置. */
+    return low;
+}

@@ -22,7 +22,8 @@ int main()
     // InsertionSort(Arr, 9);
     // BinaryInsertionSort(Arr, 9);
     // ShellSort(Arr, 9);
-    BubbleSort(Arr, 9);
+    // BubbleSort(Arr, 9);
+    QuickSort(Arr, 1, 8);
 
     for (int i = 1; i < 9; ++i)
     {

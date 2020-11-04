@@ -75,4 +75,32 @@ void ShellSort(ElemType Arr[], int n);
  */
 void BubbleSort(ElemType Arr[], int n);
 
+/**
+ * @brief 快速排序.
+ * @note 空间效率: 由于快速排序是递归的, 因此需要借助一个递归工作栈来保存每一层
+ * 调用时的必要信息, 其容量因与递归调用的最大深度一致. 最好的情况下为log2(n+1)取上底;
+ * 最坏的情况下, 因为要进行 n-1 次递归调用, 所以栈的深度是 O(n); 平均情况下,
+ * 栈的深度是 O(log2n). 因此,空间复杂度在最坏的情况下为 O(n), 平均情况下为 O(log2n).
+ * @note 时间效率: 平均情况下, 时间复杂度为 O(nlog2n). 最坏的情况发生在两个区域
+ * 分别包含 n-1 和 0 个元素时, 若这种情况发生在递归的每一层上, 就得到了最坏情况
+ * 的时间复杂度 O(n^2). 当 Partition() 做到平衡的划分时, 效率大大提高, 此时的
+ * 时间复杂度为 0(nlog2n). 平均情况下的的运行时间和最佳情况下的运行时间很接近,
+ * 也是 O(nlog2n).
+ * ! 快速排序是所有内部排序算法中平均性能最优的排序算法.
+ * @note 稳定性: 不稳定.
+ * @param Arr 数组.
+ * @param low 排序开始索引.
+ * @param high 排序结束索引.
+ */
+void QuickSort(ElemType Arr[], int low, int high);
+
+/**
+ * @brief 1 趟快速排序过程的划分算法.
+ * @param Arr 数组.
+ * @param low 划分开始索引.
+ * @param high 划分结束索引.
+ * @return int 存放枢轴的最终位置.
+ */
+int Partition(ElemType Arr[], int low, int high);
+
 #endif /* SORT_H */
