@@ -98,3 +98,30 @@ void ShellSort(ElemType Arr[], int n)
         }
     }
 }
+
+void BubbleSort(ElemType Arr[], int n)
+{
+    for (int i = 0; i < n; ++i)
+    {
+        Status flag = FALSE;
+        for (int j = n - 1; j > i; --j)
+        {
+            /* 若出现逆序. */
+            if (Arr[j] < Arr[j - 1])
+            {
+                /* 交换元素. */
+                ElemType temp = Arr[j - 1];
+                Arr[j - 1] = Arr[j];
+                Arr[j] = temp;
+
+                /* 更新标记. */
+                flag = TRUE;
+            }
+        }
+        /* 若一趟排序下来没有发生交换, 则结束算法. */
+        if (flag == FALSE)
+        {
+            return;
+        }
+    }
+}

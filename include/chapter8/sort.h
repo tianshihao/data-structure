@@ -10,6 +10,8 @@
 #ifndef SORT_H
 #define SORT_H
 
+#include <chapter1/status.h>
+
 typedef int ElemType;
 
 /**
@@ -56,5 +58,21 @@ void BinaryInsertionSort(ElemType Arr[], int n);
  * @param n 数组长度.
  */
 void ShellSort(ElemType Arr[], int n);
+
+/**
+ * @brief 冒泡排序.
+ * @note 空间效率: 仅使用了常数个辅助单元, 因而空间复杂度为 O(1).
+ * @note 时间效率: 平均时间复杂度为 O(n^2).
+ * @note 在最好的情况下, 即初始比较序列有序时, 显然第 1 趟排序后直接跳出循环,
+ * 比较次数仅为 n-1, 移动次数为 0, 从而此时时间复杂度为 O(n).
+ * @note 在最坏的情况下, 即初始比较序列逆序时, 需要进行 n-1 趟排序. 第 i 趟排序
+ * 要进行 n-i 次比较, 而且每次比较都必须移动元素 3 次来交换元素位置. 在这种情况
+ * 下, 比较次数(1->n-1)Σ(n-i)=n(n-1)/2, 移动次数(i->n-1)Σ3(n-i)=3n(n-1)/2. 从而,
+ * 此时的时间复杂度为 O(n^2).
+ * @note 稳定性: 稳定.
+ * @param Arr 数组.
+ * @param n 数组长度.
+ */
+void BubbleSort(ElemType Arr[], int n);
 
 #endif /* SORT_H */
