@@ -8,6 +8,7 @@
  */
 
 #include <chapter8/sort.h>
+#include <stdio.h>
 
 void InsertionSort(ElemType Arr[], int n)
 {
@@ -168,4 +169,73 @@ int Partition(ElemType Arr[], int low, int high)
 
     /* 返回存放枢轴的最终位置. */
     return low;
+}
+
+void MergeSort(ElemType A[], int low, int high, int n)
+{
+    if (low < high)
+    {
+        int mid = (low + high) / 2;
+
+        MergeSort(A, low, mid, n);
+        MergeSort(A, mid + 1, high, n);
+
+        Merge(A, low, mid, high, n);
+    }
+
+    return;
+}
+
+void Merge(ElemType A[], int low, int mid, int high, int n)
+{
+    ElemType B[n];
+
+    int i = 0, j = 0, k = 0;
+
+    /* 将 A 中的元素复制到 B 中. */
+    for (k = low; k <= high; ++k)
+    {
+        B[k] = A[k];
+    }
+
+    /**
+     * 指针 i 指向数组 B 的待排子序列开始, 指针 j 指向数组 B 的待排序子序列结束.
+     * 指针 k 指向原数组 A 的待排序子序列开始. 以最后一次归并为例, 此时数组 B
+     * 复制自数组 A, 比较数组 B 的左右两部分, 相当于将 A 腾空, 存储排序后的结果.
+     * 
+     * B      38      49      65      97      13      27      49     79
+     *        i(low)                          j(high)
+     * 
+     * A      13
+     *        k
+     * 
+     * B      38      49      65      97      13      27      49     79
+     *        i(low)                                  j(high)
+     * 
+     * A      13      27
+     *                k
+     */
+    for (i = low, j = mid + 1, k = i; (i <= mid) && (j <= high); ++k)
+    {
+        if (B[i] <= B[j])
+        {
+            A[k] = B[i++];
+        }
+        else
+        {
+            A[k] = B[j++];
+        }
+    }
+
+    /* 说明右半段归并完了, 剩下左半段, 将左半段剩下内容复制到 A. */
+    while (i <= mid)
+    {
+        A[k++] = B[i++];
+    }
+    while (j <= high)
+    {
+        A[k++] = B[j++];
+    }
+
+    return;
 }

@@ -12,22 +12,34 @@
 
 int main()
 {
-    ElemType Arr[9] = {0, 49, 38, 65, 97, 76, 13, 27, 49};
+    const int arrLen = 9;
 
-    for (int i = 1; i < 9; ++i)
+    ElemType Arr[arrLen];
+    Arr[0] = 0;
+    Arr[1] = 49;
+    Arr[2] = 38;
+    Arr[3] = 65;
+    Arr[4] = 97;
+    Arr[5] = 76;
+    Arr[6] = 13;
+    Arr[7] = 27;
+    Arr[8] = 49;
+
+    for (int i = 0; i < arrLen; ++i)
     {
-        printf("%d%c", Arr[i], i == 8 ? '\n' : ',');
+        printf("%d%c", Arr[i], i == arrLen - 1 ? '\n' : ',');
     }
 
     // InsertionSort(Arr, 9);
     // BinaryInsertionSort(Arr, 9);
     // ShellSort(Arr, 9);
     // BubbleSort(Arr, 9);
-    QuickSort(Arr, 1, 8);
+    // QuickSort(Arr, 1, 8);
+    MergeSort(Arr, 0, arrLen - 1, arrLen);
 
-    for (int i = 1; i < 9; ++i)
+    for (int i = 0; i < arrLen; ++i)
     {
-        printf("%d%c", Arr[i], i == 8 ? '\n' : ',');
+        printf("%d%c", Arr[i], i == arrLen - 1 ? '\n' : ',');
     }
 
     return 0;

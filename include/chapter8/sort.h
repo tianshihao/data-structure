@@ -11,6 +11,7 @@
 #define SORT_H
 
 #include <chapter1/status.h>
+#include <stdlib.h>
 
 typedef int ElemType;
 
@@ -102,5 +103,31 @@ void QuickSort(ElemType Arr[], int low, int high);
  * @return int 存放枢轴的最终位置.
  */
 int Partition(ElemType Arr[], int low, int high);
+
+/**
+ * @brief 归并排序.
+ * @note 空间效率: 操作 Merge() 中正好要占用 n 个单元, 所以归并排序的空间复杂度
+ * 为 O(n).
+ * @note 时间效率: 每一趟归并排序的时间复杂度为 O(n), 共需进行 log2n 取上底趟
+ * 归并, 所以算法时间复杂度为 o(nlog2n).
+ * @note 稳定性: 由于 Merge() 操作不会改变相同关键字记录的相对次序, 所以 2-路归并
+ * 是一个稳定的算法.
+ * @param Arr 数组.
+ * @param low 排序开始索引.
+ * @param high 排序结束索引.
+ * @param n 数组长度, 数组 A 被当作参数传递之后, 在子函数中退化为指针, 无法计算
+ * 数组长度, 导致算法出错, 故把数组长度也一并传递过去.
+ */
+void MergeSort(ElemType A[], int low, int high, int n);
+
+/**
+ * @brief 归并操作. 将前后相邻的两个有序表归并为一个有序表的算法.
+ * @param Arr 数组.
+ * @param low 归并开始索引.
+ * @param mid mid = (low + high) / 2.
+ * @param high 归并结束索引.
+ * @param n 数组的长度.
+ */
+void Merge(ElemType A[], int low, int mid, int high, int n);
 
 #endif /* SORT_H */
