@@ -8,35 +8,34 @@
  */
 
 #include <chapter8/sort.h>
-#include <stdio.h>
 
-void InsertionSort(ElemType Arr[], int n)
+void InsertionSort(ElemType A[], int n)
 {
     int i, j;
     for (i = 2; i < n; ++i)
     {
-        if (Arr[i] < Arr[i - 1])
+        if (A[i] < A[i - 1])
         {
-            Arr[0] = Arr[i]; /* 设置哨兵. */
+            A[0] = A[i]; /* 设置哨兵. */
 
-            for (j = i - 1; Arr[j] > Arr[0]; --j)
+            for (j = i - 1; A[j] > A[0]; --j)
             {
-                Arr[j + 1] = Arr[j]; /* 将小于哨兵的元素向后挪动. */
+                A[j + 1] = A[j]; /* 将小于哨兵的元素向后挪动. */
             }
-            Arr[j + 1] = Arr[0]; /* 将哨兵复制到插入位置. */
+            A[j + 1] = A[0]; /* 将哨兵复制到插入位置. */
         }
     }
 }
 
-void BinaryInsertionSort(ElemType Arr[], int n)
+void BinaryInsertionSort(ElemType A[], int n)
 {
     int i, j, left, right, mid;
 
     for (i = 2; i < n; ++i)
     {
-        if (Arr[i] < Arr[i - 1])
+        if (A[i] < A[i - 1])
         {
-            Arr[0] = Arr[i]; /* 设置哨兵. */
+            A[0] = A[i]; /* 设置哨兵. */
 
             /**
              * @brief 开始在有序子序列中折半查找合适的插入位置. 有序子序列的起始
@@ -56,7 +55,7 @@ void BinaryInsertionSort(ElemType Arr[], int n)
             {
                 mid = (left + right) / 2;
                 /* 合适的插入位置落在左半区间. */
-                if (Arr[mid] > Arr[0]) /* 此处的 > 保证排序稳定. */
+                if (A[mid] > A[0]) /* 此处的 > 保证排序稳定. */
                 {
                     right = mid - 1;
                 }
@@ -72,35 +71,35 @@ void BinaryInsertionSort(ElemType Arr[], int n)
              */
             for (j = i - 1; j >= right + 1; --j)
             {
-                Arr[j + 1] = Arr[j];
+                A[j + 1] = A[j];
             }
 
-            Arr[right + 1] = Arr[0]; /* 将哨兵复制到插入位置. */
+            A[right + 1] = A[0]; /* 将哨兵复制到插入位置. */
         }
     }
 }
 
-void ShellSort(ElemType Arr[], int n)
+void ShellSort(ElemType A[], int n)
 {
     int i, j, delta;
     for (delta = n / 2; delta >= 1; delta = delta / 2)
     {
         for (i = 1 + delta; i < n; ++i)
         {
-            if (Arr[i] < Arr[i - delta])
+            if (A[i] < A[i - delta])
             {
-                Arr[0] = Arr[i];
-                for (j = i - delta; (j > 0) && (Arr[0] < Arr[j]); j -= delta)
+                A[0] = A[i];
+                for (j = i - delta; (j > 0) && (A[0] < A[j]); j -= delta)
                 {
-                    Arr[j + delta] = Arr[j];
+                    A[j + delta] = A[j];
                 }
-                Arr[j + delta] = Arr[0];
+                A[j + delta] = A[0];
             }
         }
     }
 }
 
-void BubbleSort(ElemType Arr[], int n)
+void BubbleSort(ElemType A[], int n)
 {
     for (int i = 0; i < n; ++i)
     {
@@ -108,12 +107,12 @@ void BubbleSort(ElemType Arr[], int n)
         for (int j = n - 1; j > i; --j)
         {
             /* 若出现逆序. */
-            if (Arr[j] < Arr[j - 1])
+            if (A[j] < A[j - 1])
             {
                 /* 交换元素. */
-                ElemType temp = Arr[j - 1];
-                Arr[j - 1] = Arr[j];
-                Arr[j] = temp;
+                ElemType temp = A[j - 1];
+                A[j - 1] = A[j];
+                A[j] = temp;
 
                 /* 更新标记. */
                 flag = TRUE;
@@ -127,45 +126,45 @@ void BubbleSort(ElemType Arr[], int n)
     }
 }
 
-void QuickSort(ElemType Arr[], int low, int high)
+void QuickSort(ElemType A[], int low, int high)
 {
     if (low < high)
     {
         /* 划分 */
-        int pivotPos = Partition(Arr, low, high);
+        int pivotPos = Partition(A, low, high);
 
         /* 依次对两个子表进行排序. */
-        QuickSort(Arr, low, pivotPos - 1);
-        QuickSort(Arr, pivotPos + 1, high);
+        QuickSort(A, low, pivotPos - 1);
+        QuickSort(A, pivotPos + 1, high);
     }
 
     return;
 }
 
-int Partition(ElemType Arr[], int low, int high)
+int Partition(ElemType A[], int low, int high)
 {
     /* 将枢轴设置为当前表的第一个元素. */
-    ElemType pivot = Arr[low];
+    ElemType pivot = A[low];
 
     while (low < high)
     {
         /* 将比枢轴小的元素移动到左端. */
-        while (low < high && Arr[high] >= pivot)
+        while (low < high && A[high] >= pivot)
         {
             --high;
         }
-        Arr[low] = Arr[high];
+        A[low] = A[high];
 
         /* 将比枢轴大的元素移动到右端. */
-        while (low < high && Arr[low] <= pivot)
+        while (low < high && A[low] <= pivot)
         {
             ++low;
         }
-        Arr[high] = Arr[low];
+        A[high] = A[low];
     }
 
     /* 将枢轴放到最终位置. */
-    Arr[low] = pivot;
+    A[low] = pivot;
 
     /* 返回存放枢轴的最终位置. */
     return low;

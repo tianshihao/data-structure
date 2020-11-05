@@ -14,32 +14,32 @@ int main()
 {
     const int arrLen = 9;
 
-    ElemType Arr[arrLen];
-    Arr[0] = 0;
-    Arr[1] = 49;
-    Arr[2] = 38;
-    Arr[3] = 65;
-    Arr[4] = 97;
-    Arr[5] = 76;
-    Arr[6] = 13;
-    Arr[7] = 27;
-    Arr[8] = 49;
+    ElemType A[arrLen];
+    A[0] = 0;
+    A[1] = 49;
+    A[2] = 38;
+    A[3] = 65;
+    A[4] = 97;
+    A[5] = 76;
+    A[6] = 13;
+    A[7] = 27;
+    A[8] = 49;
 
     for (int i = 0; i < arrLen; ++i)
     {
-        printf("%d%c", Arr[i], i == arrLen - 1 ? '\n' : ',');
+        printf("%d%c", A[i], i == arrLen - 1 ? '\n' : ',');
     }
 
-    // InsertionSort(Arr, 9);
-    // BinaryInsertionSort(Arr, 9);
-    // ShellSort(Arr, 9);
-    // BubbleSort(Arr, 9);
-    // QuickSort(Arr, 1, 8);
-    MergeSort(Arr, 0, arrLen - 1, arrLen);
+    // InsertionSort(A, 9);
+    // BinaryInsertionSort(A, 9);
+    // ShellSort(A, 9);
+    // BubbleSort(A, 9);
+    // QuickSort(A, 1, 8);
+    MergeSort(A, 0, arrLen - 1, arrLen);
 
     for (int i = 0; i < arrLen; ++i)
     {
-        printf("%d%c", Arr[i], i == arrLen - 1 ? '\n' : ',');
+        printf("%d%c", A[i], i == arrLen - 1 ? '\n' : ',');
     }
 
     return 0;

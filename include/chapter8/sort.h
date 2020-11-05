@@ -28,11 +28,11 @@ typedef int ElemType;
  * 达到最大, 为 (2->n)Σ(i+1), 即时间复杂度为 O(n^2).
  * @note 在平均情况下, 总的比较次数和移动次数约为 (n^2)/4.
  * @note 稳定性: 稳定.
- * @note 适用性: 顺序存储和链式存储的线性表.
- * @param Arr 0 号索引为辅助空间的顺序存储结构, 数组. 
+ * @note 适用性: 顺序存储和链式存储的线性表.A
+ * @param A 0 号索引为辅助空间的顺序存储结构, 数组. 
  * @param n 数组长度.
  */
-void InsertionSort(ElemType Arr[], int n);
+void InsertionSort(ElemType A[], int n);
 
 /**
  * @brief 折半插入排序.
@@ -43,10 +43,10 @@ void InsertionSort(ElemType Arr[], int n);
  * 移动次数未改变, 它依赖于待排序表的初始状况.
  * @note 适用性: 对于数据量不是很大的待排序表, 能表现出很好的性能.
  * @note 稳定性: 稳定.
- * @param Arr 数组.
+ * @param A 数组.
  * @param n 数组长度.
  */
-void BinaryInsertionSort(ElemType Arr[], int n);
+void BinaryInsertionSort(ElemType A[], int n);
 
 /**
  * @brief 希尔排序, 又称缩小增量排序.
@@ -55,10 +55,10 @@ void BinaryInsertionSort(ElemType Arr[], int n);
  * 最坏情况下希尔排序的时间复杂度为 O(n^2).
  * @note 适用性: 仅适用于线性表为顺序存储.
  * @note 稳定性: 不稳定.
- * @param Arr 数组.
+ * @param A 数组.
  * @param n 数组长度.
  */
-void ShellSort(ElemType Arr[], int n);
+void ShellSort(ElemType A[], int n);
 
 /**
  * @brief 冒泡排序.
@@ -71,10 +71,10 @@ void ShellSort(ElemType Arr[], int n);
  * 下, 比较次数(1->n-1)Σ(n-i)=n(n-1)/2, 移动次数(i->n-1)Σ3(n-i)=3n(n-1)/2. 从而,
  * 此时的时间复杂度为 O(n^2).
  * @note 稳定性: 稳定.
- * @param Arr 数组.
+ * @param A 数组.
  * @param n 数组长度.
  */
-void BubbleSort(ElemType Arr[], int n);
+void BubbleSort(ElemType A[], int n);
 
 /**
  * @brief 快速排序.
@@ -89,20 +89,20 @@ void BubbleSort(ElemType Arr[], int n);
  * 也是 O(nlog2n).
  * ! 快速排序是所有内部排序算法中平均性能最优的排序算法.
  * @note 稳定性: 不稳定.
- * @param Arr 数组.
+ * @param A 数组.
  * @param low 排序开始索引.
  * @param high 排序结束索引.
  */
-void QuickSort(ElemType Arr[], int low, int high);
+void QuickSort(ElemType A[], int low, int high);
 
 /**
  * @brief 1 趟快速排序过程的划分算法.
- * @param Arr 数组.
+ * @param A 数组.
  * @param low 划分开始索引.
  * @param high 划分结束索引.
  * @return int 存放枢轴的最终位置.
  */
-int Partition(ElemType Arr[], int low, int high);
+int Partition(ElemType A[], int low, int high);
 
 /**
  * @brief 归并排序.
@@ -112,7 +112,7 @@ int Partition(ElemType Arr[], int low, int high);
  * 归并, 所以算法时间复杂度为 o(nlog2n).
  * @note 稳定性: 由于 Merge() 操作不会改变相同关键字记录的相对次序, 所以 2-路归并
  * 是一个稳定的算法.
- * @param Arr 数组.
+ * @param A 数组.
  * @param low 排序开始索引.
  * @param high 排序结束索引.
  * @param n 数组长度, 数组 A 被当作参数传递之后, 在子函数中退化为指针, 无法计算
@@ -122,7 +122,7 @@ void MergeSort(ElemType A[], int low, int high, int n);
 
 /**
  * @brief 归并操作. 将前后相邻的两个有序表归并为一个有序表的算法.
- * @param Arr 数组.
+ * @param A 数组.
  * @param low 归并开始索引.
  * @param mid mid = (low + high) / 2.
  * @param high 归并结束索引.
