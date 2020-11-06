@@ -129,5 +129,37 @@ void MergeSort(ElemType A[], int low, int high, int n);
  * @param n 数组的长度.
  */
 void Merge(ElemType A[], int low, int mid, int high, int n);
+/**
+ * @brief 建立大根堆
+ * @param A 数组.
+ * @param len 数组长度.
+ */
+void BuildMaxHeap(ElemType A[], int len);
+
+/**
+ * @brief 堆调整. 将元素 parent 为根的子树进行调整.
+ * @param A 数组.
+ * @param parent 某一子树.
+ * @param len 数组长度.
+ */
+void HeapAdjust(ElemType A[], int parent, int len);
+
+/**
+ * @brief 堆排序.
+ * @note 空间效率: 仅使用了常数个辅助单元, 所以空间复杂度为 O(1).
+ * @note 时间效率: 建堆时间为 O(n), 之后有 n-1 次向下调整的操作, 每次调整
+ * 时间复杂度为 O(h), 故在最好, 最坏和平均情况下, 堆排序的时间复杂度为 O(nlog2n).
+ * @note 稳定性: 不稳定.
+ * @param A 数组.
+ * @param len 数组长度.
+ */
+void HeapSort(ElemType A[], int len);
+
+/**
+ * @brief 交换元素 A 和 B 的值.
+ * @param A 元素 A.
+ * @param B 元素 B.
+ */
+void Swap(ElemType A, ElemType B);
 
 #endif /* SORT_H */

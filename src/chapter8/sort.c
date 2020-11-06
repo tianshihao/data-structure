@@ -238,3 +238,88 @@ void Merge(ElemType A[], int low, int mid, int high, int n)
 
     return;
 }
+
+void BuildMaxHeap(ElemType A[], int len)
+{
+    /* 从 i = n/2 到 1, 反复调整堆, 直至建成大根堆. */
+    for (int i = len / 2; i > 0; --i)
+    {
+        HeapAdjust(A, i, len);
+    }
+
+    return;
+}
+
+void HeapAdjust(ElemType A[], int parent, int len)
+{
+    /* A[0] 暂存子树根结点. */
+    A[0] = A[parent];
+
+    /* 从子树根结点开始, 一直沿着较大的子结点向下调整. */
+    for (int child = 2 * parent; child <= len; child *= 2)
+    {
+        /**
+         * 使用线性表存储树, 若亲结点索引为 i, 则左右子结点索引分别为 2*i 和
+         * 2*i+1.
+         */
+        /* 在合适范围内, 若左子小于右子. */
+        if (child < len && A[child] < A[child + 1])
+        {
+            /* 则取较大的右子. */
+            ++child;
+        }
+        /* 好, 选出了最大子结点. 若亲结点大于最大子结点, 则没有调整的必要, 跳出. */
+        if (A[0] > A[child])
+        {
+            break;
+        }
+        /* 亲结点小于最大子结点. */
+        else
+        {
+            /* 将子结点调整到亲结点上. */
+            A[parent] = A[child];
+
+            /**
+             * 同时更新亲结点索引, 即将亲结点向下移动. 之后 for 循环更新子结点为
+             * 新的亲结点的子结点.
+             */
+            parent = child;
+        }
+    }
+
+    /* 将被筛选的结点放入最终位置. */
+    A[parent] = A[0];
+
+    return;
+}
+
+void HeapSort(ElemType A[], int len)
+{
+    /* 建立大根堆. */
+    BuildMaxHeap(A, len);
+
+    /* n-1 趟交换和堆调整过程. */
+    for (int i = len; i > 1; --i)
+    {
+        // Swap(A[i], A[1]);
+
+        /* 通过交换堆顶和堆底元素来输出堆顶元素. */
+        ElemType temp = A[i];
+        A[i] = A[1];
+        A[1] = temp;
+
+        /* 把剩下的 n-1 个元素整理成堆. */
+        HeapAdjust(A, 1, i - 1);
+    }
+
+    return;
+}
+
+void Swap(ElemType A, ElemType B)
+{
+    ElemType temp = A;
+    A = B;
+    B = temp;
+
+    return;
+}

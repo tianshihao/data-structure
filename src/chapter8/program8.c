@@ -35,7 +35,8 @@ int main()
     // ShellSort(A, 9);
     // BubbleSort(A, 9);
     // QuickSort(A, 1, 8);
-    MergeSort(A, 0, arrLen - 1, arrLen);
+    // MergeSort(A, 0, arrLen - 1, arrLen);
+    HeapSort(A, arrLen - 1);
 
     for (int i = 0; i < arrLen; ++i)
     {
