@@ -156,10 +156,22 @@ void HeapAdjust(ElemType A[], int parent, int len);
 void HeapSort(ElemType A[], int len);
 
 /**
- * @brief 交换元素 A 和 B 的值.
- * @param A 元素 A.
- * @param B 元素 B.
+ * @brief 简单选择排序.
+ * @note 空间效率: 仅使用了常数个辅助单元, 故空间复杂度为 O(1).
+ * @note 时间效率: 元素的比较次数与待排序序列初始状态无关, 始终为 n(n-1)/2 次,
+ * 因此时间复杂度为 O(n^2). 此外, 元素的移动操作很少, 待排序序列逆序时, 最多,
+ * 为 3n(n-1)/2 次; 有序时, 最少, 0 次.
+ * @note 稳定性: 不稳定.
+ * @param A 数组.
+ * @param len 数组长度.
  */
-void Swap(ElemType A, ElemType B);
+void SelectionSort(ElemType A[], int len);
+
+/**
+ * @brief 交换元素 *A 和 *B 的值.
+ * @param A 指向元素 A 的指针.
+ * @param B 指向元素 B 的指针.
+ */
+void Swap(ElemType *A, ElemType *B);
 
 #endif /* SORT_H */

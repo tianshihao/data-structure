@@ -301,12 +301,8 @@ void HeapSort(ElemType A[], int len)
     /* n-1 趟交换和堆调整过程. */
     for (int i = len; i > 1; --i)
     {
-        // Swap(A[i], A[1]);
-
         /* 通过交换堆顶和堆底元素来输出堆顶元素. */
-        ElemType temp = A[i];
-        A[i] = A[1];
-        A[1] = temp;
+        Swap(&A[i], &A[1]);
 
         /* 把剩下的 n-1 个元素整理成堆. */
         HeapAdjust(A, 1, i - 1);
@@ -315,11 +311,35 @@ void HeapSort(ElemType A[], int len)
     return;
 }
 
-void Swap(ElemType A, ElemType B)
+void SelectionSort(ElemType A[], int len)
 {
-    ElemType temp = A;
-    A = B;
-    B = temp;
+    /* 一共进行 n-1 趟. */
+    for (int i = 0; i < len; ++i)
+    {
+        /* 记录最小元素的位置. */
+        int min = i;
+
+        /* 在 [i,len-1] 中选择最小的元素. */
+        for (int j = i + 1; j < len; ++j)
+        {
+            /* 更新最小元素的位置. */
+            if (A[j] < A[min])
+            {
+                min = j;
+            }
+        }
+        if (min != i)
+        {
+            Swap(&A[min], &A[i]);
+        }
+    }
+}
+
+void Swap(ElemType *A, ElemType *B)
+{
+    ElemType temp = *A;
+    *A = *B;
+    *B = temp;
 
     return;
 }
