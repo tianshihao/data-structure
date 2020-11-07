@@ -88,4 +88,4 @@ int QueueLength_Sq(SqQueue Q);
  */
 void PrintQueue_Sq(SqQueue Q);
 
-#endif // SQQUEUE_H
+#endif /* SQQUEUE_H */
