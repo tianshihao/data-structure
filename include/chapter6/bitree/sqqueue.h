@@ -1,12 +1,10 @@
 ﻿/**
  * @file sqqueue.h
- * @author tianshihao
+ * @author tianshihao4944@126.com
  * @brief 二叉树用到的队列.
- * @version 0.1
- * @date 2020-08-09
- * 
+ * @version 0.2
+ * @date 2020-11-11
  * @copyright Copyright (c) 2020
- * 
  */
 
 #ifndef SQQUEUE_H
@@ -17,19 +15,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/* 队列最大尺寸为 100. */
 #define MAX_SIZE 100
 
+/* 存储元素基本类型是二叉树结点. */
 typedef BiTNode QElemType;
 
 typedef struct SqQueue
 {
-    // 初始化的动态分配存储空间
+    /* 初始化的动态分配存储空间. */
     QElemType *base;
 
-    // 头指针, 若队列不空, 指向队头元素
+    /* 头指针, 若队列不空, 指向队头元素. */
     int front;
 
-    // 尾指针, 若队列不空, 指向队尾元素的下一位置
+    /* 尾指针, 若队列不空, 指向队尾元素的下一位置. */
     int rear;
 } SqQueue;
 
@@ -58,7 +58,8 @@ Status QueueEmpty_Sq(SqQueue Q);
 /**
  * @brief 入队, 若循环队列 Q 未满, 将 x 加入, 使之成为新的队尾.
  * @param Q 指向循环队列的指针.
- * @param e 入队的数据元素.
+ * @param e 入队的数据元素. 不是指针, 是值传递, 相当于复制了一份新的元素, 将其
+ * 存储在队列中, 不影响原来的元素.
  */
 Status EnQueue_Sq(SqQueue *Q, QElemType e);
 
