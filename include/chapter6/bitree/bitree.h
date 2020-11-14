@@ -127,11 +127,11 @@ Status LevelOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e));
 Status InvertLevelTraverse_Binary(BiTree T, Status (*Visit)(ElemType e));
 
 /**
- * @brief 王道数据结构5, 非递归算法求二叉树高度.
+ * @brief 王道数据结构5, 非递归算法求二叉树高度. 根据层序遍历修改.
  * @param T 非空二叉树.
  * @return int 返回二叉树高度.
  */
-int BiTreeDepth(BiTree T);
+int BiTreeHeight(BiTree T);
 
 /**
  * @brief 由先序遍历序列和中序遍历序列构建二叉树.
@@ -226,7 +226,7 @@ int WPLPreOrder(BiTree T, int depth);
 
 /**
  * @brief 以层序遍历的方式计算 WPL.
- * @see BiTreeDepth.
+ * @see BiTreeHeight.
  * @param T 二叉树.
  * @return int WPL.
  */

@@ -20,7 +20,7 @@ Status MyVisit(ElemType e);
 
 int main()
 {
-    // UseBinaryTree();
+    UseBinaryTree();
 
     // int *p;
 
@@ -30,7 +30,7 @@ int main()
 
     // UseThreadTree();
 
-    UseBinarySearchTree();
+    // UseBinarySearchTree();
 
     return 0;
 }
@@ -62,7 +62,7 @@ void UseBinaryTree()
     }
 
     printf("Tree's height or depth is ");
-    printf("%d\n", BiTreeDepth(T));
+    printf("%d\n", BiTreeHeight(T));
 
     printf("Taverse tree with inverted level order (from bottom to top, from right to left)\n");
     InvertLevelTraverse_Binary(T, MyVisit);
@@ -101,10 +101,10 @@ void UseBinaryTree()
     printf("wpl = %d\n", WPL(N));
     printf("wpl = %d\n", WPLLevelOrder(N));
 
-    // // printf("tree depth = %d\n", BiTreeDepth(T));
+    // // printf("tree depth = %d\n", BiTreeHeight(T));
     // // printf("\n");
 
-    // // printf("depth = %d\n", BiTreeDepth(T));
+    // // printf("depth = %d\n", BiTreeHeight(T));
     // LevelOrderTraverse_Binary(T, MyVisit);
     // printf("\n");
     // Swap(T);

@@ -75,7 +75,7 @@ Status EnQueue_Sq(SqQueue *Q, QElemType e)
     return OK;
 }
 
-Status DeQueue_Sq(SqQueue *Q, QElemType **e)
+Status DeQueue_Sq(SqQueue *Q, QElemType *e)
 {
     /* 如果队列为空. */
     if (Q->front == Q->rear)
@@ -88,7 +88,7 @@ Status DeQueue_Sq(SqQueue *Q, QElemType **e)
      * 这么做的理由同 
      * @see PostOrderTraverse_Binary2
      */
-    *e = Q->base + Q->front;
+    *e = *(Q->base + Q->front);
 
     /* 队头进一. */
     Q->front = (Q->front + 1) % MAX_SIZE;

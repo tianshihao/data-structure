@@ -68,7 +68,7 @@ Status EnQueue_Sq(SqQueue *Q, QElemType e);
  * @param Q 指向循环队列的指针,
  * @param e 用以返回队头元素.
  */
-Status DeQueue_Sq(SqQueue *Q, QElemType **e);
+Status DeQueue_Sq(SqQueue *Q, QElemType *e);
 
 /**
  * @brief 若队列不空, 则用 e 返回 Q 的队头元素, 并返回 OK; 否则返回 ERROR.
