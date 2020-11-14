@@ -18,7 +18,7 @@ Status InitTree_Binary(BiTree *T)
     *T = NULL; // 使得指针指向 NULL.
 
     return OK;
-} // InitTree_Binary
+}
 
 /**
  * 即使 BiTree 类型和 BiTNode * 等价, 表面上是指针, 但是在指针传递时, 仍要取
@@ -49,7 +49,7 @@ Status CreateBinaryTree(BiTree *T, const char *path)
     fclose(fp);
 
     return OK;
-} // CreateBinaryTree
+}
 
 void CreateTree_Binary(BiTree *T, FILE *PreSeq)
 {
@@ -78,7 +78,7 @@ void CreateTree_Binary(BiTree *T, FILE *PreSeq)
         CreateTree_Binary(&((*T)->lchild), PreSeq); // 创建左子树
         CreateTree_Binary(&((*T)->rchild), PreSeq); // 创建右子树
     }
-} // CreateTree_Binary
+}
 
 Status PreOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
 {
@@ -100,7 +100,7 @@ Status PreOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
     {
         return OK;
     }
-} // PreOrderTraverse_Binary
+}
 
 Status PreOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e))
 {
@@ -131,10 +131,10 @@ Status PreOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e))
             Pop(&S, &p);
             p = p->rchild;
         }
-    } // while
+    }
 
     return OK;
-} // PreOrderTraverse_Binary2
+}
 
 Status InOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
 {
@@ -156,7 +156,7 @@ Status InOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
     {
         return OK;
     }
-} // InOrderTraverse_Binary
+}
 
 Status InOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e))
 {
@@ -188,10 +188,10 @@ Status InOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e))
             Visit(p->data); // 访问出栈结点.
             p = p->rchild;  // 向右子树走, p 赋值为当前结点的右子.
         }
-    } // while
+    }
 
     return OK;
-} // InOrderTraverse_Binary2
+}
 
 Status PostOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
 {
@@ -213,7 +213,7 @@ Status PostOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
     {
         return OK;
     }
-} // PostOrderTraverse_Binary
+}
 
 Status PostOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e))
 {
@@ -288,7 +288,7 @@ Status PostOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e))
     }
 
     return OK;
-} // PostOrderTraverse_Binary2
+}
 
 Status LevelOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
 {
@@ -354,12 +354,12 @@ Status LevelOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
         {
             EnQueue_Sq(&Q, *p->rchild);
         }
-    } // while
+    }
 
     DestoryQueue_Sq(&Q);
 
     return OK;
-} // LevelOrderTraverse_Binary
+}
 
 Status InvertLevelTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
 {
@@ -389,7 +389,7 @@ Status InvertLevelTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
             {
                 EnQueue_Sq(&Q, *p->rchild);
             }
-        } // while
+        }
 
         while (!StackEmpty(S))
         {
@@ -402,7 +402,7 @@ Status InvertLevelTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
     {
         return ERROR;
     }
-} // InvertLevelTraverse_Binary
+}
 
 int BiTreeHeight(BiTree T)
 {
@@ -466,52 +466,53 @@ int BiTreeHeight(BiTree T)
         // 树空, 高度为 0.
         return 0;
     }
-} // BiTreeHeight
+}
 
-BiTree PreInCreate(ElemType *Pre,
+BiTree PreInCreate(ElemType *PreOrder,
                    int preL, int preR,
-                   ElemType *In,
+                   ElemType *InOrder,
                    int InL, int InR)
 {
-    // 创建根结点.
-    BiTree root = malloc(sizeof(BiTNode));
+    /* 创建根结点. */
+    BiTree root = (BiTNode *)malloc(sizeof(BiTNode));
 
-    // 先序遍历序列第一个值是根结点的值.
-    root->data = Pre[preL];
+    /* 先序遍历序列第一个值是根结点的值. */
+    root->data = PreOrder[preL];
 
-    // 在中序遍历序列中找到根结点的位置.
-    int i = InL;
-    while (In[i] != root->data)
+    /* 在中序遍历序列中找到根结点的位置. */
+    int rootPos = InL;
+    while (InOrder[rootPos] != root->data)
     {
-        ++i;
+        ++rootPos;
     }
 
-    // 左子树长度
-    int leftLen = i - InL;
+    /* 左子树长度. */
+    int lchildLen = rootPos - InL;
 
-    // 右子树长度
-    int rightLen = InR - i;
+    /* 右子树长度. */
+    int rchildLen = InR - rootPos;
 
-    // 左子树不为空.
-    if (leftLen > 0)
+    /* 左子树不为空. */
+    if (lchildLen > 0)
     {
-        root->lchild = PreInCreate(Pre,
-                                   preL + 1, preL + leftLen,
-                                   In,
-                                   InL, InL + leftLen - 1);
+        /* 注意 +1, -1 边界条件. */
+        root->lchild = PreInCreate(PreOrder,
+                                   preL + 1, preL + lchildLen,
+                                   InOrder,
+                                   InL, InL + lchildLen - 1);
     }
     else
     {
         root->lchild = NULL;
     }
 
-    // 右子树不为空.
-    if (rightLen > 0)
+    /* 右子树不为空. */
+    if (rchildLen > 0)
     {
-        root->rchild = PreInCreate(Pre,
-                                   preR - rightLen + 1, preR,
-                                   In,
-                                   InR - rightLen + 1, InR);
+        root->rchild = PreInCreate(PreOrder,
+                                   preR - rchildLen + 1, preR,
+                                   InOrder,
+                                   InR - rchildLen + 1, InR);
     }
     else
     {
@@ -519,43 +520,39 @@ BiTree PreInCreate(ElemType *Pre,
     }
 
     return root;
-} // PreInCreate
+}
 
-Status Swap(BiTree T)
+Status SwapSubTree(BiTree T)
 {
-
-    // 两种写法均可.
-    // 1
-
+    /* 两种写法均可. */
     if (T)
     {
-        Swap(T->lchild);
-
-        Swap(T->rchild);
+        SwapSubTree(T->lchild);
+        SwapSubTree(T->rchild);
 
         BiTNode *tmp = T->lchild;
         T->lchild = T->rchild;
         T->rchild = tmp;
     }
 
-    // 2
+    /**
+    BiTNode *tmp = T->lchild;
+    T->lchild = T->rchild;
+    T->rchild = tmp;
 
-    // BiTNode *tmp = T->lchild;
-    // T->lchild = T->rchild;
-    // T->rchild = tmp;
+    if (T->lchild)
+    {
+        SwapSubTree(T->lchild);
+    }
 
-    // if (T->lchild)
-    // {
-    //     Swap(T->lchild);
-    // }
-
-    // if (T->rchild)
-    // {
-    //     Swap(T->rchild);
-    // }
+    if (T->rchild)
+    {
+        SwapSubTree(T->rchild);
+    }
+     */
 
     return OK;
-} // Swap
+}
 
 Status FindAncestor(BiTree T, ElemType x)
 {
@@ -607,11 +604,10 @@ Status FindAncestor(BiTree T, ElemType x)
             s[top].tag = 1;          // 栈顶元素右子被访问了.
             p = s[top].node->rchild; // 跳到右子.
         }
-
-    } // while (p != NULL || top > 0)
+    }
 
     return ERROR;
-} // FindAncestor
+}
 
 BiTNode *FindCommonAncestor(BiTree T, BiTNode *p, BiTNode *q)
 {
@@ -684,7 +680,7 @@ BiTNode *FindCommonAncestor(BiTree T, BiTNode *p, BiTNode *q)
             // 后序遍历中到了访问根结点时, 其左右子均已被访问, 访问完根结点, 根
             // 结点退栈.
             top--;
-        } // while
+        }
 
         // 访问右子树.
         if (top != 0)
@@ -695,7 +691,7 @@ BiTNode *FindCommonAncestor(BiTree T, BiTNode *p, BiTNode *q)
     }
 
     return NULL;
-} // FindCommonAncestor
+}
 
 int BiTreeWidth(BiTree T)
 {
@@ -745,7 +741,7 @@ int BiTreeWidth(BiTree T)
     {
         return 0;
     }
-} // BiTreeWidth
+}
 
 void PreToPost(ElemType *Pre,
                int preL, int preR,
@@ -773,7 +769,7 @@ void PreToPost(ElemType *Pre,
                   Post,
                   postL + half, postR - 1);
     }
-} // PreToPost
+}
 
 Status Similar(BiTree T1, BiTree T2)
 {
@@ -789,12 +785,12 @@ Status Similar(BiTree T1, BiTree T2)
     {
         return Similar(T1->lchild, T2->lchild) && Similar(T1->rchild, T2->rchild);
     }
-} // Similar
+}
 
 int WPL(BiTree T)
 {
     return WPLPreOrder(T, 1);
-} // WPL
+}
 
 int WPLPreOrder(BiTree p, int depth)
 {
@@ -819,7 +815,7 @@ int WPLPreOrder(BiTree p, int depth)
     }
 
     return wpl;
-} // WPLPreOrder
+}
 
 int WPLLevelOrder(BiTree T)
 {
@@ -870,8 +866,7 @@ int WPLLevelOrder(BiTree T)
     }
 
     return wpl;
-
-} // WPLLevelOrder
+}
 
 char predt = 0;
 

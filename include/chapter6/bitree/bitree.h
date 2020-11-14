@@ -134,18 +134,18 @@ Status InvertLevelTraverse_Binary(BiTree T, Status (*Visit)(ElemType e));
 int BiTreeHeight(BiTree T);
 
 /**
- * @brief 由先序遍历序列和中序遍历序列构建二叉树.
- * @param pre 先序遍历序列.
- * @param In 中序遍历学列.
- * @param preL 先序遍历序列第一个结点下标.
- * @param preR 先序遍历序列最后一个结点序列.
- * @param InL 中序遍历序列第一个结点下标.
- * @param InR 中序遍历序列最后一个结点序列.
+ * @brief 王道数据结构149/6, 由先序遍历序列和中序遍历序列构建二叉树.
+ * @param preOrder 先序遍历序列.
+ * @param preL 先序遍历序列第一个结点索引.
+ * @param preR 先序遍历序列最后一个结点索引.
+ * @param InOrder 中序遍历序列.
+ * @param InL 中序遍历序列第一个结点索引.
+ * @param InR 中序遍历序列最后一个结点索引.
  * @return BiTree 构建好的二叉树.
  */
-BiTree PreInCreate(ElemType *Pre,
+BiTree PreInCreate(ElemType *preOrder,
                    int preL, int preR,
-                   ElemType *In,
+                   ElemType *InOrder,
                    int InL, int InR);
 
 /**
@@ -154,7 +154,7 @@ BiTree PreInCreate(ElemType *Pre,
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR.
  */
-Status Swap(BiTree T);
+Status SwapSubTree(BiTree T);
 
 /**
  * @brief 王道数据结构150/12, 在二叉树中查找值为 x 的结点, 打印其所有祖先, 假定

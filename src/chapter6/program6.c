@@ -32,6 +32,8 @@ int main()
 
     // UseBinarySearchTree();
 
+    system("pause");
+
     return 0;
 }
 
@@ -40,10 +42,12 @@ void UseBinaryTree()
     BiTree T;
     InitTree_Binary(&T);
 
-    printf("Load binay tree from file input1.txt.\n");
     CreateBinaryTree(&T, "../input/input1.txt");
 
-    printf("Traverse tree with level order.\n");
+    printf("Tree's height or depth is ");
+    printf("%d\n", BiTreeHeight(T));
+
+    printf("Traverse tree with level-order.\n");
     LevelOrderTraverse_Binary(T, MyVisit);
     printf("\n");
 
@@ -64,18 +68,20 @@ void UseBinaryTree()
     printf("Tree's height or depth is ");
     printf("%d\n", BiTreeHeight(T));
 
-    printf("Taverse tree with inverted level order (from bottom to top, from right to left)\n");
+    printf("Taverse tree with inverted level-order (from bottom to top, from right to left)\n");
     InvertLevelTraverse_Binary(T, MyVisit);
     printf("\n");
 
-    ElemType ch = 'D';
-    printf("Find %c's all ancestors.\n", ch);
-    FindAncestor(T, 'D');
+    // {
+    //     ElemType ch = 'D';
+    //     printf("Find %c's all ancestors.\n", ch);
+    //     FindAncestor(T, 'D');
 
-    BiTNode *q = T->rchild;
-    BiTNode *p = T->lchild->rchild;
-    printf("Node %c and node %c's closest common ancestor is ", q->data, p->data);
-    printf("%c\n", FindCommonAncestor(T, p, q)->data);
+    //     BiTNode *q = T->rchild;
+    //     BiTNode *p = T->lchild->rchild;
+    //     printf("Node %c and node %c's closest common ancestor is ", q->data, p->data);
+    //     printf("%c\n", FindCommonAncestor(T, p, q)->data);
+    // }
 
     printf("The width of binary tree is ");
     printf("%d\n", BiTreeWidth(T));
@@ -107,7 +113,7 @@ void UseBinaryTree()
     // // printf("depth = %d\n", BiTreeHeight(T));
     // LevelOrderTraverse_Binary(T, MyVisit);
     // printf("\n");
-    // Swap(T);
+    // SwapSubTree(T);
     // LevelOrderTraverse_Binary(T, MyVisit);
     // printf("\n");
 
