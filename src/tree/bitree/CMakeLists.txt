@@ -1,5 +1,4 @@
-﻿add_library(
-    bitree
+﻿add_library(bitree STATIC
     bitree.c
     sqstack.c
     sqqueue.c

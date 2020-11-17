@@ -1,5 +1,4 @@
-﻿add_library(
-    linkqueue
+﻿add_library(linkqueue STATIC
     linkqueue.c
 )
 

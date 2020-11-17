@@ -1,5 +1,4 @@
-﻿add_library(
-    linkstack
+﻿add_library(linkstack STATIC
     linkstack.c
 )
 

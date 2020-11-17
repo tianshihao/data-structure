@@ -1,6 +1,10 @@
 ﻿project(linearlist)
 
-set(  src
+add_executable(${PROJECT_NAME} program.c)
+
+set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+
+set(src
    clinklist.c
    dclinklist.c
    dlinklist.c
@@ -9,6 +13,10 @@ set(  src
    sqlist.c
 )
 
-add_executable(${PROJECT_NAME} program.c ${src})
+add_library(linearlist_dynamic SHARED
+   ${src}
+)
 
-set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+target_link_libraries(${PROJECT_NAME} PUBLIC
+   linearlist_dynamic
+)

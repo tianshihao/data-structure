@@ -1,5 +1,4 @@
-﻿add_library(
-    sqstack
+﻿add_library(sqstack STATIC
     sqstack.c
 )
 

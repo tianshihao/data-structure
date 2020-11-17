@@ -1,5 +1,4 @@
-﻿add_library(
-    threadtree
+﻿add_library(threadtree STATIC
     threadtree.c
 )
 

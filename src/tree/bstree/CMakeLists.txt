@@ -1,5 +1,4 @@
-﻿add_library(
-    bstree
+﻿add_library(bstree STATIC
     bstree.c
 )
 

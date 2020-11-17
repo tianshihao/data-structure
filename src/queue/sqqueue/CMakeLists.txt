@@ -1,5 +1,4 @@
-﻿add_library(
-    sqqueue
+﻿add_library(sqqueue STATIC
     sqqueue.c
 )
 

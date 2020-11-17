@@ -1,5 +1,4 @@
-﻿add_library(
-    algraph
+﻿add_library(algraph STATIC
     algraph.c
     sqqueue.c
 )

@@ -1,5 +1,4 @@
-﻿add_library(
-    mgraph
+﻿add_library(mgraph STATIC
     mgraph.c
     sqqueue.c
     sqstack.c
