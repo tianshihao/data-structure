@@ -12,7 +12,7 @@
 
 void WriteGraph(MGraph *G);
 void ReadGraph(MGraph *G);
-Status MyVisit(int i);
+Status MyVisit(VertexType v);
 void UseMgraph();
 void UseAlgraph();
 
@@ -75,9 +75,9 @@ void ReadGraph(MGraph *G)
     return;
 }
 
-Status MyVisit(VertexType i)
+Status MyVisit(VertexType v)
 {
-    printf("%d ", i);
+    printf("%d ", v);
 
     return OK;
 }

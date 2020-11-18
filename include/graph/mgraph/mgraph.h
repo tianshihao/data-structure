@@ -10,9 +10,9 @@
 #ifndef MGRAPH_H
 #define MGRAPH_H
 
-#include <status.h>
 #include <graph/graphtype.h>
 #include <graph/mgraph/sqqueue.h>
+#include <status.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -41,7 +41,7 @@ typedef struct ArcCell
 } ArcCell, AdjMatrix[MAX_VERTEX_NUM][MAX_VERTEX_NUM];
 
 /**
- * @brief 临接矩阵.
+ * @brief 临接矩阵存储的图.
  */
 typedef struct MGraph
 {
@@ -53,69 +53,69 @@ typedef struct MGraph
 
 /**
  * @brief 创建图.
- * @param G 指向空图的指针.
+ * @param pG 指向空图的指针.
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作成功返回 ERROR. 
  */
-Status CreateGraph_M(MGraph *G);
+Status CreateGraph_M(MGraph *pG);
 
 /**
  * @brief 创建有向图.
- * @param G 指向空图的指针.
+ * @param pG 指向空图的指针.
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作成功返回 ERROR.  
  */
-Status CreateDG_M(MGraph *G);
+Status CreateDG_M(MGraph *pG);
 
 /**
  * @brief 创建有向网.
- * @param G 指向空图的指针.
+ * @param pG 指向空图的指针.
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作成功返回 ERROR.  
  */
-Status CreateDN_M(MGraph *G);
+Status CreateDN_M(MGraph *pG);
 
 /**
  * @brief 创建无向图.
- * @param G 指向空图的指针.
+ * @param pG 指向空图的指针.
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作成功返回 ERROR.  
  */
-Status CreateUDG_M(MGraph *G);
+Status CreateUDG_M(MGraph *pG);
 
 /**
  * @brief 创建无向网.
- * @param G 指向空图的指针.
+ * @param pG 指向空图的指针.
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作成功返回 ERROR.  
  */
-Status CreateUDN_M(MGraph *G);
+Status CreateUDN_M(MGraph *pG);
 
 /**
  * @brief 定位顶点 v 在图中的位置.
  * @param G 图.
- * @param v 要定位的顶点.
- * @return VertexType 顶点在图中的位置.
+ * @param v 要定位的顶点的索引.
+ * @return int 返回顶点 v 在图的顶点表中的索引, 顶点表中不存在则返回 -1.
  */
-VertexType LocateVex_M(MGraph G, VertexType v);
+int LocateVex_M(MGraph G, int v);
 
 /**
  * @brief 在图 G 中寻找顶点 v 的第一个邻接点, 没有则返回 -1.
  * @param G 图.
- * @param v 顶点.
- * @return VertexType 顶点 v 的第一个邻接点.
+ * @param v 顶点的索引.
+ * @return int 返回顶点 v 的第一个邻接点的在顶点表中的索引.
  */
-VertexType FirstVex_M(MGraph G, VertexType v);
+int FirstVex_M(MGraph G, int v);
 
 /**
- * @brief 在图 G 中，寻找顶点 v 相对于 w 的下一个邻接点. 若 w 是 v 的最后一个
+ * @brief 在图 G 中，寻找位于顶点 v 的邻接点 w 后的邻接点. 若 w 是 v 的最后一个
  * 临接结点, 则返回 -1.
  * @param G 图.
- * @param v 当前顶点.
- * @param w 下一个顶点.
- * @return VertexType 当前顶点 v 的下一个顶点 w.
+ * @param v 当前顶点的索引.
+ * @param w 下一个顶点的索引.
+ * @return int 当前顶点 v 的下一个顶点 w 的索引.
  */
-VertexType NextVex_M(MGraph G, VertexType v, int w);
+int NextVex_M(MGraph G, int v, int w);
 
 /**
  * @brief 宽度优先搜索.
@@ -132,7 +132,7 @@ void BFSTraverse_M(MGraph G, Status (*Visit)(VertexType v));
  * @param visited 辅助数组.
  * @param Q 顺序队列.
  */
-void BFS_M(MGraph G, VertexType v, Status (*Visit)(VertexType v), int *visited, SqQueue *Q);
+void BFS_M(MGraph G, int v, Status (*Visit)(VertexType v), int *visited, SqQueue *pQ);
 
 /**
  * @brief 深度优先搜索.
@@ -148,7 +148,7 @@ void DFSTraverse_M(MGraph G, Status (*Visit)(VertexType v));
  * @param Visit 访问函数.
  * @param visited 辅助数组.
  */
-void DFS_M(MGraph G, VertexType v, Status (*Visit)(VertexType v), int *visited);
+void DFS_M(MGraph G, int v, Status (*Visit)(VertexType v), int *visited);
 
 /**
  * @brief 迪杰斯特拉算法, 计算源点 source 到其余各点的最短距离.
