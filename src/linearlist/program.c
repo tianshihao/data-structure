@@ -32,6 +32,8 @@ int main()
 
     // UseSLinklist();
 
+    system("pause");
+
     return 0;
 }
 

@@ -6,6 +6,8 @@ int main()
 {
     UseSqstack();
 
+    system("pause");
+
     return 0;
 }
 

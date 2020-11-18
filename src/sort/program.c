@@ -44,5 +44,7 @@ int main()
         printf("%d%c", A[i], i == len - 1 ? '\n' : ',');
     }
 
+    system("pause");
+
     return 0;
 }

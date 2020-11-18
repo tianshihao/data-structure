@@ -8,6 +8,8 @@ int main()
 {
     UseSqqueue();
 
+    system("pause");
+
     return 0;
 }
 

@@ -21,6 +21,8 @@ int main()
     UseMgraph();
     // UseAlgraph();
 
+    system("pause");
+
     return 0;
 }
 
