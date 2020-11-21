@@ -13,45 +13,49 @@
 #define SQSTACK_H
 
 #include <status.h>
-#include <tree/bitree/bitree.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <tree/bitree/bitree.h>
 
+/* 栈初始大小*/
 #define STACK_INIT_SIZE 100
+/* 栈大小增量 */
 #define STACK_INCREMENT 20
 
+/* 栈存储类型为 BiTNode */
 typedef BiTNode StackElemType;
 
+/* 顺序栈的存储类型. */
 typedef struct SqStack
 {
-    // 在栈构造之前和销毁之后, base 的值为 NULL
+    /* 在栈构造之前和销毁之后, base 的值为 NULL. */
     StackElemType *base;
 
-    // 栈顶指针
+    /* 栈顶指针. */
     StackElemType *top;
 
-    // 当前已分配的存储空间, 以元素为单位
-    int stackSize;
+    /* 当前已分配的存储空间, 以元素为单位. */
+    int allocatedSize;
 } SqStack;
 
 /**
  * @brief 构造一个空顺序栈.
  * @param S 指向顺序栈的指针.
  */
-Status InitStack(SqStack *S);
+Status InitStack_Sq(SqStack *S);
 
 /**
  * @brief 若顺序栈 S 为空, 则返回 TRUE, 否则返回 FALSE.
  * @param S 顺序栈.
  */
-Status StackEmpty(SqStack S);
+Status StackEmpty_Sq(SqStack S);
 
 /**
  * @brief 插入元素 e 为新的栈顶元素.
  * @param S 指向顺序栈的指针.
  * @param e 压入栈中的元素.
  */
-Status Push(SqStack *S, StackElemType e);
+Status Push_Sq(SqStack *S, StackElemType e);
 
 /**
  * @brief 若顺序栈 S 不空, 则删除 S 的栈顶元素, 用 e 返回其值.
@@ -59,26 +63,14 @@ Status Push(SqStack *S, StackElemType e);
  * @param e 用 e 保存出栈元素. 注意, 在子函数中修改的时候 BiTNode 的地址, 所以
  * e 的类型是 BiTNode **. 
  */
-Status Pop(SqStack *S, StackElemType **e);
+Status Pop_Sq(SqStack *S, StackElemType **e);
 
 /**
  * @brief 若顺序栈 S 不空, 则用 e 返回 S 的栈顶元素, 并返回 OK; 否则返回 ERROR.
  * @param S 顺序栈.
  * @param e 保存栈顶元素.
  */
-Status GetTop(SqStack S, StackElemType **e);
-
-/**
- * @brief 返回顺序栈 S 的元素个数, 即栈的长度.
- * @param S 顺序栈.
- */
-int StackLength(SqStack S);
-
-/**
- * @brief 把顺序栈 S 置为空栈.
- * @param S 指向顺序栈的指针.
- */
-Status ClearStack(SqStack *S);
+Status GetTop_Sq(SqStack S, StackElemType **e);
 
 /**
  * @brief 销毁顺序栈 S, S 不再存在.
@@ -86,7 +78,4 @@ Status ClearStack(SqStack *S);
  */
 Status DestoryStack(SqStack *S);
 
-//从栈底到栈顶依次对栈中的每个元素调用函数 visit(). 一旦 visit() 失败, 则操作失败.
-Status StackTraverse(SqStack S, Status (*visit)());
-
-#endif // SQSTACK_H
+#endif /* SQSTACK_H */

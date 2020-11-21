@@ -12,6 +12,7 @@
 
 #include <graph/graphtype.h>
 #include <graph/mgraph/sqqueue.h>
+#include <graph/mgraph/sqstack.h>
 #include <status.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -94,7 +95,7 @@ Status CreateUDN_M(MGraph *pG);
 /**
  * @brief 定位顶点 v 在图中的位置.
  * @param G 图.
- * @param v 要定位的顶点的索引.
+ * @param v 要定位的顶点在顶点表中的索引.
  * @return int 返回顶点 v 在图的顶点表中的索引, 顶点表中不存在则返回 -1.
  */
 int LocateVex_M(MGraph G, int v);
@@ -102,7 +103,7 @@ int LocateVex_M(MGraph G, int v);
 /**
  * @brief 在图 G 中寻找顶点 v 的第一个邻接点, 没有则返回 -1.
  * @param G 图.
- * @param v 顶点的索引.
+ * @param v 顶点在顶点表中的索引.
  * @return int 返回顶点 v 的第一个邻接点的在顶点表中的索引.
  */
 int FirstVex_M(MGraph G, int v);
@@ -111,9 +112,9 @@ int FirstVex_M(MGraph G, int v);
  * @brief 在图 G 中，寻找位于顶点 v 的邻接点 w 后的邻接点. 若 w 是 v 的最后一个
  * 临接结点, 则返回 -1.
  * @param G 图.
- * @param v 当前顶点的索引.
- * @param w 下一个顶点的索引.
- * @return int 当前顶点 v 的下一个顶点 w 的索引.
+ * @param v 当前顶点在顶点表中的索引.
+ * @param w 下一个顶点的在顶点表中的索引.
+ * @return int 当前顶点 v 的下一个顶点 w 在顶点表中的索引.
  */
 int NextVex_M(MGraph G, int v, int w);
 
@@ -125,9 +126,9 @@ int NextVex_M(MGraph G, int v, int w);
 void BFSTraverse_M(MGraph G, Status (*Visit)(VertexType v));
 
 /**
- * @brief 从顶点 v 出发, 广度优先遍历图 G.
+ * @brief 从顶点 G.vertices[v] 出发, 广度优先遍历图 G.
  * @param G 图.
- * @param v 顶点.
+ * @param v 顶点在顶点表中的索引.
  * @param Visit 访问函数.
  * @param visited 辅助数组.
  * @param Q 顺序队列.
@@ -142,13 +143,22 @@ void BFS_M(MGraph G, int v, Status (*Visit)(VertexType v), int *visited, SqQueue
 void DFSTraverse_M(MGraph G, Status (*Visit)(VertexType v));
 
 /**
- * @brief 从顶点 v 出发, 深度优先遍历图 G.
+ * @brief 从顶点 G.vertices[v] 出发, 深度优先遍历图 G.
  * @param G 图.
- * @param v 顶点.
+ * @param v 顶点在顶点表中的索引.
  * @param Visit 访问函数.
  * @param visited 辅助数组.
  */
 void DFS_M(MGraph G, int v, Status (*Visit)(VertexType v), int *visited);
+
+/**
+ * @brief 从顶点 G.vertices[v] 出发, 以非递归的方式深度优先遍历图 G.
+ * @param G 图.
+ * @param v 顶点在顶点表中的索引.
+ * @param Visit 访问函数.
+ * @param visited 辅助数组.
+ */
+void DFS_M_NoRec(MGraph G, int v, Status (*Visit)(VertexType v), int *visited);
 
 /**
  * @brief 迪杰斯特拉算法, 计算源点 source 到其余各点的最短距离.

@@ -1,24 +1,35 @@
-﻿#include <stack/sqstack/sqstack.h>
+﻿/**
+ * @file sqstack.c
+ * @author tianshihao4944@126.com
+ * @brief 顺序栈函数实现.
+ * @version 0.1
+ * @date 2020-01-27
+ * @copyright Copyright (c) 2020
+ */
 
-Status InitStack(SqStack *S)
+#include <stack/sqstack/sqstack.h>
+
+Status InitStack_Sq(SqStack *S)
 {
-    // 栈顶指针指向分配的内存空间的起始地址
-    S->base = malloc(STACK_INIT_SIZE * sizeof(StackElemType));
+    /* 栈顶指针指向分配的内存空间的起始地址. */
+    S->base = (StackElemType *)malloc(STACK_INIT_SIZE * sizeof(StackElemType));
 
-    // 存储分配失败
+    /* 存储分配失败. */
     if (!S->base)
     {
         exit(OVERFLOW);
     }
 
+    /* 初始化栈顶指针. */
     S->top = S->base;
 
-    S->stackSize = STACK_INIT_SIZE;
+    /* 初始化已分配空间大小. */
+    S->allocatedSize = STACK_INIT_SIZE;
 
     return OK;
-} // InitStack
+}
 
-Status StackEmpty(SqStack S)
+Status StackEmpty_Sq(SqStack S)
 {
     if (S.top == S.base)
     {
@@ -26,167 +37,159 @@ Status StackEmpty(SqStack S)
     }
 
     return FALSE;
-} // StackEmpty
+}
 
-Status Push(SqStack *S, StackElemType e)
+Status Push_Sq(SqStack *S, StackElemType e)
 {
-    // 栈满, 追加存储空间
-    if ((S->top - S->base) >= S->stackSize)
+    /* 栈满, 追加存储空间. */
+    if ((S->top - S->base) >= S->allocatedSize)
     {
-        S->base = realloc(S->base, (S->stackSize + STACK_INCREMENT) * sizeof(StackElemType));
+        S->base = realloc(S->base, (S->allocatedSize + STACK_INCREMENT) * sizeof(StackElemType));
 
-        // 内存分配失败.
+        /* 内存分配失败. */
         if (!S->base)
         {
             exit(OVERFLOW);
         }
 
-        // 重置栈顶指针
-        S->top = S->base + S->stackSize;
+        /* 重置栈顶指针. */
+        S->top = S->base + S->allocatedSize;
 
-        // 更新栈大小
-        S->stackSize += STACK_INCREMENT;
+        /* 更新栈大小. */
+        S->allocatedSize += STACK_INCREMENT;
     }
 
-    // 更新栈顶指针, top 始终指向栈顶元素的下一位.
+    /* 更新栈顶指针, top 始终指向栈顶元素的下一位. */
     *(S->top)++ = e;
 
     return OK;
-} // Push
+}
 
-Status Pop(SqStack *S, StackElemType *e)
+Status Pop_Sq(SqStack *S, StackElemType *e)
 {
-    // 若栈为空.
+    /* 若栈为空. */
     if (S->top == S->base)
     {
         return ERROR;
     }
 
+    /* 弹出元素. */
     (*e) = *(--(S->top));
 
     return OK;
-} // Pop
+}
 
-Status GetTop(SqStack S, StackElemType *e)
+Status GetTop_Sq(SqStack S, StackElemType *e)
 {
-    // 空栈
+    /* 空栈. */
     if (S.top == S.base)
     {
         return ERROR;
     }
 
+    /* 获取栈顶元素. */
     *e = *(S.top - 1);
 
     return OK;
-} // GetTop
-
-int StackLength(SqStack S)
-{
-    return (S.top - S.base);
-} // StackLength
-
-Status ClearStack(SqStack *S)
-{
-    S->top = S->base;
-
-    return OK;
-} // ClearStack
+}
 
 Status DestoryStack(SqStack *S)
 {
-    // 释放顺序栈内容空间.
+    /* 释放顺序栈内容空间. */
     free(S->base);
 
-    // 置栈顶栈顶指针为空.
+    /* 置栈顶栈顶指针为空. */
     S->base = NULL;
     S->top = NULL;
 
-    // 更新栈大小.
-    S->stackSize = 0;
-
     return OK;
-} // DestoryStack
+}
 
 Status StackTraverse(SqStack S, Status (*visit)())
 {
     return OK;
-} // StackTraverse
+}
 
-// 栈的应用
-
-// 数制转换
-void conversion()
+void Conversion()
 {
     SqStack S;
-    InitStack(&S);
+    InitStack_Sq(&S);
 
-    printf("enter a decimal number: ");
+    printf("Enter a decimal number: ");
 
     int N = 0;
     scanf("%d", &N);
 
     while (N)
     {
-        Push(&S, N % 8);
+        Push_Sq(&S, N % 8);
         N = N / 8;
     }
 
-    printf("octal of this number is: ");
+    printf("Octal of this number is: ");
 
     StackElemType e;
-    while (!StackEmpty(S))
+    while (!StackEmpty_Sq(S))
     {
-        Pop(&S, &e);
+        Pop_Sq(&S, &e);
         printf("%d", e);
     }
 
     printf("\n");
 
     return;
-} // conversion
+}
 
-// 括号匹配
 Status MatchBrackets()
 {
-    printf("please enter a bracket sequence: ");
+    printf("Enter a bracket sequence, length does not exceed 20.\n");
 
     SqStack S;
-    InitStack(&S);
+    InitStack_Sq(&S);
 
-    char bracket_sequence[20] = "\0";
-    gets(bracket_sequence);
+    char bracketSequence[20] = "\0";
+    gets(bracketSequence);
 
-    int len = sizeof(bracket_sequence) / sizeof(bracket_sequence[0]);
-    for (int i = 0; (i < len) && (bracket_sequence[i] != '\0'); ++i)
+    int len = sizeof(bracketSequence) / sizeof(bracketSequence[0]);
+    for (int i = 0; (i < len) && (bracketSequence[i] != '\0'); ++i)
     {
-        // 左括号压栈
-        if ((bracket_sequence[i] == '(') || (bracket_sequence[i] == '[') || (bracket_sequence[i] == '{') || (bracket_sequence[i] == '<'))
-            Push(&S, bracket_sequence[i]);
+        /* 左括号压栈. */
+        if ((bracketSequence[i] == '(') || (bracketSequence[i] == '[') || (bracketSequence[i] == '{') || (bracketSequence[i] == '<'))
+        {
+            Push_Sq(&S, bracketSequence[i]);
+        }
         else
         {
-            StackElemType left_bracket;
+            StackElemType leftBracket;
 
-            // stack have bracket
-            if ((!StackEmpty(S)) && (Pop(&S, &left_bracket)))
+            /* 栈中有括号. */
+            if ((!StackEmpty_Sq(S)) && (Pop_Sq(&S, &leftBracket)))
             {
-                // match
-                // the ASCII of brackets differs by 2, except () differ by 1
-                // 若匹配则出栈
-                if ((left_bracket == (bracket_sequence[i] - 1)) || left_bracket == (bracket_sequence[i] - 2))
+                /* 匹配. */
+                /* 每对括号的 ASCII 相差 2, 除了 () 相差 1. */
+                if ((leftBracket == (bracketSequence[i] - 1)) || leftBracket == (bracketSequence[i] - 2))
+                {
                     continue;
-                // not match
+                }
+                /* 不匹配. */
                 else
+                {
                     return FALSE;
+                }
             }
-            // stack have no bracket to match
+            /* stack have no bracket to match. */
             else
+            {
                 return FALSE;
+            }
         }
     }
 
-    // 若存在未消解的括号, 则说明匹配失败
-    if (StackEmpty(S))
+    /* 若存在未消解的括号, 则说明匹配失败. */
+    if (StackEmpty_Sq(S))
+    {
         return TRUE;
+    }
 
     return FALSE;
 }

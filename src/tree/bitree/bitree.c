@@ -105,13 +105,13 @@ Status PreOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
 Status PreOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e))
 {
     SqStack S;
-    InitStack(&S);
+    InitStack_Sq(&S);
 
     // 工作指针.
     BiTNode *p = T;
 
     // 指针 p 不为空或栈不为空时.
-    while (p || !StackEmpty(S))
+    while (p || !StackEmpty_Sq(S))
     {
         /**
          * 1. 沿着根的左子, 一遍访问, 一遍入栈, 直至当前结点为空, 为空时说明该访
@@ -119,16 +119,16 @@ Status PreOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e))
          * */
         if (p)
         {
-            Visit(p->data); // 先访问当前结点.
-            Push(&S, *p);   // 入栈.
-            p = p->lchild;  // 再向左
+            Visit(p->data);  // 先访问当前结点.
+            Push_Sq(&S, *p); // 入栈.
+            p = p->lchild;   // 再向左
         }
         /**
          * 2. 将结点从栈中弹出, 若其右子为空, 则继续执行 2, 否则右子树继续执行 1. 
          * */
         else
         {
-            Pop(&S, &p);
+            Pop_Sq(&S, &p);
             p = p->rchild;
         }
     }
@@ -162,20 +162,20 @@ Status InOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e))
 {
     // 初始化顺序栈.
     SqStack S;
-    InitStack(&S);
+    InitStack_Sq(&S);
 
     // 工作指针.
     BiTNode *p = T;
 
-    while (p || !StackEmpty(S))
+    while (p || !StackEmpty_Sq(S))
     {
         /**
          * 1. 沿着根的左子, 依次入栈, 直至左子为空, 说明已找到可以输出的结点.
          */
         if (p) // 一路向左.
         {
-            Push(&S, *p);  // 当前结点入栈.
-            p = p->lchild; // 左子不空, 一直向左走.
+            Push_Sq(&S, *p); // 当前结点入栈.
+            p = p->lchild;   // 左子不空, 一直向左走.
         }
 
         /**
@@ -184,7 +184,7 @@ Status InOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e))
          * */
         else // 出栈, 并转向出栈结点的右子树.
         {
-            Pop(&S, &p);    // 栈顶元素出栈.
+            Pop_Sq(&S, &p); // 栈顶元素出栈.
             Visit(p->data); // 访问出栈结点.
             p = p->rchild;  // 向右子树走, p 赋值为当前结点的右子.
         }
@@ -218,7 +218,7 @@ Status PostOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
 Status PostOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e))
 {
     SqStack S;
-    InitStack(&S);
+    InitStack_Sq(&S);
 
     // p 是工作指针.
     BiTNode *p = T;
@@ -230,14 +230,14 @@ Status PostOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e))
      * 后续非递归遍历二叉树是先访问左子树, 再访问右子树, 最后访问根结点.
      */
 
-    while (p || !StackEmpty(S))
+    while (p || !StackEmpty_Sq(S))
     {
         /**
          * 1. 沿着根结点的左子, 依次入栈, 直至左子为空.
         */
         if (p)
         {
-            Push(&S, *p);
+            Push_Sq(&S, *p);
             p = p->lchild;
         }
         /**
@@ -246,15 +246,15 @@ Status PostOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e))
          */
         else
         {
-            GetTop(S, &p);
+            GetTop_Sq(S, &p);
             /**
              * 2. 若栈顶元素右子非空且未访问过, 则将右子执行 1.
              */
             /**
-             * 注意, 原来 Push() 只是将结点复制了一份存到了栈中, 所以 r 记录的上
+             * 注意, 原来 Push_Sq() 只是将结点复制了一份存到了栈中, 所以 r 记录的上
              * 次访问过的结点和栈中相对应的结点并不相同, 不能直接使用
              * p->rchild != r 比较, 可以比较 data. 但是二叉树中可能会出现重复的
-             * 元素, 比较 data 会出现误差, 所以修改 Push() 为向栈中存放二叉树中
+             * 元素, 比较 data 会出现误差, 所以修改 Push_Sq() 为向栈中存放二叉树中
              * 结点本身, 而不是拷贝比较好.
              * 
              * 刚才试了一下, 还是直接比较 data 方便.
@@ -262,8 +262,8 @@ Status PostOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e))
             if (p->rchild && p->rchild->data != r->data)
             {
                 p = p->rchild;
-                Push(&S, *p);  // 右子入栈.
-                p = p->lchild; // 检查右子左子.
+                Push_Sq(&S, *p); // 右子入栈.
+                p = p->lchild;   // 检查右子左子.
             }
             /**
              * 否则栈顶元素出栈, 并访问.
@@ -271,15 +271,15 @@ Status PostOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e))
             /**
              * @see LevelOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
              * 
-             * 这里 Pop 中第二个参数是类型是 BiTNode **, 即指向 BiTNode 指针的指
+             * 这里 Pop_Sq 中第二个参数是类型是 BiTNode **, 即指向 BiTNode 指针的指
              * 针, 并不是我需要修改栈中的存储的元素本身, 而是只用当指针 p 为 NULL
-             * 时, 才会使用 Pop(), 而 NULL 并没有指向的内容, 不能修改 p 指向的内
-             * 容, 也就无法复制栈中的元素, 而在 Pop() 中为 p malloc 存储空间又改
+             * 时, 才会使用 Pop_Sq(), 而 NULL 并没有指向的内容, 不能修改 p 指向的内
+             * 容, 也就无法复制栈中的元素, 而在 Pop_Sq() 中为 p malloc 存储空间又改
              * 变了指针本身, 所以将参数改为 BiTNode **, 直接修改 *p, 即 BiTNode*.
              */
             else
             {
-                Pop(&S, &p);
+                Pop_Sq(&S, &p);
                 Visit(p->data);
                 r = p;    // 更新最近访问结点.
                 p = NULL; // 结点访问之后置 p 为 NULL.
@@ -370,7 +370,7 @@ Status InvertLevelTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
         EnQueue_Sq(&Q, *T);
 
         SqStack S;
-        InitStack(&S);
+        InitStack_Sq(&S);
 
         BiTNode *p = T;
 
@@ -378,7 +378,7 @@ Status InvertLevelTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
         {
             DeQueue_Sq(&Q, p);
 
-            Push(&S, *p);
+            Push_Sq(&S, *p);
 
             if (p->lchild != NULL)
             {
@@ -391,9 +391,9 @@ Status InvertLevelTraverse_Binary(BiTree T, Status (*Visit)(ElemType e))
             }
         }
 
-        while (!StackEmpty(S))
+        while (!StackEmpty_Sq(S))
         {
-            Pop(&S, &p);
+            Pop_Sq(&S, &p);
             Visit(p->data);
         }
         return OK;
