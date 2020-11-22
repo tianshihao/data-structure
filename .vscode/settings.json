@@ -1,0 +1,18 @@
+{
+    "C_Cpp.autocomplete": "Default",
+    "C_Cpp.clang_format_sortIncludes": true,
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    // 关闭以下一项以防与 Clang 冲突.
+    "C_Cpp.errorSquiggles": "Enabled",
+    "C_Cpp.intelliSenseEngineFallback": "Enabled",
+    "C_Cpp.suggestSnippets": true,
+    "editor.tabCompletion": "on",
+    "files.associations": {
+        "*.c": "c",
+        "*.h": "c",
+        "limits": "c",
+        "type_traits": "c"
+    },
+    "files.defaultLanguage": "c",
+    "editor.formatOnSave": true
+}
