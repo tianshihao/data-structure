@@ -1,78 +1,108 @@
 ﻿/**
- * @file  : linkqueue.h
- * @brief : 单链队列, 是先进先出的线性表
- * @author: 田世豪
- * @date  : 2020-1-29
+ * @file linkqueue.h
+ * @author tianshihao4944@126.com
+ * @brief 链式队列. 
+ * @version 0.2
+ * @date 2020-11-22
+ * @copyright Copyright (c) 2020
  */
 
 #ifndef LINKQUEUE_H
 #define LINKQUEUE_H
 
 #include <status.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-typedef int QElemType;
+/* 队列存储类型为 int. */
+typedef int QueueElemType;
 
-typedef struct QNode
+/* 链式队列的存储结点. */
+typedef struct LinkQNode
 {
-    QElemType data;
-    struct QNode *next;
-} QNode, *QueuePtr;
+    /* 数据域. */
+    QueueElemType data;
+    /* 指针域. */
+    struct LinkQNode *next;
+} LinkQNode;
 
+/* 链式队列的存储类型. */
+/**
+ * @brief 链式队列的优点:
+ * 1. 特别适合于数据元素变动比较大的情形;
+ * 2. 不存在队列满产生溢出的问题;
+ * 3. 使用多个队列时, 不会出现存储分配不合理和 "溢出" 的问题.
+ */
 typedef struct LinkQueue
 {
-    // 队头指针
-    QueuePtr front;
+    /***
+     * 队头指针.
+     * @note 注意, 在带有头结点的链式队列中, 队头指针 front 指向的不是队头元素,
+     * 指向的是头结点. 
+     */
+    LinkQNode *front;
 
-    // 队尾指针
-    QueuePtr rear;
+    /* 队尾指针. */
+    LinkQNode *rear;
 } LinkQueue;
 
 /**
- * 构造一个空队列.
+ * @brief 初始化链式队列.
+ * @param Q 指向链式队列的指针.
+ * @return Status 构造成功返回 OK.
  */
-Status InitQueue_L(LinkQueue *Q);
+Status InitQueue_Link(LinkQueue *Q);
 
 /**
- * 销毁队列 Q, Q 不再存在.
+ * @brief 判断链式队列是否为空.
+ * @param Q 链式队列.
+ * @return Status 若链式队列为空, 则返回 TURE, 非空返回 FALSE.
  */
-Status DestoryQueue_L(LinkQueue *Q);
+Status QueueEmpty_Link(LinkQueue Q);
 
 /**
- * 把 Q 置为空队列.
+ * @brief 元素入队.
+ * @param Q 指向链式队列的指针.
+ * @param e 入队的数据元素.
+ * @return Status 
  */
-Status ClearQueue(LinkQueue *Q);
+Status EnQueue_Link(LinkQueue *Q, QueueElemType e);
 
 /**
- * 若队列 Q 为空队列, 则返回 TRUE, 否则返回 FALSE.
+ * @brief 元素出队.
+ * @param Q 指向链式队列的指针.
+ * @param e 用以返回队头元素.
+ * @return Status 
  */
-Status QueueEmpty(LinkQueue Q);
+Status DeQueue_Link(LinkQueue *Q, QueueElemType *e);
 
 /**
- * 返回 Q 的元素个数, 即队列的长度.
+ * @brief 读队头元素. 若队列不空, 则用 e 返回 Q 的队头元素, 并返回 OK;
+ * 否则返回 ERROR.
+ * @param Q 链式队列.
+ * @param e 存储队头元素.
+ * @return Status 
  */
-int QueueLength(LinkQueue Q);
+Status GetHead_Link(LinkQueue Q, QueueElemType *e);
 
 /**
- * 若队列不空, 则用 e 返回 Q 的队头元素, 并返回 OK; 否则返回 ERROR.
+ * @brief 返回链式队列数据元素个数
+ * @param Q 链式队列
+ * @return int 队列中元素个数.
  */
-Status GetHead(LinkQueue Q, QElemType *e);
+int QueueLength_Link(LinkQueue Q);
 
 /**
- * 插入元素 e 为新的队尾元素.
+ * @brief 销毁链式队列.
+ * @param Q 指向链式队列的指针.
+ * @return Status 销毁成功返回 OK.
  */
-Status EnQueue(LinkQueue *Q, QElemType e);
+Status DestoryQueue_Link(LinkQueue *Q);
 
 /**
- * 若队列不空, 则删除 Q 的队头元素, 用 e 返回其值, 并返回 OK; 否则返回ERROR.
+ * @brief 打印队列数据.
+ * @param Q 指向链式队列的指针.
  */
-Status DeQueue(LinkQueue *Q, QElemType *e);
-
-//从队列底到队列顶依次对队列中的每个元素调用函数 visit(). 一旦 visit() 失败, 则操作失败.
-Status QueueTraverse(LinkQueue Q, Status (*visit)());
-
-/**
- * 打印队列数据.
- */
-void PrintQueue_L(LinkQueue Q);
+void PrintQueue_Link(LinkQueue Q);
 
 #endif /* LINKQUEUE_H */

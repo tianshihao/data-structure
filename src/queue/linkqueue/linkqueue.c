@@ -1,89 +1,96 @@
-﻿#include <queue/linkqueue/linkqueue.h>
-#include <stdio.h>
-#include <stdlib.h>
-
-/**
- * 构造一个空队列.
+﻿/**
+ * @file linkqueue.c
+ * @author tianshihao4944@126.com   
+ * @brief 链式队列方法实现.
+ * @version 0.2
+ * @date 2020-11-22
+ * @copyright Copyright (c) 2020
  */
-Status InitQueue_L(LinkQueue *Q)
-{
-    Q->front = Q->rear = malloc(sizeof(QNode));
 
+#include <queue/linkqueue/linkqueue.h>
+
+Status InitQueue_Link(LinkQueue *Q)
+{
+    /* 建立头结点. */
+    Q->front = Q->rear = (LinkQNode *)malloc(sizeof(LinkQNode));
+    /* 如果内存分配失败. */
     if (!Q->front)
     {
         exit(OVERFLOW);
     }
+
+    /* 初始为空. */
     Q->front->next = NULL;
 
     return OK;
 }
 
-/**
- * 销毁队列 Q, Q 不再存在.
- */
-Status DestoryQueue_L(LinkQueue *Q)
+Status QueueEmpty_Link(LinkQueue Q)
 {
-    // 过河拆桥?
-    while (Q->front)
-    {
-        Q->rear = Q->front->next;
-        free(Q->front);
-        Q->front = Q->rear;
-    }
-
-    return OK;
-}
-
-/**
- * 把 Q 置为空队列.
- */
-Status ClearQueue(LinkQueue *Q)
-{
-    QueuePtr ptr = Q->front->next;
-
-    while (ptr)
-    {
-        Q->front->next = ptr->next;
-        free(ptr);
-        ptr = Q->front->next;
-    }
-
-    Q->rear = Q->front;
-
-    return OK;
-}
-
-/**
- * 若队列 Q 为空队列, 则返回 TRUE, 否则返回 FALSE.
- */
-Status QueueEmpty(LinkQueue Q)
-{ // 队列为空的判断条件是头指针和尾指针均指向头结点
+    /* 队列为空的判断条件是头指针和尾指针均指向头结点. */
     if (Q.front == Q.rear)
+    {
         return TRUE;
-    return FALSE;
+    }
+    else
+    {
+        return FALSE;
+    }
 }
 
-/**
- * 返回 Q 的元素个数, 即队列的长度.
- */
-int QueueLength(LinkQueue Q)
+Status EnQueue_Link(LinkQueue *Q, QueueElemType e)
 {
-    int len = 0;
-    QueuePtr ptr = Q.front->next;
-
-    while (ptr)
+    /* 工作指针, 指向新入队的结点. */
+    LinkQNode *p = (LinkQNode *)malloc(sizeof(LinkQNode));
+    /* 如果内存分配失败. */
+    if (!p)
     {
-        ptr = ptr->next;
-        ++len;
+        exit(OVERFLOW);
     }
 
-    return len;
+    /* 为新结点赋值. */
+    p->data = e;
+    p->next = NULL;
+
+    /* 插入新结点. 此时 Q->rear 指向队尾结点. */
+    /* 将新结点连接到队尾结点之后. */
+    Q->rear->next = p;
+    /* 更新队尾结点. */
+    Q->rear = p;
+
+    return OK;
 }
 
-/**
- * 若队列不空, 则用 e 返回 Q 的队头元素, 并返回 OK; 否则返回 ERROR.
- */
-Status GetHead(LinkQueue Q, QElemType *e)
+Status DeQueue_Link(LinkQueue *Q, QueueElemType *e)
+{
+    /* 空队列. */
+    if (Q->front == Q->rear)
+    {
+        return ERROR;
+    }
+
+    /* 工作指针. 初始指向队头结点 (第一个结点). Q->front 指向的是头结点. */
+    LinkQNode *p = Q->front->next;
+
+    /* 获取队头结点数据. */
+    (*e) = p->data;
+
+    /* 逻辑上跳过队头结点. */
+    Q->front->next = p->next;
+
+    /* 若原队列中只有一个结点, 删除后变空队列. */
+    if (Q->rear == p)
+    {
+        Q->rear = Q->front;
+    }
+
+    /* 释放队头结点内存空间, 物理上删除了队头元素. */
+    free(p);
+
+    return OK;
+}
+
+Status GetHead_Link(LinkQueue Q, QueueElemType *e)
 {
     if (Q.front != Q.rear)
     {
@@ -94,66 +101,54 @@ Status GetHead(LinkQueue Q, QElemType *e)
         return ERROR;
 }
 
-/**
- * 插入元素 e 为新的队尾元素.
- */
-Status EnQueue(LinkQueue *Q, QElemType e)
+int QueueLength_Link(LinkQueue Q)
 {
-    QueuePtr ptr = malloc(sizeof(QNode));
+    /* 计数器, 记录结点数目, 即队列长度. */
+    int length = 0;
+    /* 工作指针. 初始指向队头结点. */
+    LinkQNode *p = Q.front->next;
 
-    if (!ptr)
-        exit(OVERFLOW);
+    /* 循环. */
+    while (p)
+    {
+        /* 指针向后指. */
+        p = p->next;
+        /* 计数器加 1. */
+        ++length;
+    }
 
-    ptr->data = e;
-    ptr->next = NULL;
+    return length;
+}
 
-    Q->rear->next = ptr;
-    Q->rear = ptr;
+Status DestoryQueue_Link(LinkQueue *Q)
+{
+    /* 从头结点开始释放内存. */
+    while (Q->front)
+    {
+        /* 把队尾指针当作辅助指针, 记录要释放内存结点的下一个结点. */
+        Q->rear = Q->front->next;
+        /* 把队头指针当作工作指针, 释放其指向的结点. */
+        free(Q->front);
+        /* 指向下一个结点. */
+        Q->front = Q->rear;
+    }
 
     return OK;
 }
 
-/**
- * 若队列不空, 则删除 Q 的队头元素, 用 e 返回其值, 并返回 OK; 否则返回ERROR.
- */
-Status DeQueue(LinkQueue *Q, QElemType *e)
+void PrintQueue_Link(LinkQueue Q)
 {
-    if (Q->front == Q->rear)
-        return ERROR;
-
-    QueuePtr ptr = Q->front->next;
-    (*e) = ptr->data;
-
-    Q->front->next = ptr->next;
-
-    // 之后队列将为空, 顺便重置尾指针
-    if (Q->rear == ptr)
-        Q->rear = Q->front;
-
-    free(ptr);
-
-    return OK;
-}
-
-//从队列底到队列顶依次对队列中的每个元素调用函数 visit(). 一旦 visit() 失败, 则操作失败.
-Status QueueTraverse(LinkQueue Q, Status (*visit)())
-{
-    return OK;
-}
-
-/**
- * 打印队列数据.
- */
-void PrintQueue_L(LinkQueue Q)
-{
+    /* 空队列. */
     if (Q.front == Q.rear)
     {
-        printf("queue is empty\n");
+        printf("Queue is empty\n");
         return;
     }
 
-    for (QueuePtr ptr = Q.front->next; ptr != NULL; ptr = ptr->next)
-        printf(" %d ", ptr->data);
+    for (LinkQNode *p = Q.front->next; p != NULL; p = p->next)
+    {
+        printf(" %d ", p->data);
+    }
     printf("\n");
 
     return;
