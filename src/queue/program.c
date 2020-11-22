@@ -26,7 +26,7 @@ void UseSqqueue()
 
     PrintQueue_Sq(Q);
 
-    QElemType e;
+    QueueElemType e;
 
     GetHead_Sq(Q, &e);
 
@@ -48,40 +48,38 @@ void UseSqqueue()
 void UseLinkqueue()
 {
     LinkQueue Q;
-    InitQueue_L(&Q);
-    QElemType e;
+    InitQueue_Link(&Q);
+    QueueElemType e;
 
-    printf("length = %d\n", QueueLength(Q));
+    printf("length = %d\n", QueueLength_Link(Q));
 
-    EnQueue(&Q, 1);
-    EnQueue(&Q, 2);
-    EnQueue(&Q, 3);
-    EnQueue(&Q, 4);
+    EnQueue_Link(&Q, 1);
+    EnQueue_Link(&Q, 2);
+    EnQueue_Link(&Q, 3);
+    EnQueue_Link(&Q, 4);
 
-    printf("length = %d\n", QueueLength(Q));
+    printf("length = %d\n", QueueLength_Link(Q));
 
-    DeQueue(&Q, &e);
+    DeQueue_Link(&Q, &e);
     printf("e = %d\n", e);
-    printf("length = %d\n", QueueLength(Q));
+    printf("length = %d\n", QueueLength_Link(Q));
 
-    PrintQueue_L(Q);
+    PrintQueue_Link(Q);
 
-    GetHead(Q, &e);
+    GetHead_Link(Q, &e);
     printf("e = %d\n", e);
-    printf("length = %d\n", QueueLength(Q));
+    printf("length = %d\n", QueueLength_Link(Q));
 
-    printf("length = %d\n", QueueLength(Q));
+    printf("length = %d\n", QueueLength_Link(Q));
 
-    ClearQueue(&Q);
+    PrintQueue_Link(Q);
 
-    PrintQueue_L(Q);
-
-    if (DeQueue(&Q, &e))
+    if (DeQueue_Link(&Q, &e))
         printf("wrong\n");
     else
         printf("bingo\n");
 
-    DestoryQueue_L(&Q);
+    DestoryQueue_Link(&Q);
 
     return;
 }

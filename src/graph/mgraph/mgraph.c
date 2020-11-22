@@ -295,26 +295,26 @@ void DFS_M(MGraph G, int v, Status (*Visit)(VertexType v), int *visited)
     return;
 }
 
-void DFS_M_NoRec(MGraph G, int v, Status (*Visit)(VertexType v), int *visited)
-{
-    /**/
-    SqStack S;
-    InitStack_Sq(&S);
-    Push_Sq(&S, v);
-    while (!StackEmpty_Sq(S))
-    {
-        int k = Pop_Sq(&S, k);
-        Visit(G.vertices[k]);
-        for (int w = FirstVex_M(G, k); k >= 0; w = NextVex_M(G, k, w))
-        {
-            if (!visited[w])
-            {
-                Push_Sq(&S, w);
-                visited[w];
-            }
-        }
-    }
-}
+// void DFS_M_NoRec(MGraph G, int v, Status (*Visit)(VertexType v), int *visited)
+// {
+//     /**/
+//     SqStack S;
+//     InitStack_Sq(&S);
+//     Push_Sq(&S, v);
+//     while (!StackEmpty_Sq(S))
+//     {
+//         int k = Pop_Sq(&S, k);
+//         Visit(G.vertices[k]);
+//         for (int w = FirstVex_M(G, k); k >= 0; w = NextVex_M(G, k, w))
+//         {
+//             if (!visited[w])
+//             {
+//                 Push_Sq(&S, w);
+//                 visited[w];
+//             }
+//         }
+//     }
+// }
 
 void Dijkstra_M(MGraph G, VertexType source)
 {
