@@ -1,7 +1,7 @@
 ﻿/**
  * @file sqqueue.h
  * @author tianshihao4944@126.com
- * @brief 顺序循环队列.
+ * @brief 顺序队列头文件.
  * @version 0.1
  * @date 2020-09-13
  * @copyright Copyright (c) 2020
@@ -14,14 +14,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/* 队列的最大尺寸为 100.  实际能存储的元素数量为MAX_SIZE-1*/
 #define MAX_SIZE 100
 
-typedef int QElemType;
-
+/* 队列存储类型为 int. */
+typedef int QueueElemType;
+/* 顺序队列的存储类型. */
 typedef struct SqQueue
 {
     /* 初始化的动态分配存储空间. */
-    QElemType *base;
+    QueueElemType *base;
 
     /* 头指针, 若队列不空, 指向队头元素. */
     int front;
@@ -31,10 +33,45 @@ typedef struct SqQueue
 } SqQueue;
 
 /**
- * @brief 初始化循环队列, 构造一个空队列.
+ * @brief 初始化顺序队列, 构造一个空队列.
  * @param Q 指向空循环的指针.
  */
 Status InitQueue_Sq(SqQueue *Q);
+
+/**
+ * @brief 判队列空, 若顺序队列 Q 为空返回 TRUE, 否则返回 FALSE.
+ * @param Q 顺序队列.
+ * @return TRUE 队列为空返回 TRUE.
+ * @return FALSE 队列不空返回 FALSE.
+ */
+Status QueueEmpty_Sq(SqQueue Q);
+
+/**
+ * @brief 入队, 若顺序队列 Q 未满, 将 x 加入, 使之成为新的队尾.
+ * @param Q 指向顺序队列的指针.
+ * @param e 入队的数据元素.
+ */
+Status EnQueue_Sq(SqQueue *Q, QueueElemType e);
+
+/**
+ * @brief 出队, 若顺序队列 Q 非空, 删除队头元素, 并用 e 返回.
+ * @param Q 指向顺序队列的指针,
+ * @param e 用以返回队头元素.
+ */
+Status DeQueue_Sq(SqQueue *Q, QueueElemType *e);
+
+/**
+ * @brief 若队列不空, 则用 e 返回 Q 的队头元素, 并返回 OK; 否则返回 ERROR.
+ * @param Q 顺序队列.
+ * @param e 存储队头元素.
+ */
+Status GetHead_Sq(SqQueue Q, QueueElemType *e);
+
+/**
+ * @brief 返回顺序队列数据元素个数.
+ * @param Q 顺序队列.
+ */
+int QueueLength_Sq(SqQueue Q);
 
 /**
  * @brief 删除队列, 释放其内存空间.
@@ -45,43 +82,8 @@ Status InitQueue_Sq(SqQueue *Q);
 Status DestoryQueue_Sq(SqQueue *Q);
 
 /**
- * @brief 判队列空, 若循环队列 Q 为空返回 TRUE, 否则返回 FALSE.
- * @param Q 循环队列.
- * @return TRUE 队列为空返回 TRUE.
- * @return FALSE 队列不空返回 FALSE.
- */
-Status QueueEmpty_Sq(SqQueue Q);
-
-/**
- * @brief 入队, 若循环队列 Q 未满, 将 x 加入, 使之成为新的队尾.
- * @param Q 指向循环队列的指针.
- * @param e 入队的数据元素.
- */
-Status EnQueue_Sq(SqQueue *Q, QElemType e);
-
-/**
- * @brief 出队, 若循环队列 Q 非空, 删除队头元素, 并用 e 返回.
- * @param Q 指向循环队列的指针,
- * @param e 用以返回队头元素.
- */
-Status DeQueue_Sq(SqQueue *Q, QElemType *e);
-
-/**
- * @brief 若队列不空, 则用 e 返回 Q 的队头元素, 并返回 OK; 否则返回 ERROR.
- * @param Q 循环队列.
- * @param e 存储队头元素.
- */
-Status GetHead_Sq(SqQueue Q, QElemType *e);
-
-/**
- * @brief 返回循环队列数据元素个数.
- * @param Q 循环队列.
- */
-int QueueLength_Sq(SqQueue Q);
-
-/**
- * @brief 打印循环队列.
- * @param Q 循环队列.
+ * @brief 打印顺序队列.
+ * @param Q 顺序队列.
  * @return OK 打印成功.
  * @return ERROR 打印失败.
  */

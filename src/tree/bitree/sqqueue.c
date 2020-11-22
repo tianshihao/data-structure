@@ -12,7 +12,7 @@
 Status InitQueue_Sq(SqQueue *Q)
 {
     /* 为顺序队列申请内存空间. */
-    Q->base = (QElemType *)malloc(MAX_SIZE * sizeof(QElemType));
+    Q->base = (QueueElemType *)malloc(MAX_SIZE * sizeof(QueueElemType));
 
     /* 如果内存申请失败. */
     if (!Q->base)
@@ -26,47 +26,24 @@ Status InitQueue_Sq(SqQueue *Q)
     return OK;
 }
 
-Status DestoryQueue_Sq(SqQueue *Q)
-{
-    /* 若已为队列分配内存空间, */
-    if (Q->base)
-    {
-        /* 则释放内存. */
-        free(Q->base);
-
-        /* 同时重置存储空间为 NULL, 指针为 0.*/
-        Q->base = NULL;
-        Q->front = Q->rear = 0;
-
-        return OK;
-    }
-    else
-    {
-        /* 队列未被分配内存空间, 销毁失败. */
-        exit(ERROR);
-    }
-}
-
 Status QueueEmpty_Sq(SqQueue Q)
 {
     return Q.front == Q.rear;
 }
 
-Status EnQueue_Sq(SqQueue *Q, QElemType e)
+Status EnQueue_Sq(SqQueue *Q, QueueElemType e)
 {
     /**
-     * 队头指针在队尾指针的下一位是队满的标志, 这样做会牺牲一位存储空间, 所以
-     * 该队列实际上的最大尺寸为 MAX_SIEZ-1.
+     * 为了区分队空还是队满的情况, 牺牲一个单元来区分队空和队满, 入队时少用一个
+     * 队列单元, 约定以队头指针在队尾指针的下一位置作为队满的标志.
      */
-    /* 队满, 无法新入队元素. */
+    /* 如果队列已满. */
     if ((Q->rear + 1) % MAX_SIZE == Q->front)
     {
         return ERROR;
     }
 
-    /* memcpy(Q->base + Q->rear, &e, sizeof(e)); */
     /* 新元素入队尾. */
-    /* Q->base[Q->rear] = e; */
     *(Q->base + Q->rear) = e;
 
     /* 队尾指针进一. */
@@ -75,7 +52,7 @@ Status EnQueue_Sq(SqQueue *Q, QElemType e)
     return OK;
 }
 
-Status DeQueue_Sq(SqQueue *Q, QElemType *e)
+Status DeQueue_Sq(SqQueue *Q, QueueElemType *e)
 {
     /* 如果队列为空. */
     if (Q->front == Q->rear)
@@ -96,13 +73,15 @@ Status DeQueue_Sq(SqQueue *Q, QElemType *e)
     return OK;
 }
 
-Status GetHead_Sq(SqQueue Q, QElemType *e)
+Status GetHead_Sq(SqQueue Q, QueueElemType *e)
 {
+    /* 如果队列为空. */
     if (Q.front == Q.rear)
     {
         return ERROR;
     }
 
+    /* 读取队头元素. */
     *e = Q.base[Q.front];
 
     return OK;
@@ -111,6 +90,26 @@ Status GetHead_Sq(SqQueue Q, QElemType *e)
 int QueueLength_Sq(SqQueue Q)
 {
     return (Q.rear - Q.front + MAX_SIZE) % MAX_SIZE;
+}
+
+Status DestoryQueue_Sq(SqQueue *Q)
+{
+    /* 如果为队列分配了内存空间. */
+    if (Q->base)
+    {
+        /* 释放内存. */
+        free(Q->base);
+        /* 重置指向内存空间的指针. */
+        Q->base = NULL;
+        /* 重置队头队尾指针. */
+        Q->front = Q->rear = 0;
+
+        return OK;
+    }
+    else
+    {
+        exit(ERROR);
+    }
 }
 
 void PrintQueue_Sq(SqQueue Q)
