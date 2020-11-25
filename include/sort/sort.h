@@ -2,8 +2,8 @@
  * @file sort.h
  * @author tianshihao4944@126.com
  * @brief 排序算法.
- * @version 0.1
- * @date 2020-10-27
+ * @version 0.2
+ * @date 2020-11-25
  * @copyright Copyright (c) 2020
  */
 
@@ -28,7 +28,7 @@ typedef int ElemType;
  * 达到最大, 为 (2->n)Σ(i+1), 即时间复杂度为 O(n^2).
  * @note 在平均情况下, 总的比较次数和移动次数约为 (n^2)/4.
  * @note 稳定性: 稳定.
- * @note 适用性: 顺序存储和链式存储的线性表.A
+ * @note 适用性: 顺序存储和链式存储的线性表.
  * @param A 0 号索引为辅助空间的顺序存储结构, 数组. 
  * @param n 数组长度.
  */
@@ -137,9 +137,12 @@ void Merge(ElemType A[], int low, int mid, int high, int n);
 void BuildMaxHeap(ElemType A[], int len);
 
 /**
- * @brief 堆调整. 将元素 parent 为根的子树进行调整.
+ * @brief 堆调整. 将元素 parent 为根的子树进行调整. 即堆化, Heapify.
+ * @note 时间效率: 调整的时间与树高有关, 为 O(h). 在建立含 n 个元素的堆时, 关键字
+ * 的总比较次数不超过 4n, 时间复杂度为 O(n), 这说明可以在线性时间内将一个无序数组
+ * 建成一个堆. 
  * @param A 数组.
- * @param parent 某一子树.
+ * @param parent 以 parent 为根的某一子树.
  * @param len 数组长度.
  */
 void HeapAdjust(ElemType A[], int parent, int len);
@@ -168,7 +171,7 @@ void HeapSort(ElemType A[], int len);
 void SelectionSort(ElemType A[], int len);
 
 /**
- * @brief 交换元素 *A 和 *B 的值.
+ * @brief 交换元素 *A 和 *B 的值. 一共移动元素 3 次.
  * @param A 指向元素 A 的指针.
  * @param B 指向元素 B 的指针.
  */

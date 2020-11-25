@@ -30,7 +30,7 @@ int main()
         printf("%d%c", A[i], i == len - 1 ? '\n' : ',');
     }
 
-    // InsertionSort(A, 9);
+    InsertionSort(A, 9);
     // BinaryInsertionSort(A, 9);
     // ShellSort(A, 9);
     // BubbleSort(A, 9);

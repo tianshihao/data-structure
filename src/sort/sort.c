@@ -2,8 +2,8 @@
  * @file sort.c
  * @author tianshihao4944@126.com
  * @brief 排序算法实现
- * @version 0.1
- * @date 2020-11-01
+ * @version 0.2
+ * @date 2020-11-25
  * @copyright Copyright (c) 2020
  */
 
@@ -12,19 +12,26 @@
 void InsertionSort(ElemType A[], int n)
 {
     int i, j;
+    /* 从索引 2 开始, 默认将 A[1] 作为有序子序列. */
     for (i = 2; i < n; ++i)
     {
+        /* 有序子序列的最后一位元素大于当前元素, 有比较的必要. */
         if (A[i] < A[i - 1])
         {
-            A[0] = A[i]; /* 设置哨兵. */
+            /* 1. 设置哨兵. */
+            A[0] = A[i];
 
             for (j = i - 1; A[j] > A[0]; --j)
             {
-                A[j + 1] = A[j]; /* 将小于哨兵的元素向后挪动. */
+                /* 2. 将大于哨兵的元素向后挪动. */
+                A[j + 1] = A[j];
             }
-            A[j + 1] = A[0]; /* 将哨兵复制到插入位置. */
+            /* 3. A[j] 小于或等于哨兵, 应将哨兵复制插入位置 j+1.*/
+            A[j + 1] = A[0];
         }
     }
+
+    return;
 }
 
 void BinaryInsertionSort(ElemType A[], int n)
@@ -77,10 +84,16 @@ void BinaryInsertionSort(ElemType A[], int n)
             A[right + 1] = A[0]; /* 将哨兵复制到插入位置. */
         }
     }
+
+    return;
 }
 
 void ShellSort(ElemType A[], int n)
 {
+    /**
+     * 在直接插入排序的基础上, 外面套一层步长 delta 循环, 里面将直接插入排序代码
+     * 中所有的 1 替换成 delta. 包括 i = 2 = 1 + 1 => i = 1+delta, --j => j-= delta.
+     */
     int i, j, delta;
     for (delta = n / 2; delta >= 1; delta = delta / 2)
     {
@@ -89,7 +102,7 @@ void ShellSort(ElemType A[], int n)
             if (A[i] < A[i - delta])
             {
                 A[0] = A[i];
-                for (j = i - delta; (j > 0) && (A[0] < A[j]); j -= delta)
+                for (j = i - delta; (j > 0) && (A[j] > A[0]); j -= delta)
                 {
                     A[j + delta] = A[j];
                 }
@@ -97,13 +110,17 @@ void ShellSort(ElemType A[], int n)
             }
         }
     }
+
+    return;
 }
 
 void BubbleSort(ElemType A[], int n)
 {
     for (int i = 0; i < n; ++i)
     {
+        /* 是否发生交换的标记. */
         Status flag = FALSE;
+
         for (int j = n - 1; j > i; --j)
         {
             /* 若出现逆序. */
@@ -124,6 +141,8 @@ void BubbleSort(ElemType A[], int n)
             return;
         }
     }
+
+    return;
 }
 
 void QuickSort(ElemType A[], int low, int high)
@@ -187,6 +206,10 @@ void MergeSort(ElemType A[], int low, int high, int n)
 
 void Merge(ElemType A[], int low, int mid, int high, int n)
 {
+    /**
+     * 辅助数组 B, 用于存储本次归并之前的序列. 相当于将排序操作的对象变成 B,
+     * 而原数组 A 存储每次归并操作之后的结果, 即更新了数组 A.
+     */
     ElemType B[n];
 
     int i = 0, j = 0, k = 0;
@@ -198,24 +221,30 @@ void Merge(ElemType A[], int low, int mid, int high, int n)
     }
 
     /**
-     * 指针 i 指向数组 B 的待排子序列开始, 指针 j 指向数组 B 的待排序子序列结束.
-     * 指针 k 指向原数组 A 的待排序子序列开始. 以最后一次归并为例, 此时数组 B
-     * 复制自数组 A, 比较数组 B 的左右两部分, 相当于将 A 腾空, 存储排序后的结果.
+     * 将待排序子序列 B[low, high] 分为两段, 设比较指针 i, j 和写入指针 k.
+     * 指针 i = low 指向左半段的开始, 指针 j = mid + 1 指向右半段的开始,
+     * 指针 k 指向原数组 A 的待排序子序列开始. 然后每次从两个段中取出一个记录
+     * 进行比较, 较小者放入数组 A, 即 A[k].
+     * 以最后一次归并为例, 比较数组 B 的左右两段, 每次各取出一个记录 B[i] = 38
+     * 和 B[j] = 13, 比较 B[i] 和 B[j], 将较小的 B[j] = 13 放入 A[k]. 指针 j++, k++.
+     * 此时数组 A 和空数组没有差别, 只是存储归并排序后的结果.
+     *
+     * B     {38      49      65      97}    {13      27      49     79}
+     *        i(low)                          j(mid+1)
      * 
-     * B      38      49      65      97      13      27      49     79
-     *        i(low)                          j(high)
-     * 
-     * A      13
+     * A     {13
      *        k
      * 
-     * B      38      49      65      97      13      27      49     79
-     *        i(low)                                  j(high)
+     * B     {38      49      65      97}    {13      27      49     79}
+     *        i                               j  ->   j
      * 
-     * A      13      27
-     *                k
+     * A     {13      27
+     *        k  ->   k
      */
+    /* 比较 B 的左右两段中的元素. */
     for (i = low, j = mid + 1, k = i; (i <= mid) && (j <= high); ++k)
     {
+        /* 将较小的值复制到 A. */
         if (B[i] <= B[j])
         {
             A[k] = B[i++];
@@ -244,6 +273,7 @@ void BuildMaxHeap(ElemType A[], int len)
     /* 从 i = n/2 到 1, 反复调整堆, 直至建成大根堆. */
     for (int i = len / 2; i > 0; --i)
     {
+        /* 以 i 为根将 A 调整为大根堆. */
         HeapAdjust(A, i, len);
     }
 
@@ -333,6 +363,8 @@ void SelectionSort(ElemType A[], int len)
             Swap(&A[min], &A[i]);
         }
     }
+
+    return;
 }
 
 void Swap(ElemType *A, ElemType *B)
