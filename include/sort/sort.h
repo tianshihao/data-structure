@@ -177,4 +177,43 @@ void SelectionSort(ElemType A[], int len);
  */
 void Swap(ElemType *A, ElemType *B);
 
+/**
+ * @brief 王道数据结构323/2, 双向冒泡排序, 又称筛动排序(Shaker Sort),
+ * 鸡尾酒排序(Cocktail Sort).
+ * @param A 待排序数组.
+ * @param n 数组长度.
+ */
+void BidirectionalBubbleSort(ElemType A[], int n);
+
+/**
+ * @brief 王道数据结构323/3, 将所有奇数移动到所有偶数后面. 基于快速排序划分思想,
+ * 时间复杂度为 O(n). 空间复杂度为 O(1);
+ * @param A 数组.
+ * @param n 数组长度.
+ */
+void Move(ElemType A[], int n);
+
+/**
+ * @brief 王道数据结构324/5, 找到数组中第 k 小的元素. 平均情况下时间复杂度为 O(n).
+ * @param A 数组.
+ * @param low 数组下界.
+ * @param high 数组上界.
+ * @param k 次序.
+ */
+int KthElem(ElemType A[], int low, int high, int k);
+
+typedef enum Color
+{
+    RED,
+    WHITE,
+    BLUE
+} Color;
+/**
+ * @brief 王道数据结构324/7, 荷兰国旗问题, 给定一个仅有红, 白, 蓝三种颜色的条块
+ * 组成的条状序列, 是这些条块按红, 白, 蓝的顺序排好, 即荷兰国旗图案. 时间复杂度O(n).
+ * @param A 颜色序列.
+ * @param n 序列长度.
+ */
+void FlagArrange(Color A[], int n);
+
 #endif /* SORT_H */

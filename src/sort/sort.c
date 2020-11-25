@@ -375,3 +375,138 @@ void Swap(ElemType *A, ElemType *B)
 
     return;
 }
+
+void BidirectionalBubbleSort(ElemType A[], int n)
+{
+    int low = 0, high = n - 1;
+    Status flag = TRUE;
+
+    while (low < high && flag)
+    {
+        /* 每趟初始设置 falg 为 FALSE. */
+        flag = FALSE;
+        /* 从前向后冒泡. */
+        for (int i = low; i < high; ++i)
+        {
+            if (A[i] > A[i + 1])
+            {
+                /* 发生交换, 置 flag 为 TRUE.*/
+                Swap(&A[i], &A[i + 1]);
+                flag = TRUE;
+            }
+        }
+        /* 更新上界. */
+        --high;
+        /* 从后向前冒泡. */
+        for (int i = high; i > low; --i)
+        {
+            if (A[i] < A[i - 1])
+            {
+                Swap(&A[i], &A[i - 1]);
+                flag = TRUE;
+            }
+        }
+        /* 更新下界. */
+        ++low;
+    }
+
+    return;
+}
+
+void Move(ElemType A[], int n)
+{
+    int i = 0, j = n - 1;
+
+    while (i < j)
+    {
+        /* 从前往后找一个偶数元素. */
+        while (i < j && i % 2 != 0)
+        {
+            ++i;
+        }
+        /* 从后往前找一个奇数元素. */
+        while (i < j && j % 2 != 1)
+        {
+            --j;
+        }
+        if (i < j)
+        {
+            Swap(&A[i], &A[j]);
+        }
+        ++i, --j;
+    }
+
+    return;
+}
+
+int KthElem(ElemType A[], int low, int high, int k)
+{
+    /* 由于划分会修改 low 和 high 而递归时有需要它们, 故在这里暂存. */
+    int lowTemp = low, highTemp = high;
+
+    /* 快速排序的一趟划分. */
+    int pivot = A[low];
+    while (low < high)
+    {
+        while (low < high && A[high] >= pivot)
+        {
+            --high;
+        }
+        A[low] = A[high];
+        while (low < high && A[low] <= pivot)
+        {
+            ++low;
+        }
+        A[high] = A[low];
+    }
+    A[low] = pivot;
+
+    /* 若枢轴被放到了第 k 个位置, 即枢轴是第 k 小的元素, 直接返回 pivot. */
+    if (low == k)
+    {
+        return pivot;
+    }
+    /* 在前一部分表中递归寻找. low 是枢轴索引, 以此划分. */
+    else if (low > k)
+    {
+        return KthElem(A, lowTemp, low - 1, k);
+    }
+    /* 在后一部分表中递归寻找. */
+    else
+    {
+        return KthElem(A, low + 1, highTemp, k);
+    }
+}
+
+void FlagArrange(Color A[], int n)
+{
+    /* 设置三个指针, i 之前的元素全为红色, k 之后的元素全为蓝色, j 指向当前扫描元素. */
+    int i = 0, j = 0, k = n - 1;
+
+    while (i < k)
+    {
+        /* 判断条块的颜色. */
+        switch (A[j])
+        {
+        case RED:
+        {
+            Swap(&A[i], &A[j]);
+            ++i;
+            ++j; /* 交换之前 i 指向的一定是白色, 所以交换后 j++. */
+            break;
+        }
+        case WHITE:
+        {
+            j++;
+            break;
+        }
+        case BLUE:
+        {
+            Swap(&A[j], &A[k]);
+            --k;
+        }
+        }
+    }
+
+    return;
+}

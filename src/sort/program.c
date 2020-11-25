@@ -30,7 +30,7 @@ int main()
         printf("%d%c", A[i], i == len - 1 ? '\n' : ',');
     }
 
-    InsertionSort(A, 9);
+    // InsertionSort(A, 9);
     // BinaryInsertionSort(A, 9);
     // ShellSort(A, 9);
     // BubbleSort(A, 9);
@@ -38,11 +38,17 @@ int main()
     // MergeSort(A, 0, len - 1, len);
     // HeapSort(A, len - 1);
     // SelectionSort(A, len);
+    BidirectionalBubbleSort(A, len);
+    // Move(A, len);
 
     for (int i = 0; i < len; ++i)
     {
         printf("%d%c", A[i], i == len - 1 ? '\n' : ',');
     }
+
+    int kth = KthElem(A, 0, 8, 7);
+
+    printf("kth = %d\n", kth);
 
     system("pause");
 
