@@ -1,9 +1,13 @@
 ﻿/**
- * @file  : linklist.h
- * @brief : 单向链表
- * @author: 田世豪
- * @date  : 2020-1-25
- * */
+ * @file linklist.h
+ * @author 田世豪 (tianshihao@4944@126.com)
+ * @brief 
+ * @version 0.1
+ * @date 2020-01-25
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
 
 #ifndef LINKLIST_H
 #define LINKLIST_H
@@ -14,7 +18,7 @@
 
 typedef int ElemType;
 
-// 结点类型
+/* 单项链表的存储类型. */
 typedef struct LNode
 {
     ElemType data;
@@ -87,8 +91,6 @@ int ListLength_L(Linklist L);
  */
 void PrintList_L(Linklist L);
 
-/*******************************2021王道数据结构习题*******************************
-
 /**
  * @brief 3 逆序打印单向链表.
  * @param L 待打印单向链表.
@@ -96,22 +98,22 @@ void PrintList_L(Linklist L);
 void RPrintList_L(Linklist L);
 
 /**
- * @brief 5 逆置链表.
+ * @brief 5 逆置链表. 空间复杂度 O(1), 时间复杂度 O(n).
  * @param L 待逆置单向链表.
  * */
-Linklist Reverse_L1(Linklist L);
+void Reverse_L1(Linklist L);
 
 /**
- * @brief 5 逆置链表.
+ * @brief 5 逆置链表. 空间复杂度 O(1), 时间复杂度 O(n).
  * @param L 待逆置单向链表.
  * */
-Linklist Reverse_L2(Linklist L);
+void Reverse_L2(Linklist L);
 
 /**
- * @brief 6, 使单向链表元素递增.
+ * @brief 6, 使单向链表元素递增. 直接插入排序. 
  * @param L 待排序单向链表.
  * */
-void Sort(Linklist *L);
+void Sort(Linklist L);
 
 /**
  * @brief 7, 删除单向链表中所有介于给定的两个值之间的元素的元素.
@@ -219,4 +221,4 @@ Status ChangeList(Linklist *L);
 // // 归并 La 和 Lb 得到新的单单向链表 Lc, Lc 的元素也按值非线性递减排列.
 // Status MergeList_L(Linklist *La, Linklist *Lb, Linklist *Lc, Status (*compare)(ElemType, ElemType));
 
-#endif // LINKLIST_H
+#endif /* LINKLIST_H */

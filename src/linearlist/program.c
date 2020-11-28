@@ -76,7 +76,6 @@ void UseSqlist()
 void UseLinklist()
 {
     Linklist L;
-
     InitList_L(&L);
 
     TailInsert_L(&L, 1);
@@ -88,11 +87,13 @@ void UseLinklist()
     TailInsert_L(&L, 7);
     TailInsert_L(&L, 8);
     TailInsert_L(&L, 9);
-
     PrintList_L(L);
 
-    ChangeList(&L);
+    // ChangeList(&L);
+    Reverse_L2(L);
+    PrintList_L(L);
 
+    Sort(L);
     PrintList_L(L);
 
     return;

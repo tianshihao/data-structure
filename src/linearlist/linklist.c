@@ -1,4 +1,15 @@
-﻿#include <linearlist/linklist.h>
+﻿/**
+ * @file linklist.c
+ * @author 田世豪 (tianshihao@4944@126.com)
+ * @brief 
+ * @version 0.1
+ * @date 2020-01-25
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
+
+#include <linearlist/linklist.h>
 
 Status InitList_L(Linklist *L)
 {
@@ -12,40 +23,41 @@ Status InitList_L(Linklist *L)
      *      https://blog.csdn.net/bestone0213/article/details/40829203
      **/
 
-    // 为头结点分配内存空间.
-    (*L) = malloc(sizeof(LNode)); // 创建头结点.
-    // 内存分配失败.
+    /* 为头结点分配内存空间. */
+    (*L) = malloc(sizeof(LNode));
+    /* 内存分配失败. */
     if (!(*L))
     {
         exit(OVERFLOW);
     }
 
-    (*L)->data = 0; // 初始为空链表.
+    /* 为头结点赋值. */
+    (*L)->data = 0;
     (*L)->next = NULL;
 
     return OK;
-} // InitList_L
+}
 
 Status HeadInsert_L(Linklist *L, ElemType e)
 {
-    // 创建新结点.
+    /* 创建新结点. */
     LNode *s = malloc(sizeof(LNode));
 
-    // 为新结点赋值.
+    /* 为新结点赋值. */
     s->data = e;
 
-    // 1. 新结点指向后继结点.
+    /* 1. 新结点指向后继结点. */
     s->next = (*L)->next;
 
-    // 2. 前驱结点指向新结点.
+    /* 2. 头结点指向新结点. */
     (*L)->next = s;
 
     return OK;
-} // HeadInsert_L
+}
 
 Status TailInsert_L(Linklist *L, ElemType e)
 {
-    // 这是新结点.
+    /* 这是新结点. */
     LNode *s = malloc(sizeof(LNode));
     s->data = e;
     s->next = NULL;
@@ -61,20 +73,20 @@ Status TailInsert_L(Linklist *L, ElemType e)
      * 内存块中的数据.
      */
 
-    // 这是表尾结点, 即新结点的前驱结点.
+    /* 工作指针, 指向表尾结点, 即新结点的前驱结点. */
     LNode *p = (*L);
 
-    // 找到最后一个不为空的结点.
+    /* 找到最后一个不为空的结点. */
     while (p->next != NULL)
     {
         p = p->next;
     }
 
-    // 将新结点链接到链表尾.
+    /* 将新结点链接到链表尾. */
     p->next = s;
 
     return OK;
-} // TailInsert
+}
 
 LNode *GetElem_L(Linklist L, int i)
 {
@@ -84,30 +96,36 @@ LNode *GetElem_L(Linklist L, int i)
         return NULL;
     }
 
+    /* 计数器. */
     int counter = 0;
+    /* 工作指针, 初始指向头结点.  */
     LNode *p = L;
 
-    // 从第一个结点开始找, 查找第 i 个结点.
+    /* 从第一个结点开始找, 查找第 i 个结点. */
     while (p && counter < i)
     {
         p = p->next;
         ++counter;
     }
 
+    /* 返回目标结点指针. */
     return p;
-} // GetElem_L
+}
 
 LNode *LocateElem_L(Linklist L, ElemType e)
 {
+    /* 工作指针, 指向第一个结点. */
     LNode *p = L->next;
 
+    /* 循环查找数据为 e 的结点. */
     while (p && p->data != e)
     {
         p = p->next;
     }
 
+    /* 返回目标结点指针. */
     return p;
-} // LocateElem_L
+}
 
 Status ListInsert_L(Linklist *L, int i, ElemType e)
 {
@@ -117,21 +135,21 @@ Status ListInsert_L(Linklist *L, int i, ElemType e)
         return ERROR;
     }
 
-    // 新结点的前驱结点.
+    /* 新结点的前驱结点. */
     LNode *p = GetElem_L(*L, i - 1);
 
-    // 这是要插入的结点.
+    /* 这是要插入的结点. */
     LNode *s = malloc(sizeof(LNode));
     s->data = e;
 
-    // 1. 新结点指向后继结点.
+    /* 1. 新结点指向后继结点. */
     s->next = p->next;
 
-    // 2. 前驱结点指向新结点.
+    /* 2. 前驱结点指向新结点. */
     p->next = s;
 
     return OK;
-} // ListInsert_L
+}
 
 Status ListDelete_L(Linklist *L, int i)
 {
@@ -141,20 +159,20 @@ Status ListDelete_L(Linklist *L, int i)
         return ERROR;
     }
 
-    // 被删除结点的前驱结点.
+    /* 被删除结点的前驱结点. */
     LNode *p = GetElem_L(*L, i - 1);
 
-    // 这是要删除的结点.
+    /* 这是要删除的结点. */
     LNode *q = p->next;
 
-    // 前驱结点跳过被删除的结点.
+    /* 前驱结点跳过被删除的结点. */
     p->next = q->next;
 
-    // 删除结点 q.
+    /* 删除结点 q. */
     free(q);
 
     return OK;
-} // ListDelete_L
+}
 
 int ListLength_L(Linklist L)
 {
@@ -168,7 +186,7 @@ int ListLength_L(Linklist L)
     }
 
     return length;
-} // ListLength
+}
 
 void PrintList_L(Linklist L)
 {
@@ -191,7 +209,7 @@ void PrintList_L(Linklist L)
     }
 
     return;
-} // PrintList_L
+}
 
 void RPrintList_L(Linklist L)
 {
@@ -203,92 +221,125 @@ void RPrintList_L(Linklist L)
     {
         printf("%d->", L->data); // 输出函数.
     }
-} // RPrintList_L
+}
 
-Linklist Reverse_L1(Linklist L)
+void Reverse_L1(Linklist L)
 {
-    LNode *p, *r; // p 为工作指针, r 为 p 得后继, 以防断链.
+    /* p 为工作指针, r 为 p 得后继, 以防断链. */
+    LNode *p, *r;
 
-    p = L->next; // 从第一个元素开始.
+    /* 从第一个元素开始. */
+    p = L->next;
 
-    L->next = NULL; // 先将头结点剥离出来.
+    /* 先将头结点剥离出来. */
+    L->next = NULL;
 
-    while (p != NULL) // 依次将元素摘下.
+    /* 依次将元素摘下. */
+    while (p != NULL)
     {
-        r = p->next;       // 暂存 p 的后继.
-        p->next = L->next; // 头插法, 插入 p.
+        /* 暂存 p 的后继. */
+        r = p->next;
+        /* 用头插法插入 p. */
+        p->next = L->next;
         L->next = p;
+        /* 更新 p, 指向下一个结点. */
         p = r;
     }
 
-    return L;
-} // Reverse_L1
+    return;
+}
 
-Linklist Reverse_L2(Linklist L)
+void Reverse_L2(Linklist L)
 {
-    // 三个指针, p 为要反转的结点, pre 为 p 前面的结点, r 是保存 p 后继的指针.
-    // 初始状态 p 指向第一个元素, r 指向第二个元素.
-    LNode *pre, *p = L->next, *r = p->next;
+    /**
+     * 三个指针, p 为要反转的结点, pre 为 p 前面的结点, r 是保存 p 后继的指针.
+     * 初始状态 p 指向第一个元素, r 指向第二个元素.
+     */
+    LNode *pre = L, *p = L->next, *r = p->next;
 
-    // 将要第一个结点后继链接断开.
+    /**
+     * 将要第一个结点后继链接断开. 因为它将成为逆置后链表的最后一个结点, 否则
+     * 将在逆置后的链表中的最后一个元素和倒数第二个元素之间形成环.
+     */
     p->next = NULL;
 
-    // 如果 r 不为空, 三个指针前进一个单位.
-    // 否则链表只有一个结点, 直接执行 while 后的 L->next = p.
-    // 循环中将 p 反转指向其前面的结点 pre, r 是 p 的后继.
-    // 假设链表有 n 个元素, 则循环可将前 n - 1 个元素逆置, 之后 p 指向第 n 个元素,
+    /**
+     * 如果 r 不为空, 三个指针前进一个单位.
+     * 否则链表只有一个结点, 直接执行 while 后的 L->next = p.
+     * 循环中将 p 反转指向其前面的结点 pre, r 是 p 的后继.
+     * 假设链表有 n 个元素, 则循环可将前 n - 1 个元素逆置,
+     * 之后 p 指向第 n 个元素.
+     */
+    /**
+     * 用  0->1->...->n 表示一个链表, 其中 0 为头结点, 1 为第一个结点, 以此类推.
+     * 和方法一的一次摘一个结点不同, 方法一工作(操作)对象是一个结点, 只有一个工作
+     * 指针 p 和保存其后继的指针 r. 而方法二中的工作指针是一对指针和存储其后继的指针.
+     * 例如 (3->4)->5, pre 指向 3, p 指向 4, p 和 pre 是一对工作指针, r 指向其后继 5.
+     * 将3->4变成3<-4, 即 p->next = pre, (3<-4)->5, r 不为空, while 循环 3 个指针进一,
+     * 变成了3<-(4->5), pre 指向 4, p 指向 5, r 指向 NULL, 然后 p->next = pre,
+     * 变成了3<-4<-5; while 循环, r 指向空, 循环结束. 显然此时工作指针 p 指向
+     * 最后一个结点, 再将头结点 L 指向 p 即可, 即 L->next = p.
+     */
     while (r != NULL)
     {
+        /* 指针依次进一. */
         pre = p;
         p = r;
         r = r->next;
-        p->next = pre; // 反转.
+        /* 逆置. */
+        p->next = pre;
     }
 
     L->next = p;
 
-    return L;
-} // Reverse_L2
+    return;
+}
 
-void Sort(Linklist *L)
+void Sort(Linklist L)
 {
-    // pre 指向已经构造好的有序递增链表的尾结点.
-    LNode *p = (*L)->next, *pre;
-    LNode *r = p->next; // r 用以保存 *p 的后继结点指针.
+    /* pre 指向已经构造好的有序递增链表的尾结点. */
+    LNode *p = L->next, *pre;
+    /*  r 用以保存 *p 的后继结点指针. */
+    LNode *r = p->next;
 
-    // 断开第一个结点的后继, 相当于先构造只有一个结点的有序表.
+    /* 断开第一个结点的后继, 相当于先构造只有一个结点的有序表. */
     p->next = NULL;
 
-    // 这时候之前保存的 r = p->next 就有用了.
-    // p 指向后继结点, 第二个结点, 即断开第一个结点的后继后得到的无序表的第一个结点.
+    /**
+     * 这时候之前保存的 r = p->next 就有用了. 指向后继结点, 第二个结点,
+     * 即断开第一个结点的后继后得到的无序表的第一个结点.
+     */
     p = r;
 
+    /* p 不为空, 即链表至少有两个结点需要排序. */
     while (p != NULL)
     {
-        // 先保存下来, 后面将 p 插入到有序表时会修改 p->next.
+        /* 先保存下来, 后面将 p 插入到有序表时会修改 p->next. */
         r = p->next;
 
-        // pre 指向有序表头结点.
-        pre = (*L);
+        /* pre 指向链表头结点. */
+        pre = L;
 
-        // pre 在有序表中遍历, 找到合适的位置.
-        // 要么是 pre->next = NULL 的有序表尾结点, 要么是 pre->data < p->data &&
-        // pre->next->data >= p->data 的合适的位置.
+        /**
+         * pre 在有序表中遍历, 找到合适的位置.
+         * 要么是 pre->next = NULL 的有序表尾结点, 要么是 pre->data < p->data &&
+         * pre->next->data >= p->data 的合适的位置.
+         */
         while (pre->next != NULL && pre->next->data < p->data)
         {
             pre = pre->next;
         }
 
-        // 将 p 插入到 pre 后.
+        /* 将 p 插入到 pre 后. */
         p->next = pre->next;
         pre->next = p;
 
-        // 下一个结点.
+        /* 下一个结点. */
         p = r;
     }
 
     return;
-} // Sort
+}
 
 Status RangeDelete(Linklist *L, ElemType min, ElemType max)
 {
@@ -321,7 +372,7 @@ Status RangeDelete(Linklist *L, ElemType min, ElemType max)
     }
 
     return OK;
-} // RangeDelete
+}
 
 Linklist Split(Linklist *A)
 {
@@ -372,7 +423,7 @@ Linklist Split(Linklist *A)
     rb->next = NULL;
 
     return B;
-} // Split
+}
 
 Linklist Split2(Linklist *A)
 {
@@ -420,7 +471,7 @@ Linklist Split2(Linklist *A)
     ra->next = NULL;
 
     return B;
-} // Split2
+}
 
 Status DeleteRepeat(Linklist *L)
 {
@@ -450,7 +501,7 @@ Status DeleteRepeat(Linklist *L)
     }
 
     return OK;
-} // DeleteRepeat
+}
 
 Linklist MergeList(Linklist *A, Linklist *B)
 {
@@ -506,7 +557,7 @@ Linklist MergeList(Linklist *A, Linklist *B)
     free((*B));
 
     return (*A);
-} // MergeList
+}
 
 Linklist GetCommon(Linklist A, Linklist B)
 {
@@ -551,7 +602,7 @@ Linklist GetCommon(Linklist A, Linklist B)
     // rc = NULL;
 
     return C;
-} // GetCommon
+}
 
 Linklist Union(Linklist *A, Linklist *B)
 {
@@ -615,7 +666,7 @@ Linklist Union(Linklist *A, Linklist *B)
     free((*B));
 
     return (*A);
-} // Union
+}
 
 Status Pattern(Linklist A, Linklist B)
 {
@@ -653,7 +704,7 @@ Status Pattern(Linklist A, Linklist B)
     {
         return TRUE;
     }
-} // Pattern
+}
 
 Status SearchK(Linklist L, int k)
 {
@@ -697,7 +748,7 @@ Status SearchK(Linklist L, int k)
         printf("the %dth element from the bottom is %d.\n", k, q->data);
         return TRUE;
     }
-} // SearchK
+}
 
 LNode *FindLoopStart(Linklist L)
 {
@@ -740,7 +791,7 @@ LNode *FindLoopStart(Linklist L)
     }
 
     return p1;
-} // FindLoopStart
+}
 
 Status ChangeList(Linklist *L)
 {
@@ -825,7 +876,7 @@ Status ChangeList(Linklist *L)
     }
 
     return OK;
-} // ChangeList
+}
 
 // Status MakeNode(Link *p, ElemType e)
 // {
@@ -871,7 +922,7 @@ Status ChangeList(Linklist *L)
 //         return FALSE;
 
 //     return OK;
-// } // ListTraverse
+// }
 
 // /***************************利用基本操作实现的高级操作**********************/
 
@@ -917,7 +968,7 @@ Status ChangeList(Linklist *L)
 //             Append(Lc, ptr);
 //             pb = NextPos(*Lb, hb);
 //         }
-//     } // while
+//     }
 
 //     if (pa) // 链表 La 中剩余结点
 //         Append(Lc, pa);
@@ -928,4 +979,4 @@ Status ChangeList(Linklist *L)
 //     FreeNode(&hb);
 
 //     return OK;
-// } // MergeList_L
+// }
