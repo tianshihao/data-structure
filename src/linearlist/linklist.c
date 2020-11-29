@@ -215,11 +215,13 @@ void RPrintList_L(Linklist L)
 {
     if (L->next != NULL)
     {
-        RPrintList_L(L->next); // 递归.
+        /* 递归. */
+        RPrintList_L(L->next);
     }
     if (L != NULL)
     {
-        printf("%d->", L->data); // 输出函数.
+        /* 输出函数. */
+        printf("%d->", L->data);
     }
 }
 
@@ -579,142 +581,145 @@ Linklist MergeList(Linklist A, Linklist B)
 
 Linklist GetCommon(Linklist A, Linklist B)
 {
-    // 初始化新单向链表 C.
+    /* 初始化新单向链表 C. */
     Linklist C = malloc(sizeof(LNode));
     C->data = -1;
     C->next = NULL;
 
-    // rc 指向 C 尾结点.
-    LNode *rc = C;
+    /* rC 指向 C 尾结点. */
+    LNode *rC = C;
 
-    // 工作指针.
-    LNode *pa = A->next, *pb = B->next;
+    /* 工作指针, 指向链表 A 和 B 的第一个结点. */
+    LNode *pA = A->next, *pB = B->next;
 
-    while (pa && pb)
+    while (pA && pB)
     {
-        if (pa->data < pb->data)
+        /* pA, pB 相互追赶, 直到 pA->data = pB->data. */
+        if (pA->data < pB->data)
         {
-            pa = pa->next;
+            pA = pA->next;
         }
-        else if (pa->data > pb->data)
+        else if (pA->data > pB->data)
         {
-            pb = pb->next;
+            pB = pB->next;
         }
         else
         {
-            // 找到了公共结点, 准备一个新结点.
+            /* 找到了公共结点, 准备一个新结点. */
             LNode *s = malloc(sizeof(LNode));
-            s->data = pa->data;
+            s->data = pA->data;
             s->next = NULL;
 
-            // 尾插法.
-            rc->next = s;
-            rc = s;
+            /* 尾插法. */
+            rC->next = s;
+            rC = s;
 
-            // 工作指针前进一.
-            pa = pa->next;
-            pb = pb->next;
+            /* 工作指针前进一. */
+            pA = pA->next;
+            pB = pB->next;
         }
     }
-
-    // rc = NULL;
 
     return C;
 }
 
-Linklist Union(Linklist *A, Linklist *B)
+void Union(Linklist A, Linklist B)
 {
-    // 工作指针.
-    LNode *pa = (*A)->next, *pb = (*B)->next;
-    // 回收指针.
+    /* 工作指针. */
+    LNode *pA = A->next, *pB = B->next;
+    /* 回收指针. */
     LNode *r = NULL;
-    // 指向 A 尾结点. A 用于存储求交集之后的结果, 所以尾结点是头结点.
-    LNode *ra = (*A);
+    /* 指向 A 尾结点. A 用于存储求交集之后的结果, 所以初始尾结点是头结点. */
+    LNode *rA = A;
 
-    (*A)->next = NULL;
+    /* 剥离链表 A 的头结点. */
+    A->next = NULL;
 
-    while (pa && pb)
+    while (pA && pB)
     {
-        if (pa->data < pb->data)
+        /* 异步前进, 相互追赶. 释放不属于交集的结点. */
+        if (pA->data < pB->data)
         {
-            r = pa;
-            pa = pa->next;
+            r = pA;
+            pA = pA->next;
             free(r);
         }
-        else if (pa->data > pb->data)
+        else if (pA->data > pB->data)
         {
-            r = pb;
-            pb = pb->next;
+            r = pB;
+            pB = pB->next;
             free(r);
         }
         else
         {
-            // 找到符合要求的结点. 链接到 A 后.
-            ra->next = pa;
-            ra = pa;
+            /* 找到符合要求的结点. 链接到 A 后. 尾插法. */
+            rA->next = pA;
+            rA = pA;
 
-            // pa 前进一.
-            pa = pa->next;
+            /* pA 前进一. */
+            pA = pA->next;
 
-            // 释放 pb 内存空间.
-            r = pb;
-            pb = pb->next;
+            /* pB 也前进一, 但是用指针 r 指向 pB 指向的结点, pB再前进一. */
+            r = pB;
+            pB = pB->next;
+            /* 释放不属于交集的结点. */
             free(r);
         }
     }
 
-    // 释放剩余结点的内存.
-    while (pa)
+    /* 如果 A 和 B 不一样长, 释放剩余结点的内存. */
+    while (pA)
     {
-        r = pa;
-        pa = pa->next;
+        r = pA;
+        pA = pA->next;
         free(r);
     }
-    while (pb)
+    while (pB)
     {
-        r = pb;
-        pb = pb->next;
+        r = pB;
+        pB = pB->next;
         free(r);
     }
 
-    // 注意新链表尾结点. 也可以在链接时处理处理后继, 但比较麻烦, 这里一句就行.
-    ra->next = NULL;
+    /* 注意新链表尾结点. 也可以在链接时处理处理后继, 但比较麻烦, 这里一句就行. */
+    rA->next = NULL;
 
-    // 释放 B 头结点.
-    free((*B));
+    /* 释放 B 头结点. */
+    free(B);
 
-    return (*A);
+    return;
 }
 
 Status Pattern(Linklist A, Linklist B)
 {
-    // 工作指针.
-    LNode *pa = A->next, *pb = B->next;
-    // 记录 A 表的比较起点.
-    LNode *start = pa;
+    /* 工作指针. */
+    LNode *pA = A->next, *pB = B->next;
+    /* 记录 A 表的比较起点. 从 A 的第一个结点匹配 B. */
+    LNode *start = pA;
 
-    while (pa && pb)
+    while (pA && pB)
     {
-        // 匹配, pa 和 pb 共同前进一.
-        if (pb->data == pa->data)
+        /* 匹配, pA 和 pB 共同前进一. */
+        if (pB->data == pA->data)
         {
-            pa = pa->next;
-            pb = pb->next;
+            pA = pA->next;
+            pB = pB->next;
         }
-        // 否则证明至少 A[i] 不是 B 开头, 下一次从 A[i+1] 开始匹配.
+        /* 否则证明至少 A[i] 不是 B 开头, 下一次从 A[i+1] 开始匹配. */
         else
         {
-            // 更新 A 的比较起点.
+            /* 更新 A 的比较起点. 从下一个结点开始匹配 B. */
             start = start->next;
-            pa = start;
+            /* 更新工作指针. */
+            pA = start;
 
-            // 重置 B 的比较起点.
-            pb = B->next;
+            /* 重置 B 的比较起点. */
+            pB = B->next;
         }
     }
 
-    // 若 B 是 A 的连续子序列, 则比较完后 pb 应为 NULL.
-    if (pb)
+    /* 若 B 是 A 的连续子序列, 则比较完后 pB 应为 NULL. */
+    if (pB)
     {
         return FALSE;
     }
@@ -726,29 +731,31 @@ Status Pattern(Linklist A, Linklist B)
 
 Status SearchK(Linklist L, int k)
 {
-    // p 和 q 均为工作指针, 指向第一个结点.
+    /* p 和 q 均为工作指针, 指向第一个结点. */
     LNode *p = L->next, *q = L->next;
 
-    // 计数器.
+    /* 计数器. 由于 p 和 q 指向第一个结点, 故计数器从 1 开始计数. */
     int count = 1;
 
     /**
-     * 指针 p 前进 k 个单位, 指向第 k + 1 个位置, 之后 p 和 q 同时前进, 直到 p
-     * 指向表尾, 这样 q 会处于在正数第 n - k 个结点上, 倒数第 n - (n - k) = k 个
-     * 结点上. 具体实现还要注意计数器的计数是从 0 开始还是从 1 开始, 小于还是
-     * 小于等于.
-     * */
+     * 指针 p 前进 k 个单位, 指向第 k+1 个位置, 之后 p 和 q 同时前进, 直到 p
+     * 指向表尾, 即 p 和 q 同步前进 n-k-1 次, 这样 q 会处于在正数第 1+(n-k-1),
+     * 倒数第 n-(n-k)=k 个结点上. 具体实现还要注意计数器的计数是从 0 开始还是
+     * 从 1 开始, 小于还是小于等于.
+     */
 
     while (p)
     {
-        // 从 1 开始计数, 让 p 前进 k 次, 即 p 指向第 k + 1 个结点. p 之后的结点
-        // 还有 n - k - 1 个, p 还可以前进 n - k - 1 次.
+        /**
+         * 从 1 开始计数, 让 p 前进 k 次, 即 p 指向第 k + 1 个结点. p 之后的结点
+         * 还有 n - k - 1 个, p 还可以前进 n - k - 1 次.
+         */
         if (count <= k)
         {
             ++count;
             p = p->next;
         }
-        // 然后 q 前进 n - k - 1 次, 指向正数第 n - k 个结点, 即倒数第 k 个.
+        /* 然后 q 前进 n-k-1 次, 指向正数第 n-k 个结点, 即倒数第 k 个. */
         else
         {
             p = p->next;
@@ -756,7 +763,7 @@ Status SearchK(Linklist L, int k)
         }
     }
 
-    // 1 <= count <= length, 若 count <= k, 则表示 length <= k, k 越界.
+    /* 1 <= count <= length, 若 count <= k, 则表示 length <= k, k 越界. */
     if (count <= k)
     {
         return FALSE;
@@ -770,7 +777,7 @@ Status SearchK(Linklist L, int k)
 
 LNode *FindLoopStart(Linklist L)
 {
-    // 设置快慢指针.
+    /* 设置快慢指针. */
     LNode *fast = L, *slow = L;
 
     while (slow != NULL && fast->next != NULL)
@@ -778,14 +785,14 @@ LNode *FindLoopStart(Linklist L)
         slow = slow->next;
         fast = fast->next->next;
 
-        // 快慢指针相遇.
+        /* 快慢指针相遇. */
         if (slow == fast)
         {
             break;
         }
     }
 
-    // 没有环, 返回 NULL.
+    /* 没有环, 返回 NULL. */
     if (slow == NULL || fast->next == NULL)
     {
         return NULL;
@@ -793,14 +800,14 @@ LNode *FindLoopStart(Linklist L)
 
     /**
      * 假设环长为 r, 头结点到环的入口点的距离为 a, 环的入口点沿着环的方向到相遇
-     * 点的距离为 x, 相遇时 fast 绕过了 n 圈, 则 2(a + n) = a + n * r + x.
+     * 点的距离为 x, 相遇时 fast 绕过了 n 圈, 则 2(a+x)=a+n*r+x.
      * 解得 a = n * r - x, 即头结点到环的入口点的距离为 n 倍环长减去环的入口点到
      * 相遇点的距离, 当 n == 1, 时, a = r - x, r - x 为相遇点继续沿着环的方向到
      * 相遇点的距离. 因此, 可令 p1, p2 分别指向头结点和相遇点, 共同前进 r - x,
      * p1 和 p2 就会在入口点相遇, p1 == p2.
-     * */
+     */
 
-    // p1 指向开始点, p2 指向相遇点.
+    /* p1 指向开始点, p2 指向相遇点. */
     LNode *p1 = L, *p2 = slow;
     while (p1 != p2)
     {
@@ -811,12 +818,12 @@ LNode *FindLoopStart(Linklist L)
     return p1;
 }
 
-Status ChangeList(Linklist *L)
+Status ChangeList(Linklist L)
 {
-    // 1. 找出链表 L 的中间结点.
+    /* 1. 找出链表 L 的中间结点. */
 
-    // 设置工作指针 p 和 q.
-    LNode *p = L, *q = (*L), *r = NULL;
+    /* 设置工作指针 p 和 q. */
+    LNode *p = L, *q = L, *r = NULL;
 
     /**
      * 找到了中间结点 p, p 步长为 1, q 步长为 2, q 到达表尾时, p 正好是中间结点.
@@ -835,35 +842,35 @@ Status ChangeList(Linklist *L)
         }
     }
 
-    // 2. 将链表后半段逆置.
+    /* 2. 将链表后半段逆置. */
 
-    // 中间结点 p 是链表前半段的最后一个结点, q 指向后半段第一个结点, 即 p->next.
+    /* 中间结点 p 是链表前半段的最后一个结点, q 指向后半段第一个结点, 即 p->next. */
     q = p->next;
-    // 断开链表.
+    /* 断开链表. */
     p->next = NULL;
 
-    // 头插法, 把 p 当作头结点.
+    /* 头插法, 把 p 当作头结点. */
     while (q != NULL)
     {
-        // r 保存 q 的后继.
+        /* r 保存 q 的后继. */
         r = q->next;
 
-        // 头插法.
+        /* 头插法. */
         q->next = p->next;
         p->next = q;
 
-        // 读取后继.
+        /* 读取后继. */
         q = r;
     }
 
-    // 3. 后半段插入到前半段中的合适位置.
+    /* 3. 后半段插入到前半段中的合适位置. */
 
-    // q 指向链表后半段的第一个结点.
+    /* q 指向链表后半段的第一个结点. */
     q = p->next;
-    // 把链表一分为二.
+    /* 把链表一分为二. p 指向链表前半段的最后一个结点. */
     p->next = NULL;
-    // p 指向链表前半段的第一个结点.
-    p = (*L)->next;
+    /* p 指向链表前半段的第一个结点. */
+    p = L->next;
 
     /**
      * 这时候的链表前半段 [a1,am], 后半段 [a(m+1),an].
@@ -879,122 +886,19 @@ Status ChangeList(Linklist *L)
      */
     while (q)
     {
-        // r 保存 q 的后继.
+        /* r 保存 q 的后继. */
         r = q->next;
 
-        // 将 q 插入到 p 之后.
+        /* 将 q 插入到 p 之后. */
         q->next = p->next;
         p->next = q;
 
-        // 更新插入点位置.
+        /* 更新插入点位置. */
         p = q->next;
 
-        // 读取后继.
+        /* 读取后继. */
         q = r;
     }
 
     return OK;
 }
-
-// Status MakeNode(Link *p, ElemType e)
-// {
-//     (*p) = malloc(sizeof(LNode));
-
-//     if ((*p) == NULL)
-//     {
-//         printf("内存分配失败\n");
-//         return ERROR;
-//     }
-
-//     (*p)->data = e;
-//     (*p)->next = NULL;
-
-//     return OK;
-// }
-
-/**
- * * 指针传递 *
- * 此处传递的其实是指针, 在定义形参的时候, 声明这个参数是指针类型.
- * 在使用函数时, 应在实参左侧加 &, 表示传递实参的地址.
- * e.g.
- * int main()
- * {
- *      ...
- *      Linklist my_list;
- *      InitList_L(&my_list);
- *      ...
- * }
- * 变量的地址传递给指针变量形参之后就可以用形参指向变量,
- * 修改主函数中的变量了, 不同于值传递的形参复制一份实参.
- */
-
-// // 依次对 L 的每个元素调用函数 visit(). 一旦 visit() 失败, 则操作失败.
-// Status ListTraverse(Linklist L, Status (*visit)(ElemType))
-// {
-//     Link visiting = L.head->next;
-
-//     while ((visiting != NULL) && ((*visit)(visiting->data)))
-//         visiting = visiting->next;
-
-//     if (visiting != NULL)
-//         return FALSE;
-
-//     return OK;
-// }
-
-// /***************************利用基本操作实现的高级操作**********************/
-
-// // 已知单线性链表 La 和 Lb 的元素按值非递减排列.
-// // 归并 La 和 Lb 得到新的单线性链表 Lc, Lc 的元素也按值非线性递减排列.
-// Status MergeList_L(Linklist *La,
-//                    Linklist *Lb,
-//                    Linklist *Lc,
-//                    Status (*compare)(ElemType, ElemType))
-// {
-//     // 存储空间分配失败
-//     if (!InitList_L(Lc))
-//         return ERROR;
-
-//     // ha 和 hb 分别指向 La 和 Lb 的头结点
-//     Link ha = GetHead((*La));
-//     Link hb = GetHead((*Lb));
-
-//     // pa 和 pb 分别指向 La 和 Lb 中当前结点
-//     Link pa = NextPos(*La, ha);
-//     Link pb = NextPos(*Lb, hb);
-
-//     // La 和 Lb 均为非空
-//     while ((pa) && (pb))
-//     {
-//         // a 和 b 为两表中当前比较元素
-//         ElemType a = GetCurElem(pa);
-//         ElemType b = GetCurElem(pb);
-
-//         // a <= b
-//         if ((*compare)(a, b) <= 0)
-//         {
-//             Link ptr;
-//             DelFirst(ha, &ptr);
-//             Append(Lc, ptr);
-//             pa = NextPos(*La, ha);
-//         }
-//         // a > b
-//         else
-//         {
-//             Link ptr;
-//             DelFirst(hb, &ptr);
-//             Append(Lc, ptr);
-//             pb = NextPos(*Lb, hb);
-//         }
-//     }
-
-//     if (pa) // 链表 La 中剩余结点
-//         Append(Lc, pa);
-//     else // 链表 Lb 中剩余结点
-//         Append(Lc, pb);
-
-//     FreeNode(&ha);
-//     FreeNode(&hb);
-
-//     return OK;
-// }

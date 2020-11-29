@@ -168,12 +168,12 @@ Linklist GetCommon(Linklist A, Linklist B);
  * @brief 15, 已知两个元素递增链表, 其中元素不重复, 计算其交集, 存放于原表中.
  * 时间复杂度为 O(len1 + len2). 
  * @see GetCommon(), 和它的区别是更少的空间复杂度 O(1), 没有额外的内存空间, 
- * 但是修改了原表.
+ * 但是修改了原表, 将布署于交集的结点释放, 实际上销毁了链表 B.
  * @param A 待归并单项链表.
  * @param B 待归并单项链表.
  * @return Linklist 交集.
  */
-Linklist Union(Linklist *A, Linklist *B);
+void Union(Linklist A, Linklist B);
 
 /**
  * @brief 16, 判断序列 B 是否是序列 A 的连续子序列.
@@ -210,15 +210,6 @@ LNode *FindLoopStart(Linklist L);
  * @param L 单向链表.
  * @return OK 操作完成.
  */
-Status ChangeList(Linklist *L);
-
-// // 依次对 L 的每个元素调用函数 visit(). 一旦 visit() 失败, 则操作失败.
-// Status ListTraverse(Linklist L, Status (*visit)(ElemType));
-
-// /***************************利用基本操作实现的高级操作******************************/
-
-// // 已知单单向链表 La 和 Lb 的元素按值非递减排列.
-// // 归并 La 和 Lb 得到新的单单向链表 Lc, Lc 的元素也按值非线性递减排列.
-// Status MergeList_L(Linklist *La, Linklist *Lb, Linklist *Lc, Status (*compare)(ElemType, ElemType));
+Status ChangeList(Linklist L);
 
 #endif /* LINKLIST_H */
