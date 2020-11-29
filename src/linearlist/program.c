@@ -96,6 +96,9 @@ void UseLinklist()
     Sort(L);
     PrintList_L(L);
 
+    RangeDelete(L, 3, 8);
+    PrintList_L(L);
+
     return;
 }
 

@@ -1,7 +1,7 @@
 ﻿/**
  * @file linklist.c
  * @author 田世豪 (tianshihao@4944@126.com)
- * @brief 
+ * @brief 单向链表
  * @version 0.1
  * @date 2020-01-25
  * 
@@ -225,7 +225,7 @@ void RPrintList_L(Linklist L)
 
 void Reverse_L1(Linklist L)
 {
-    /* p 为工作指针, r 为 p 得后继, 以防断链. */
+    /* p 为工作指针, r 为 p 的后继, 以防断链. */
     LNode *p, *r;
 
     /* 从第一个元素开始. */
@@ -290,6 +290,7 @@ void Reverse_L2(Linklist L)
         p->next = pre;
     }
 
+    /* 头结点指向逆置之后的第一个结点. */
     L->next = p;
 
     return;
@@ -341,32 +342,31 @@ void Sort(Linklist L)
     return;
 }
 
-Status RangeDelete(Linklist *L, ElemType min, ElemType max)
+Status RangeDelete(Linklist L, ElemType min, ElemType max)
 {
-    // p 是检测指针, pr 为其前驱.
-    LNode *p = (*L)->next, *pr = (*L);
+    /* p 是检测指针, pr 为其前驱. */
+    LNode *p = L->next, *pre = L;
 
-    // 若当前指针指向的结点不为空.
+    /* 若当前指针指向的结点不为空. */
     while (p != NULL)
     {
-        // 比较是否满足删除要求.
-        // 若满足,
+        /* 若满足删除要求. */
         if (p->data > min && p->data < max)
         {
-            // 前驱 pr 跳过 p.
-            pr->next = p->next;
+            /* 前驱 pre 跳过 p. */
+            pre->next = p->next;
 
-            // 释放 p 所指的内存空间.
+            /* 释放 p 所指的内存空间. */
             free(p);
 
-            // 使 p 指向新的结点.
-            p = pr->next;
+            /* 使 p 指向新的结点. */
+            p = pre->next;
         }
-        // 否则,
+        /* 否则, */
         else
         {
-            // pr 和 p 进一.
-            pr = p;
+            /* pre 和 p 进一. */
+            pre = p;
             p = p->next;
         }
     }
@@ -374,109 +374,112 @@ Status RangeDelete(Linklist *L, ElemType min, ElemType max)
     return OK;
 }
 
-Linklist Split(Linklist *A)
+Linklist Split(Linklist A)
 {
-    // 初始化单向链表 B.
+    /* 初始化单向链表 B. */
     Linklist B = malloc(sizeof(LNode));
     B->next = NULL;
 
-    // 指向 A 和 B 尾结点的指针.
-    LNode *ra = (*A);
-    LNode *rb = B;
+    /**
+     * 指向 A 和 B 尾结点的指针, 初始指向头结点. 由于要求相对位置保持不变,
+     * 链表 A 和 B 都使用尾插法. 
+     */
+    LNode *rA = A;
+    LNode *rB = B;
 
-    // p 为工作指针.
-    LNode *p = (*A)->next;
+    /* p 为工作指针. */
+    LNode *p = A->next;
 
-    // 原表 A 拆分出头结点.
-    (*A)->next = NULL;
+    /* 原表 A 拆分出头结点. */
+    A->next = NULL;
 
-    // i 记录 A 中的序号.
+    /* i 记录 A 中的序号. */
     int i = 0;
 
     while (p != NULL)
     {
-        // 序号增加.
+        /* 序号增加. */
         ++i;
 
-        // 偶数.
+        /* 偶数. */
         if (i % 2 == 0)
         {
-            // 新加尾结点.
-            rb->next = p;
+            /* 新加尾结点. */
+            rB->next = p;
 
-            // 更新尾结点.
-            rb = p;
+            /* 更新尾结点. */
+            rB = p;
         }
-        // 奇数.
+        /* 奇数. */
         else
         {
-            ra->next = p;
-            ra = p;
+            rA->next = p;
+            rA = p;
         }
 
-        // 工作指针前进一.
+        /* 工作指针前进一. */
         p = p->next;
     }
 
-    // 确保尾结点后继为 NULL.
-    ra->next = NULL;
-    rb->next = NULL;
+    /* 确保尾结点后继为 NULL. */
+    rA->next = NULL;
+    rB->next = NULL;
 
     return B;
 }
 
-Linklist Split2(Linklist *A)
+Linklist Split2(Linklist A)
 {
-    // 初始化单向链表 B.
+    /* 初始化单向链表 B. */
     Linklist B = malloc(sizeof(LNode));
     B->next = NULL;
 
-    // 指向原表 A 尾结点的指针.
-    LNode *ra = (*A);
+    /* 指向原表 A 尾结点的指针. */
+    LNode *rA = A;
 
-    // 工作指针.
-    LNode *p = (*A)->next;
-    // 保存工作指针后继的指针.
+    /* 工作指针. */
+    LNode *p = A->next;
+    /* 保存工作指针后继的指针. */
     LNode *q;
 
-    // 剥离原表头结点.
-    (*A)->next = NULL;
+    /* 剥离原表头结点. */
+    A->next = NULL;
 
-    // 假若 p 是要被分给 A 的结点.
+    /* 假若 p 是要被分给 A 的结点. */
     while (p != NULL)
     {
-        // 将 p 链接至 A 表尾, 并更新 ra.
-        ra->next = p;
-        ra = p;
+        /* 将 p 链接至 A 表尾, 并更新 rA. */
+        rA->next = p;
+        rA = p;
 
-        // 工作指针前进一, 此时工作指针指向要被分给 B 的结点.
+        /* 工作指针前进一, 此时工作指针指向要被分给 B 的结点. */
         p = p->next;
 
-        // 如果要分给 B 的结点存在,
+        /* 如果要分给 B 的结点存在, */
         if (p != NULL)
         {
-            // 则保存其后继.
+            /* 则保存其后继. */
             q = p->next;
         }
 
-        // 将工作指针头插入 B 中.
+        /* 将工作指针头插入 B 中. */
         p->next = B->next;
         B->next = p;
 
-        // 读取工作指针后继, 在下次循环中, 若其不为空, 则应分配给 A.
+        /* 读取工作指针后继, 在下次循环中, 若其不为空, 则应分配给 A. */
         p = q;
     }
 
-    // 确保 A 表尾后继正确; 由于 B 是逆序头插入, 所以无须考虑表尾后继指向.
-    ra->next = NULL;
+    /* 确保 A 表尾后继正确; 由于 B 是逆序头插入, 所以无须考虑表尾后继指向. */
+    rA->next = NULL;
 
     return B;
 }
 
-Status DeleteRepeat(Linklist *L)
+Status DeleteRepeat(Linklist L)
 {
-    // p 为工作指针.
-    LNode *p = (*L)->next;
+    /* p 为工作指针. */
+    LNode *p = L->next;
 
     if (p == NULL)
     {
@@ -485,15 +488,18 @@ Status DeleteRepeat(Linklist *L)
 
     while (p->next != NULL)
     {
-        // q 指向 p 的后继结点.
+        /* q 指向 p 的后继结点. */
         LNode *q = p->next;
 
-        // 如果 p 的下一个结点
+        /* 如果 p 的下一个结点 q 和 p 的数据重复. */
         if (p->data == q->data)
         {
+            /* 结点 p 的指针跳过结点 q. */
             p->next = q->next;
+            /* 释放分配给结点 q 的内存空间. */
             free(q);
         }
+        /* 数据不重复. */
         else
         {
             p = p->next;
@@ -503,60 +509,72 @@ Status DeleteRepeat(Linklist *L)
     return OK;
 }
 
-Linklist MergeList(Linklist *A, Linklist *B)
+Linklist MergeList(Linklist A, Linklist B)
 {
-    // 工作指针 pa 和 pb, 指向.
-    LNode *pa = (*A)->next, *pb = (*B)->next;
+    /* 工作指针 pA 和 pB, 分别指向两个链表的第一个结点. */
+    LNode *pA = A->next, *pB = B->next;
 
-    // 保存 pa 或 pb 的后继.
-    LNode *q;
+    /* 指针 r 用以保存 pA 或 pB 的后继. */
+    LNode *r;
 
-    // 使用 A 作为新链表的头结点.
-    (*A)->next = NULL;
+    /* 把链表 A 的头结点剥离出来, 作为新链表的头结点. */
+    A->next = NULL;
 
-    while (pa && pb)
+    while (pA && pB)
     {
-        if (pa->data <= pb->data)
+        if (pA->data <= pB->data)
         {
-            // 保存 pa 后继.
-            q = pa->next;
+            /* 保存 pA 后继. */
+            r = pA->next;
 
-            // 因为要求是降序, 所以使用头插法, 从最小的元素开始插入.
-            pa->next = (*A)->next;
-            (*A)->next = pa;
+            /* 因为要求是降序, 所以使用头插法, 从最小的元素开始插入. */
+            pA->next = A->next;
+            A->next = pA;
 
-            // 读取后继.
-            pa = q;
+            /* 读取后继. */
+            pA = r;
         }
         else
         {
-            q = pb->next;
+            /* 保存后继. */
+            r = pB->next;
 
-            pb->next = (*A)->next;
-            (*A)->next = pb;
+            /* 将 pB 指向的结点头插入链表 A 中. */
+            pB->next = A->next;
+            A->next = pB;
 
-            pb = q;
+            /* 读取后继. */
+            pB = r;
         }
     }
 
-    // 妙啊, A 和 B 的剩余是互斥的: A 剩余了 B 就不会剩余, 此时让 pb 指向 pa;
-    // B 剩余 A 不会剩余, 此时跳过 if.
-    if (pa)
+    /**
+     * 妙啊, A 和 B 的剩余是互斥的: A 剩余了 B 就不会剩余, 此时让 pB 指向 pA,
+     * 转化为 B 剩余. 而 B 剩余 A 不会剩余, 此时跳过 if.
+     */
+    if (pA)
     {
-        pb = pa;
+        pB = pA;
     }
 
-    while (pb)
+    /* 总是 B 剩余. */
+    while (pB)
     {
-        q = pb->next;
-        pb->next = (*A)->next;
-        (*A)->next = pb;
-        pb = q;
+        /* 保存后继. */
+        r = pB->next;
+
+        /* 将 pB 指向的结点头插入链表 A 中. */
+        pB->next = A->next;
+        A->next = pB;
+
+        /* 读取后继. */
+        pB = r;
     }
 
-    free((*B));
+    /* 释放链表 B 的头结点, B 被销毁. */
+    free(B);
 
-    return (*A);
+    return A;
 }
 
 Linklist GetCommon(Linklist A, Linklist B)
@@ -798,7 +816,7 @@ Status ChangeList(Linklist *L)
     // 1. 找出链表 L 的中间结点.
 
     // 设置工作指针 p 和 q.
-    LNode *p = (*L), *q = (*L), *r = NULL;
+    LNode *p = L, *q = (*L), *r = NULL;
 
     /**
      * 找到了中间结点 p, p 步长为 1, q 步长为 2, q 到达表尾时, p 正好是中间结点.

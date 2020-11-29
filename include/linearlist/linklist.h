@@ -121,7 +121,7 @@ void Sort(Linklist L);
  * @param min 删除范围左值.
  * @param max 删除范围右值.
  * */
-Status RangeDelete(Linklist *L, ElemType min, ElemType max);
+Status RangeDelete(Linklist L, ElemType min, ElemType max);
 
 /**
  * @brief 10, 将单向链表 A 分解成两个单向链表 A 和 B, 使得 A 表中含有原表中序号为
@@ -129,7 +129,7 @@ Status RangeDelete(Linklist *L, ElemType min, ElemType max);
  * @param A 待拆分单向链表.
  * @return 包含原表偶数位结点的单向链表.
  * */
-Linklist Split(Linklist *A);
+Linklist Split(Linklist A);
 
 /**
  * @brief 11, 将单向链表 A 分解成两个单向链表 A 和 B, 使得 A 表中含有原表中序号为
@@ -138,13 +138,13 @@ Linklist Split(Linklist *A);
  * @param A 待拆分单向链表.
  * @return 包含原表偶数位结点且逆序的单向链表.
  * */
-Linklist Split2(Linklist *A);
+Linklist Split2(Linklist A);
 
 /**
  * @brief 12, 删除单项链表 L 中重复出现的元素.
  * @param L 单向链表.
  * */
-Status DeleteRepeat(Linklist *L);
+Status DeleteRepeat(Linklist L);
 
 /**
  * @brief 13, 将两个元素按值递增的线性表归并为一个元素按值递减的元素的单链表, 并
@@ -153,7 +153,7 @@ Status DeleteRepeat(Linklist *L);
  * @param B 待归并递增单向链表.
  * @return 归并后的单向链表.
  * */
-Linklist MergeList(Linklist *A, Linklist *B);
+Linklist MergeList(Linklist A, Linklist B);
 
 /**
  * @brief 14, 从两个有序递增的单向链表中找到公共元素产生新的单向链表, 且不破坏原表.
