@@ -128,27 +128,27 @@ void UseDLinklist()
 {
     DLinklist L;
 
-    InitList_DL(&L);
+    InitList_D(&L);
 
-    TailInsert_DL(&L, 1);
-    TailInsert_DL(&L, 2);
-    TailInsert_DL(&L, 3);
-    TailInsert_DL(&L, 4);
-    TailInsert_DL(&L, 5);
+    TailInsert_D(&L, 1);
+    TailInsert_D(&L, 2);
+    TailInsert_D(&L, 3);
+    TailInsert_D(&L, 4);
+    TailInsert_D(&L, 5);
 
-    PrintList_DL(L);
+    PrintList_D(L);
 
-    DNode *node = LccateElem_DL2(&L, 1);
-    node = LccateElem_DL2(&L, 2);
-    node = LccateElem_DL2(&L, 3);
-    node = LccateElem_DL2(&L, 4);
-    node = LccateElem_DL2(&L, 1);
-    node = LccateElem_DL2(&L, 2);
-    node = LccateElem_DL2(&L, 3);
-    node = LccateElem_DL2(&L, 4);
-    node = LccateElem_DL2(&L, 5);
+    DNode *node = LccateElem_D2(&L, 1);
+    node = LccateElem_D2(&L, 2);
+    node = LccateElem_D2(&L, 3);
+    node = LccateElem_D2(&L, 4);
+    node = LccateElem_D2(&L, 1);
+    node = LccateElem_D2(&L, 2);
+    node = LccateElem_D2(&L, 3);
+    node = LccateElem_D2(&L, 4);
+    node = LccateElem_D2(&L, 5);
 
-    PrintList_DL(L);
+    PrintList_D(L);
 
     printf("\n->>>%d\n", node->prior->freq);
 

@@ -11,19 +11,19 @@
 
 #include <linearlist/dlinklist.h>
 
-Status InitList_DL(DLinklist *L)
+Status InitList_D(DLinklist *L)
 {
-    // 为头结点分配内存空间.
+    /* 为头结点分配内存空间. */
     *L = malloc(sizeof(DNode));
-    // 内存分配失败.
+    /* 内存分配失败. */
     if (!(*L))
     {
         exit(OVERFLOW);
     }
 
-    // 为了保证可是使用头插法建立链表, 还要加入尾结点.
+    /* 为了保证可是使用头插法建立链表, 还要加入尾结点. */
     DNode *rear = malloc(sizeof(DNode));
-    rear->data = -1; // 尾结点标记.
+    rear->data = -1; /* 尾结点标记. */
     rear->freq = -1;
     rear->prior = (*L);
     rear->next = NULL;
@@ -34,68 +34,68 @@ Status InitList_DL(DLinklist *L)
     (*L)->prior = NULL;
 
     return OK;
-} // InitList_DL
+}
 
-Status HeadInsert_DL(DLinklist *L, ElemType e)
+Status HeadInsert_D(DLinklist L, ElemType e)
 {
-    // 创建新结点.
-    DNode *s = malloc(sizeof(DNode));
+    /* 创建新结点. */
+    DNode *newNode = malloc(sizeof(DNode));
 
-    // 为新结点赋值.
-    s->data = e;
-    s->freq = 0;
+    /* 为新结点赋值. */
+    newNode->data = e;
+    newNode->freq = 0;
 
-    // 1. 新结点指向后继结点.
-    s->next = (*L)->next;
+    /* 1. 新结点指向后继结点. */
+    newNode->next = L->next;
 
-    // 2. 后继结点指向新结点.
-    (*L)->next->prior = s;
+    /* 2. 后继结点指向新结点. */
+    L->next->prior = newNode;
 
-    // 3. 新结点指向前驱结点.
-    s->prior = (*L);
+    /* 3. 新结点指向前驱结点. */
+    newNode->prior = L;
 
-    // 4. 前驱结点指向新结点.
-    (*L)->next = s;
+    /* 4. 前驱结点指向新结点. */
+    L->next = newNode;
 
     return OK;
-} // HeadInsert_DL
+}
 
-Status TailInsert_DL(DLinklist *L, ElemType e)
+Status TailInsert_D(DLinklist L, ElemType e)
 {
-    // 不能是 p = (*L)->next, 可能会令 p 指向尾结点.
-    DNode *p = (*L);
+    /* 不能是 p = L->next, 可能会令 p 指向尾结点. */
+    DNode *p = L;
 
-    // 找到到合适的位置.
+    /* 找到到合适的位置: 尾结点的前一个结点. */
     while (p->next->data != -1)
     {
         p = p->next;
     }
 
-    // 这是新结点.
-    DNode *s = malloc(sizeof(DNode));
-    s->data = e;
-    s->freq = 0;
+    /* 这是新结点. */
+    DNode *newNode = malloc(sizeof(DNode));
+    newNode->data = e;
+    newNode->freq = 0;
 
-    // 这里和 HeadInsert_DL() 一样了.
+    /* 这里和 HeadInsert_D() 一样了. */
 
-    // 1. 新结点指向后继结点.
-    s->next = p->next;
+    /* 1. 新结点指向后继结点. */
+    newNode->next = p->next;
 
-    // 2. 后继结点指向新结点.
-    p->next->prior = s;
+    /* 2. 后继结点指向新结点. */
+    p->next->prior = newNode;
 
-    // 3. 新结点指向前驱结点.
-    s->prior = p;
+    /* 3. 新结点指向前驱结点. */
+    newNode->prior = p;
 
-    // 4. 前驱结点指向新结点.
-    p->next = s;
+    /* 4. 前驱结点指向新结点. */
+    p->next = newNode;
 
     return OK;
-} // TailInsert_DL
+}
 
-DNode *GetElem_DL(DLinklist L, int i)
+DNode *GetElem_D(DLinklist L, int i)
 {
-    if (i < 0 || i > ListLength_DL(L))
+    if (i < 0 || i > ListLength_D(L))
     {
         printf("Index out of range.\n");
         return NULL;
@@ -111,9 +111,9 @@ DNode *GetElem_DL(DLinklist L, int i)
     }
 
     return p;
-} // GetElem_DL
+}
 
-DNode *LocateElem_DL(DLinklist L, ElemType e)
+DNode *LocateElem_D(DLinklist L, ElemType e)
 {
     DNode *p = L->next;
 
@@ -123,14 +123,14 @@ DNode *LocateElem_DL(DLinklist L, ElemType e)
     }
 
     return p;
-} // LocateElem_DL
+}
 
-DNode *LccateElem_DL2(DLinklist *L, ElemType e)
+DNode *LccateElem_D2(DLinklist L, ElemType e)
 {
-    // 第一部分, 寻找结点.
+    /* 第一部分, 寻找结点. */
 
-    // p 是工作指针, 找符合要求的结点; pre 是 p 的前驱.
-    DNode *p = (*L)->next, *pre = (*L);
+    /* p 是工作指针, 找符合要求的结点; pre 是 p 的前驱. */
+    DNode *p = L->next, *pre = L;
 
     while (p && p->data != e)
     {
@@ -138,33 +138,35 @@ DNode *LccateElem_DL2(DLinklist *L, ElemType e)
         p = p->next;
     }
 
-    // 如果符合要求的节点存在, 那么将其频度加 1.
+    /* 如果符合要求的节点存在, 那么将其频度加 1. */
     if (p)
     {
         ++p->freq;
     }
-    // 否则算法可以结束了.
+    /* 否则算法可以结束了. */
     else
     {
         return NULL;
     }
 
-    // 第二部分, 剥离结点.
+    /* 第二部分, 剥离结点. */
 
-    // 找到符合要求的结点后, 将其从链表中剥离.
-    // 1. 前驱结点向后跳过被删除结点.
+    /* 找到符合要求的结点后, 将其从链表中剥离. */
+    /* 1. 前驱结点向后跳过被删除结点. */
     pre->next = p->next;
-    // 2. 后继结点向前跳过被删除结点.
+    /* 2. 后继结点向前跳过被删除结点. */
     p->next->prior = pre;
 
-    // 这时候 p 被剥离了出来. 然后将 p 插入到合适的位置. 和普通插入没什么区别.
-    // 为了描述方便, 这是使用 s 替换 p, s 是待插入结点, p 在后面仍然表示工作指针.
+    /**
+     * 这时候 p 被剥离了出来. 然后将 p 插入到合适的位置. 和普通插入没什么区别.
+     * 为了描述方便, 这是使用 s 替换 p, s 是待插入结点, p 在后面仍然表示工作指针.
+     */
     DNode *s = p;
 
-    // 第三部分, 插入结点.
+    /* 第三部分, 插入结点. */
 
-    // p 重新作为工作指针, pre 记录其前驱.
-    p = (*L)->next, pre = (*L);
+    /* p 重新作为工作指针, pre 记录其前驱. */
+    p = L->next, pre = L;
 
     /**
      * 由于双向链表中尾结点的存在, 其频度为 -1, 所以不论存储数据的结点频度为几, 
@@ -180,19 +182,19 @@ DNode *LccateElem_DL2(DLinklist *L, ElemType e)
             pre = p;
             p = p->next;
         }
-        // 找到了合适的位置, 就在 pre  和 p 之间, pre 的频度大于等于 s,
+        /* 找到了合适的位置, 就在 pre  和 p 之间, pre 的频度大于等于 s. */
         else
         {
-            // 1. 新结点指向后继结点.
+            /* 1. 新结点指向后继结点. */
             s->next = p;
 
-            // 2. 后继结点指向新结点.
+            /* 2. 后继结点指向新结点. */
             p->prior = s;
 
-            // 3. 新结点指向前驱结点.
+            /* 3. 新结点指向前驱结点. */
             s->prior = pre;
 
-            // 4. 前驱结点指向新结点.
+            /* 4. 前驱结点指向新结点. */
             pre->next = s;
 
             break;
@@ -200,60 +202,66 @@ DNode *LccateElem_DL2(DLinklist *L, ElemType e)
     }
 
     return s;
-} // LocateElem_DL2
+}
 
-Status ListInsert_DL(DLinklist *L, int i, ElemType e)
+Status ListInsert_D(DLinklist *L, int i, ElemType e)
 {
-    if (i < 1 || i > ListLength_DL(*L) + 1)
+    if (i < 1 || i > ListLength_D(*L) + 1)
     {
         printf("Illegal insertion position.\n");
         return ERROR;
     }
 
-    // 新结点的前驱结点.
-    DNode *p = GetElem_DL(*L, i - 1);
+    /* 新结点的前驱结点. */
+    DNode *p = GetElem_D(*L, i - 1);
 
-    // 这是要插入的结点.
+    /* 这是要插入的结点. */
     DNode *s = malloc(sizeof(DNode));
     s->data = e;
     s->freq = 0;
 
-    // 1. 新结点指向后继结点.
+    /* 1. 新结点指向后继结点. */
     s->next = p->next;
 
-    // 2. 前驱结点指向新结点.
+    /* 2. 后继结点指向新结点. */
+    p->next->prior = s;
+
+    /* 3. 新结点指向前驱结点. */
+    s->prior = p;
+
+    /* 2. 前驱结点指向新结点. */
     p->next = s;
 
     return OK;
-} // ListInsert_DL
+}
 
-Status ListDelete_DL(DLinklist *L, int i)
+Status ListDelete_D(DLinklist *L, int i)
 {
-    if (i < 1 || i > ListLength_DL(*L))
+    if (i < 1 || i > ListLength_D(*L))
     {
         printf("Illegal deletion position.\n");
         return ERROR;
     }
 
-    // 被删除结点的前驱结点.
-    DNode *p = GetElem_DL(*L, i - 1);
+    /* 被删除结点的前驱结点. */
+    DNode *p = GetElem_D(*L, i - 1);
 
-    // 这是要删除的结点.
+    /* 这是要删除的结点. */
     DNode *q = p->next;
 
-    // 前驱结点跳过被删除的结点.
+    /* 前驱结点跳过被删除的结点. */
     p->next = q->next;
 
-    // 后继结点跳过被删除的结点.
+    /* 后继结点跳过被删除的结点. */
     q->next->prior = p;
 
-    // 删除结点 q.
+    /* 删除结点 q. */
     free(q);
 
     return OK;
-} // ListDelete_DL
+}
 
-int ListLength_DL(DLinklist L)
+int ListLength_D(DLinklist L)
 {
     int length = 0;
     DNode *p = L->next;
@@ -265,19 +273,29 @@ int ListLength_DL(DLinklist L)
     }
 
     return length;
-} // ListLength_DL
+}
 
-void PrintList_DL(DLinklist L)
+void PrintList_D(DLinklist L)
 {
     DNode *p = L->next;
 
     while (p->data != -1)
     {
-        printf("%d->", p->data);
+        printf("%d", p->data);
+
         p = p->next;
+    }
+
+    if (p->next->data == -1)
+    {
+        printf("\n");
+    }
+    else
+    {
+        printf("->");
     }
 
     printf("\n");
 
     return;
-} // PrintList_DL
+}
