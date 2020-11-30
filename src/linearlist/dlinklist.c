@@ -86,7 +86,7 @@ DNode *GetElem_DL(DLinklist L, int i)
 {
     if (i < 0 || i > ListLength_DL(L))
     {
-        printf("索引越界\n");
+        printf("Index out of range.\n");
         return NULL;
     }
 
@@ -195,7 +195,7 @@ Status ListInsert_DL(DLinklist *L, int i, ElemType e)
 {
     if (i < 1 || i > ListLength_DL(*L) + 1)
     {
-        printf("插入位置非法\n");
+        printf("Illegal insertion position.\n");
         return ERROR;
     }
 
@@ -220,7 +220,7 @@ Status ListDelete_DL(DLinklist *L, int i)
 {
     if (i < 1 || i > ListLength_DL(*L))
     {
-        printf("删除位置非法\n");
+        printf("Illegal deletion position.\n");
         return ERROR;
     }
 

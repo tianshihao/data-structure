@@ -1,9 +1,13 @@
 ﻿/**
- * @file  : clinklist.h
- * @brief : 单项循环链表
- * @author: 田世豪
- * @date  : 2020-7-26
- * */
+ * @file clinklist.h
+ * @author 田世豪 (tianshihao@4944@126.com)
+ * @brief 单向循环链表.
+ * @version 0.2
+ * @date 2020-07-26
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
 
 #ifndef CLINKLIST_H
 #define CLINKLIST_H
@@ -14,6 +18,7 @@
 
 typedef int ElemType;
 
+/* 单项循环链表的存储类型. */
 typedef struct CNode
 {
     ElemType data;
@@ -31,14 +36,14 @@ Status InitList_C(CLinklist *L);
  * @param L 指向已存在单项循环链表的指针.
  * @param e 要插入的数据元素.
  */
-Status HeadInsert_C(CLinklist *L, ElemType e);
+Status HeadInsert_C(CLinklist L, ElemType e);
 
 /**
  * @brief 尾插法.
  * @param L 指向已存在单项循环链表的指针.
  * @param e 要插入的数据元素.
  */
-Status TailInsert_C(CLinklist *L, ElemType e);
+Status TailInsert_C(CLinklist L, ElemType e);
 
 /**
  * @brief 按序号查找结点值.
@@ -62,7 +67,7 @@ CNode *LocateElem_C(CLinklist L, ElemType e);
  * @param i 插入的位置. 取值范围 1 <= i <= length+1.
  * @param e 要插入的元素.
  * */
-Status ListInsert_C(CLinklist *L, int i, ElemType e);
+Status ListInsert_C(CLinklist L, int i, ElemType e);
 
 /**
  * @brief 删除单项循环链表中第 i 个元素.
@@ -70,7 +75,7 @@ Status ListInsert_C(CLinklist *L, int i, ElemType e);
  * @param i 插入的位置. 取值范围 1 <= i <= length.
  * @param e 要插入的元素.
  * */
-Status ListDelete_C(CLinklist *L, int i);
+Status ListDelete_C(CLinklist L, int i);
 
 /**
  * @brief 返回 L 中数据元素个数.
@@ -78,6 +83,7 @@ Status ListDelete_C(CLinklist *L, int i);
  * @return L 的数据元素个数.
  */
 int ListLength_C(CLinklist L);
+
 /**
  * @brief 打印单向循环链表 L.
  * @param L 待打印单向循环链表.
@@ -93,4 +99,4 @@ void PrintList_C(CLinklist L);
  */
 Status DelAll(CLinklist *L);
 
-#endif // CLINKLIST_H
+#endif /* CLINKLIST_H */

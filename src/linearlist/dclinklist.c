@@ -67,7 +67,7 @@ DCNode *GetElem_DC(DCLinklist L, int i)
 {
     if (i < 0 || i > ListLength_DC(L))
     {
-        printf("索引越界\n");
+        printf("Index out of range.\n");
         return NULL;
     }
 
@@ -99,7 +99,7 @@ Status ListInsert_DC(DCLinklist *L, int i, ElemType e)
 {
     if (i < 1 || i > ListLength_DC(*L) + 1)
     {
-        printf("插入位置非法\n");
+        printf("Illegal insertion position.\n");
         return ERROR;
     }
 
@@ -123,7 +123,7 @@ Status ListDelete_DC(DCLinklist *L, int i)
 {
     if (i < 1 || i > ListLength_DC(*L))
     {
-        printf("删除位置非法\n");
+        printf("Illegal deletion position.\n");
         return ERROR;
     }
 

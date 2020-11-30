@@ -92,7 +92,7 @@ LNode *GetElem_L(Linklist L, int i)
 {
     if (i < 0 || i > ListLength_L(L))
     {
-        printf("索引越界\n");
+        printf("Index out of range.\n");
         return NULL;
     }
 
@@ -131,7 +131,7 @@ Status ListInsert_L(Linklist *L, int i, ElemType e)
 {
     if (i < 1 || i > ListLength_L(*L) + 1)
     {
-        printf("插入位置非法\n");
+        printf("Illegal insertion position.\n");
         return ERROR;
     }
 
@@ -155,7 +155,7 @@ Status ListDelete_L(Linklist *L, int i)
 {
     if (i < 1 || i > ListLength_L(*L))
     {
-        printf("删除位置非法\n");
+        printf("Illegal deletion position.\n");
         return ERROR;
     }
 

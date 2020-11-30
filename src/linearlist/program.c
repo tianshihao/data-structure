@@ -22,9 +22,9 @@ int main()
 {
     // UseSqlist();
 
-    UseLinklist();
+    // UseLinklist();
 
-    // UseCLinklist();
+    UseCLinklist();
 
     // UseDLinklist();
 
@@ -108,13 +108,18 @@ void UseCLinklist()
 
     InitList_C(&L);
 
-    TailInsert_C(&L, 5);
-    TailInsert_C(&L, 4);
-    TailInsert_C(&L, 7865);
-    TailInsert_C(&L, 124);
-    TailInsert_C(&L, 65);
+    TailInsert_C(L, 5);
+    TailInsert_C(L, 4);
+    TailInsert_C(L, 7865);
+    HeadInsert_C(L, 99);
+    TailInsert_C(L, 124);
+    TailInsert_C(L, 65);
+
+    PrintList_C(L);
+    printf("length = %d.\n", ListLength_C(L));
 
     DelAll(&L);
+    printf("length = %d.\n", ListLength_C(L));
 
     return;
 }
