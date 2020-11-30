@@ -11,8 +11,6 @@
 #define BSTREE_H
 
 #include <status.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 typedef int BSTElem;
 typedef BSTElem KeyType;

@@ -13,8 +13,6 @@
 #define SQSTACK_H
 
 #include <status.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <tree/bitree/bitree.h>
 
 /* 栈初始大小*/

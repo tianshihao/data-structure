@@ -1,4 +1,15 @@
-﻿#include <linearlist/dclinklist.h>
+﻿/**
+ * @file dclinklist.c
+ * @author 田世豪 (tianshihao@4944@126.com)
+ * @brief 双向循环链表方法实现.
+ * @version 0.1
+ * @date 2020-07-26
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
+
+#include <linearlist/dclinklist.h>
 
 Status InitList_DC(DCLinklist *L)
 {

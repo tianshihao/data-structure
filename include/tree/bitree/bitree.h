@@ -9,8 +9,6 @@
 #define BITREE_H
 
 #include <status.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 typedef char ElemType;
 

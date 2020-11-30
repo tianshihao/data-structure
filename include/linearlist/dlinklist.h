@@ -1,19 +1,22 @@
 ﻿/**
- * @file  : dlinklist.h
- * @brief : 双向链表
- * @author: 田世豪
- * @date  : 2020-7-26
- * */
+ * @file dlinklist.h
+ * @author 田世豪 (tianshihao@4944@126.com)
+ * @brief 双向链表.
+ * @version 0.1
+ * @date 2020-07-26
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
 
 #ifndef DLINKLIST_H
 #define DLINKLIST_H
 
 #include <status.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 typedef int ElemType;
 
+/* 双向链表的存储类型. */
 typedef struct DNode
 {
     ElemType data;

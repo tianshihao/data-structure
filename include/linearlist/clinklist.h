@@ -13,12 +13,10 @@
 #define CLINKLIST_H
 
 #include <status.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 typedef int ElemType;
 
-/* 单项循环链表的存储类型. */
+/* 单向循环链表的存储类型. */
 typedef struct CNode
 {
     ElemType data;

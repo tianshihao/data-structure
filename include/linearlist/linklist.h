@@ -13,8 +13,6 @@
 #define LINKLIST_H
 
 #include <status.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 typedef int ElemType;
 

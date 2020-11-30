@@ -13,9 +13,6 @@
 #define THREADTREE_H
 
 #include <status.h>
-// #include <tree/bitree.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 typedef char ElemType;
 

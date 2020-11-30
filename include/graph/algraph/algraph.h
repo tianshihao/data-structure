@@ -10,11 +10,9 @@
 #ifndef ALGRAPH_H
 #define ALGRAPH_H
 
-#include <status.h>
 #include <graph/algraph/sqqueue.h>
 #include <graph/graphtype.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <status.h>
 
 /**
  * 1------------------------2

@@ -11,8 +11,6 @@
 #define SQSTACK_H
 
 #include <status.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 /* 栈初始大小*/
 #define STACK_INIT_SIZE 100
@@ -73,5 +71,16 @@ Status GetTop_Sq(SqStack S, StackElemType *e);
  * @param S 指向顺序栈的指针.
  */
 Status DestoryStack(SqStack *S);
+
+/**
+ * @brief 进制转换.
+ */
+void Conversion();
+
+/**
+ * @brief 检查给定的括号序列是否匹配.
+ * @return Status 匹配返回 TRUE, 否则返回 FALSE.
+ */
+Status MatchBrackets();
 
 #endif /* SQSTACK_H */

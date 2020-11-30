@@ -1,16 +1,18 @@
 ﻿/**
- * @file  : dclinklist.h
- * @brief : 双向循环链表
- * @author: 田世豪
- * @date  : 2020-7-26
- * */
+ * @file dclinklist.h
+ * @author 田世豪 (tianshihao@4944@126.com)
+ * @brief 双向循环链表.
+ * @version 0.1
+ * @date 2020-07-26
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
 
 #ifndef DCLINKLIST_H
 #define DCLINKLIST_H
 
 #include <status.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 typedef int ElemType;
 

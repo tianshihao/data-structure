@@ -9,8 +9,6 @@
 #define SQLIST_H
 
 #include <status.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 #define LIST_INIT_SIZE 100 // 顺序表存储空间的初始分配量.
 #define LIST_INCREMENT 10  // 顺序表存储空间的分配增量.

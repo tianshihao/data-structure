@@ -1,4 +1,15 @@
-﻿#include <linearlist/dlinklist.h>
+﻿/**
+ * @file dlinklist.c
+ * @author 田世豪 (tianshihao@4944@126.com)
+ * @brief 双向链表方法实现.
+ * @version 0.1
+ * @date 2020-07-26
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
+
+#include <linearlist/dlinklist.h>
 
 Status InitList_DL(DLinklist *L)
 {

@@ -11,8 +11,6 @@
 #define LINKQUEUE_H
 
 #include <status.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 /* 队列存储类型为 int. */
 typedef int QueueElemType;

@@ -11,8 +11,6 @@
 #define SQSTACK_H
 
 #include <status.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 /* 栈初始大小*/
 #define STACK_INIT_SIZE 100

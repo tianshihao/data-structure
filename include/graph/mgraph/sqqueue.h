@@ -12,8 +12,6 @@
 
 #include <graph/algraph/sqqueue.h>
 #include <status.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 /* 队列的最大尺寸为 100.  实际能存储的元素数量为MAX_SIZE-1*/
 #define MAX_SIZE 100

@@ -12,7 +12,7 @@
 Status InitStack_Sq(SqStack *S)
 {
     /* 栈顶指针指向分配的内存空间的起始地址. */
-    S->base = (StackElemType *)malloc(STACK_INIT_SIZE * sizeof(StackElemType));
+    S->base = malloc(STACK_INIT_SIZE * sizeof(StackElemType));
 
     /* 存储分配失败. */
     if (!S->base)
@@ -102,11 +102,6 @@ Status DestoryStack(SqStack *S)
     S->base = NULL;
     S->top = NULL;
 
-    return OK;
-}
-
-Status StackTraverse(SqStack S, Status (*visit)())
-{
     return OK;
 }
 

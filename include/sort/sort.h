@@ -11,7 +11,6 @@
 #define SORT_H
 
 #include <status.h>
-#include <stdlib.h>
 
 typedef int ElemType;
 

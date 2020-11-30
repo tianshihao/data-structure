@@ -14,8 +14,6 @@
 #include <graph/mgraph/sqqueue.h>
 #include <graph/mgraph/sqstack.h>
 #include <status.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 /* 定义最大值. */
 #define INFINITY __INT_MAX__
