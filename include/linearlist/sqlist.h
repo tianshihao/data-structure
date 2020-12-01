@@ -1,27 +1,37 @@
 ﻿/**
- * @file  : sqlist.h
- * @brief : 顺序表.
- * @author: 田世豪
- * @date  : 2020-07-21
- * */
+ * @file sqlist.h
+ * @author 田世豪 (tianshihao@4944@126.com)
+ * @brief 顺序表.
+ * @version 0.2
+ * @date 2020-12-01
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
 
 #ifndef SQLIST_H
 #define SQLIST_H
 
 #include <status.h>
 
-#define LIST_INIT_SIZE 100 // 顺序表存储空间的初始分配量.
-#define LIST_INCREMENT 10  // 顺序表存储空间的分配增量.
-#define LIST_MAX_SIZE 200  // 顺序表的最大长度.
+/* 顺序表存储空间的初始分配量.*/
+#define LIST_INIT_SIZE 100
+/* 顺序表存储空间的分配增量.*/
+#define LIST_INCREMENT 10
+/* 顺序表的最大长度.*/
+#define LIST_MAX_SIZE 200
 
 typedef int ElemType;
 
-// 顺序表的存储结构.
+/* 顺序表的存储结构. */
 typedef struct SqList
 {
-    ElemType *elem; // 存储空间基址.
-    int length;     // 顺序表当前长度.
-    int listsize;   // 当前分配的存储容量.
+    /* 存储空间基址. */
+    ElemType *elem;
+    /* 顺序表当前长度. */
+    int length;
+    /* 当前分配的存储容量. */
+    int listsize;
 } SqList;
 
 /**
@@ -147,4 +157,4 @@ Status DeleteSame(SqList *L);
  * */
 Status Merge(SqList A, SqList B, SqList *C);
 
-#endif // SQLIST_H
+#endif /* SQLIST_H */

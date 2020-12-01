@@ -2,8 +2,8 @@
  * @file status.h
  * @author 田世豪 (tianshihao@4944@126.com)
  * @brief 宏定义与共用头文件.
- * @version 0.1
- * @date 2020-01-25
+ * @version 0.2
+ * @date 2020-11-30
  * 
  * @copyright Copyright (c) 2020
  * 

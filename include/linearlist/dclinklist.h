@@ -2,7 +2,7 @@
  * @file dclinklist.h
  * @author 田世豪 (tianshihao@4944@126.com)
  * @brief 双向循环链表.
- * @version 0.1
+ * @version 0.2
  * @date 2020-07-26
  * 
  * @copyright Copyright (c) 2020
@@ -16,6 +16,7 @@
 
 typedef int ElemType;
 
+/* 双向循环链表的存储结构. */
 typedef struct DCNode
 {
     ElemType data;
@@ -33,14 +34,14 @@ Status InitList_DC(DCLinklist *L);
  * @param L 指向已存在双向循环链表的指针.
  * @param e 要插入的数据元素.
  */
-Status HeadInsert_DC(DCLinklist *L, ElemType e);
+Status HeadInsert_DC(DCLinklist L, ElemType e);
 
 /**
  * @brief 尾插法.
  * @param L 指向已存在双向循环链表的指针.
  * @param e 要插入的数据元素.
  */
-Status TailInsert_DC(DCLinklist *L, ElemType e);
+Status TailInsert_DC(DCLinklist L, ElemType e);
 
 /**
  * @brief 按序号查找结点值.
@@ -64,7 +65,7 @@ DCNode *LocateElem_DC(DCLinklist L, ElemType e);
  * @param i 插入的位置. 取值范围 1 <= i <= length+1.
  * @param e 要插入的元素.
  * */
-Status ListInsert_DC(DCLinklist *L, int i, ElemType e);
+Status ListInsert_DC(DCLinklist L, int i, ElemType e);
 
 /**
  * @brief 删除线性链表 L 中第 i 个元素.
@@ -72,7 +73,7 @@ Status ListInsert_DC(DCLinklist *L, int i, ElemType e);
  * @param i 插入的位置. 取值范围 1 <= i <= length.
  * @param e 要插入的元素.
  * */
-Status ListDelete_DC(DCLinklist *L, int i);
+Status ListDelete_DC(DCLinklist L, int i);
 
 /**
  * @brief 返回双向循环链表 L 中数据元素个数.
@@ -94,4 +95,4 @@ void PrintList_DC(DCLinklist L);
  */
 Status Symmetry(DCLinklist L);
 
-#endif // DCLINKLIST_H
+#endif /* DCLINKLIST_H */
