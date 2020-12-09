@@ -1,10 +1,12 @@
 ﻿/**
  * @file mgraph.h
- * @author tianshihao4944@126.com
- * @brief 邻接矩阵
- * @version 0.1
- * @date 2020-09-12
+ * @author 田世豪 (tianshihao@4944@126.com)
+ * @brief 邻接矩阵头文件.
+ * @version 0.2
+ * @date 2020-12-09
+ * 
  * @copyright Copyright (c) 2020
+ * 
  */
 
 #ifndef MGRAPH_H
@@ -46,7 +48,7 @@ typedef struct MGraph
 {
     VertexType vertices[MAX_VERTEX_NUM]; /* vertex vector, 顶点向量, 顶点表 */
     AdjMatrix arcs;                      /* adjacency matrix, 临接矩阵. */
-    int vexnum, arcnum;                  /* 顶点数, 弧数. */
+    int vexNum, arcNum;                  /* 顶点数, 弧数. */
     GraphType type;                      /* 图类型. */
 } MGraph;
 
@@ -91,72 +93,73 @@ Status CreateUDG_M(MGraph *pG);
 Status CreateUDN_M(MGraph *pG);
 
 /**
- * @brief 定位顶点 v 在图中的位置.
+ * @brief 定位顶点 vex 在图中的位置.
  * @param G 图.
- * @param v 要定位的顶点在顶点表中的索引.
- * @return int 返回顶点 v 在图的顶点表中的索引, 顶点表中不存在则返回 -1.
+ * @param vex 要定位的顶点.
+ * @return int 返回顶点 vex 在图的顶点表中的索引, 顶点表中不存在则返回 -1.
  */
-int LocateVex_M(MGraph G, int v);
+int LocateVex_M(MGraph G, VertexType vex);
 
 /**
- * @brief 在图 G 中寻找顶点 v 的第一个邻接点, 没有则返回 -1.
+ * @brief 在图 G 中寻找顶点 G.vertices[vexIndex] 的第一个邻接点, 没有则返回 -1.
  * @param G 图.
- * @param v 顶点在顶点表中的索引.
- * @return int 返回顶点 v 的第一个邻接点的在顶点表中的索引.
+ * @param vexIndex 顶点在顶点表中的索引.
+ * @return int 返回顶点 G.vertices[vexIndex] 的第一个邻接点的在顶点表中的索引.
  */
-int FirstVex_M(MGraph G, int v);
+int FirstVex_M(MGraph G, int vexIndex);
 
 /**
- * @brief 在图 G 中，寻找位于顶点 v 的邻接点 w 后的邻接点. 若 w 是 v 的最后一个
- * 临接结点, 则返回 -1.
+ * @brief 在图 G 中，寻找位于顶点 G.vertices[vexIndex] 之邻接点 G.vertices[nextIndex]
+ * 后的又一邻接点. 若 G.vertices[nextIndex] 是 G.vertices[vexIndex] 的最后一个临接结点,
+ * 则返回 -1.
  * @param G 图.
- * @param v 当前顶点在顶点表中的索引.
- * @param w 下一个顶点的在顶点表中的索引.
- * @return int 当前顶点 v 的下一个顶点 w 在顶点表中的索引.
+ * @param vexIndex 当前顶点在顶点表中的索引.
+ * @param nextIndex 下一个顶点的在顶点表中的索引.
+ * @return int 所求顶点在顶点表中的索引.
  */
-int NextVex_M(MGraph G, int v, int w);
+int NextVex_M(MGraph G, int vexIndex, int nextIndex);
 
 /**
  * @brief 宽度优先搜索.
  * @param G 图.
- * @param Visit 访问函数.
+ * @param VisitFunc 访问函数.
  */
-void BFSTraverse_M(MGraph G, Status (*Visit)(VertexType v));
+void BFSTraverse_M(MGraph G, Status (*VisitFunc)(VertexType vex));
 
 /**
- * @brief 从顶点 G.vertices[v] 出发, 广度优先遍历图 G.
+ * @brief 从顶点 G.vertices[vexIndex] 出发, 广度优先遍历图 G.
  * @param G 图.
- * @param v 顶点在顶点表中的索引.
- * @param Visit 访问函数.
+ * @param vexIndex 顶点在顶点表中的索引.
+ * @param VisitFunc 访问函数.
  * @param visited 辅助数组.
  * @param Q 顺序队列.
  */
-void BFS_M(MGraph G, int v, Status (*Visit)(VertexType v), int *visited, SqQueue *pQ);
+void BFS_M(MGraph G, int vexIndex, Status (*VisitFunc)(VertexType vex), int *visited, SqQueue *pQ);
 
 /**
  * @brief 深度优先搜索.
  * @param G 图.
- * @param Visit 访问函数.
+ * @param VisitFunc 访问函数.
  */
-void DFSTraverse_M(MGraph G, Status (*Visit)(VertexType v));
+void DFSTraverse_M(MGraph G, Status (*VisitFunc)(VertexType vex));
 
 /**
- * @brief 从顶点 G.vertices[v] 出发, 深度优先遍历图 G.
+ * @brief 从顶点 G.vertices[vexIndex] 出发, 深度优先遍历图 G.
  * @param G 图.
- * @param v 顶点在顶点表中的索引.
- * @param Visit 访问函数.
+ * @param vexIndex 顶点在顶点表中的索引.
+ * @param VisitFunc 访问函数.
  * @param visited 辅助数组.
  */
-void DFS_M(MGraph G, int v, Status (*Visit)(VertexType v), int *visited);
+void DFS_M(MGraph G, int vexIndex, Status (*VisitFunc)(VertexType vex), int *visited);
 
 /**
- * @brief 从顶点 G.vertices[v] 出发, 以非递归的方式深度优先遍历图 G.
+ * @brief 从顶点 G.vertices[vexIndex] 出发, 以非递归的方式深度优先遍历图 G.
  * @param G 图.
- * @param v 顶点在顶点表中的索引.
- * @param Visit 访问函数.
+ * @param vexIndex 顶点在顶点表中的索引.
+ * @param VisitFunc 访问函数.
  * @param visited 辅助数组.
  */
-void DFS_M_NoRec(MGraph G, int v, Status (*Visit)(VertexType v), int *visited);
+void DFS_M_NoRec(MGraph G, int v, Status (*VisitFunc)(VertexType vex), int *visited);
 
 /**
  * @brief 迪杰斯特拉算法, 计算源点 source 到其余各点的最短距离.

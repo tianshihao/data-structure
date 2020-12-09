@@ -1,10 +1,12 @@
 ﻿/**
  * @file mgraph.c
- * @author tianshihao4944@126.com
- * @brief 邻接矩阵
- * @version 0.1
- * @date 2020-09-12
+ * @author 田世豪 (tianshihao@4944@126.com)
+ * @brief 邻接矩阵方法实现.
+ * @version 0.2
+ * @date 2020-12-09
+ * 
  * @copyright Copyright (c) 2020
+ * 
  */
 
 #include <graph/mgraph/mgraph.h>
@@ -34,20 +36,20 @@ Status CreateGraph_M(MGraph *pG)
 Status CreateDG_M(MGraph *pG)
 {
     printf("Enter vertex number of graph: ");
-    scanf("%d", &pG->vexnum);
+    scanf("%d", &pG->vexNum);
     printf("Enter arc number of graph: ");
-    scanf("%d", &pG->arcnum);
+    scanf("%d", &pG->arcNum);
 
     printf("Enter vertex vector of graph (e.g. 1 2 3 4 or 0 1 2 3 4): ");
-    for (int i = 0; i < pG->vexnum; ++i)
+    for (int i = 0; i < pG->vexNum; ++i)
     {
         scanf("%d", (&pG->vertices[i]));
     }
 
     /* 初始化有向图. */
-    for (int i = 0; i < pG->vexnum; ++i)
+    for (int i = 0; i < pG->vexNum; ++i)
     {
-        for (int j = 0; j < pG->vexnum; ++j)
+        for (int j = 0; j < pG->vexNum; ++j)
         {
             /* 自己到自己的距离为 0. */
             if (i == j)
@@ -61,8 +63,10 @@ Status CreateDG_M(MGraph *pG)
         }
     }
 
-    printf("Enter vertex relation (e.g. 2 3 1, means vertex 2 relate to vertex 3 and arc's weight is 1.): \n");
-    for (int k = 0; k < pG->arcnum; ++k)
+    printf("Enter vertex relation\n",
+           "e.g. 2 3 1, means vertex 2 relate to vertex 3 and arc's weight is 1.\n"
+           ": \n");
+    for (int k = 0; k < pG->arcNum; ++k)
     {
         int v1, v2, weight;
 
@@ -85,19 +89,19 @@ Status CreateDN_M(MGraph *pG)
 Status CreateUDG_M(MGraph *pG)
 {
     printf("Enter vertex number of graph: ");
-    scanf("%d", &pG->vexnum);
+    scanf("%d", &pG->vexNum);
     printf("Enter arc number of graph: ");
-    scanf("%d", &pG->arcnum);
+    scanf("%d", &pG->arcNum);
 
     printf("Enter vertex vector of graph (e.g. 1 2 3 4 or 0 1 2 3 4): ");
-    for (int i = 0; i < pG->vexnum; ++i)
+    for (int i = 0; i < pG->vexNum; ++i)
     {
         scanf("%d", &pG->vertices[i]);
     }
 
-    for (int i = 0; i < pG->vexnum; ++i)
+    for (int i = 0; i < pG->vexNum; ++i)
     {
-        for (int j = 0; j < pG->vexnum; ++j)
+        for (int j = 0; j < pG->vexNum; ++j)
         {
             /* 自己到自己的距离为 0. */
             if (i == j)
@@ -111,8 +115,10 @@ Status CreateUDG_M(MGraph *pG)
         }
     }
 
-    printf("Enter vertex relation (e.g. 2 3 1, means vertex 2 relate to vertex 3 and arc's weight is 1.): \n");
-    for (int k = 0; k < pG->arcnum; ++k)
+    printf("Enter vertex relation\n",
+           "e.g. 2 3 1, means vertex 2 relate to vertex 3 and arc's weight is 1.\n"
+           ": \n");
+    for (int k = 0; k < pG->arcNum; ++k)
     {
         int v1, v2, weight;
 
@@ -134,11 +140,12 @@ Status CreateUDN_M(MGraph *pG)
     return CreateUDG_M(pG);
 }
 
-int LocateVex_M(MGraph G, int v)
+int LocateVex_M(MGraph G, VertexType vex)
 {
-    for (int i = 0; i < G.vexnum; ++i)
+    for (int i = 0; i < G.vexNum; ++i)
     {
-        if (G.vertices[i] == v)
+        /* 在顶点表中搜索顶点 vex. */
+        if (G.vertices[i] == vex)
         {
             return i;
         }
@@ -147,15 +154,15 @@ int LocateVex_M(MGraph G, int v)
     return -1;
 }
 
-int FirstVex_M(MGraph G, int v)
+int FirstVex_M(MGraph G, int vexIndex)
 {
-    /* 检查邻接矩阵的第 v 行. */
-    for (int i = 0; i < G.vexnum; ++i)
+    /* 检查邻接矩阵的第 vexIndex 行. */
+    for (int i = 0; i < G.vexNum; ++i)
     {
-        /* 若 v 和 i 之间既相连通, 权值也不为无穷. */
-        if (G.arcs[v][i].weight != 0 && G.arcs[v][i].weight != INFINITY)
+        /* 若 vexIndex 和 i 之间既相连通, 权值也不为无穷. */
+        if (G.arcs[vexIndex][i].weight != 0 && G.arcs[vexIndex][i].weight != INFINITY)
         {
-            /* 则返回顶点 i. */
+            /* 则返回索引 i. */
             return i;
         }
     }
@@ -163,16 +170,16 @@ int FirstVex_M(MGraph G, int v)
     return -1;
 }
 
-int NextVex_M(MGraph G, int v, int w)
+int NextVex_M(MGraph G, int vexIndex, int nextIndex)
 {
-    /* 在顶点 v 的临接结点中找 w 之后的临接结点. */
-    /* 搜索临接矩阵第 v 行. */
-    for (int i = w + 1; i < G.vexnum; ++i)
+    /* 在顶点 G.vertices[vexIndex] 的临接结点中找 G.vertices[nextIndex] 之后的临接结点. */
+    /* 搜索临接矩阵第 vexIndex 行. */
+    for (int i = nextIndex + 1; i < G.vexNum; ++i)
     {
-        /* 若 v 和 i 之间既相连通, 权值也不为无穷. */
-        if (G.arcs[v][i].weight != 0 && G.arcs[v][i].weight != INFINITY)
+        /* 若 vexIndex 和 i 之间既相连通, 权值也不为无穷. */
+        if (G.arcs[vexIndex][i].weight != 0 && G.arcs[vexIndex][i].weight != INFINITY)
         {
-            /* 则返回顶点 i. */
+            /* 则返回索引 i. */
             return i;
         }
     }
@@ -180,13 +187,13 @@ int NextVex_M(MGraph G, int v, int w)
     return -1;
 }
 
-void BFSTraverse_M(MGraph G, Status (*Visit)(VertexType v))
+void BFSTraverse_M(MGraph G, Status (*VisitFunc)(VertexType vex))
 {
     /* 设置辅助数组, 标记顶点是否被访问. */
-    int visited[G.vexnum];
+    int visited[G.vexNum];
 
     /* 初始化辅助数组. */
-    for (int i = 0; i < G.vexnum; ++i)
+    for (int i = 0; i < G.vexNum; ++i)
     {
         visited[i] = FALSE;
     }
@@ -198,49 +205,51 @@ void BFSTraverse_M(MGraph G, Status (*Visit)(VertexType v))
     InitQueue_Sq(&Q);
 
     /* 从 0 号顶点开始遍历. */
-    for (int v = 0; v < G.vexnum; ++v)
+    for (int vexIndex = 0; vexIndex < G.vexNum; ++vexIndex)
     {
         /* 对每个连通分量调用一次 BFS_M. */
-        if (!visited[v])
+        if (!visited[vexIndex])
         {
-            /* vi 未访问过, 从 vi 开始 BFS_M. */
-            BFS_M(G, v, Visit, visited, &Q);
+            /* vexIndex 未访问过, 从 vexIndex 开始 BFS_M. */
+            BFS_M(G, vexIndex, VisitFunc, visited, &Q);
         }
     }
 
     return;
 }
 
-void BFS_M(MGraph G, int v, Status (*Visit)(VertexType v), int *visited, SqQueue *pQ)
+void BFS_M(MGraph G, int vexIndex, Status (*VisitFunc)(VertexType vex), int *visited, SqQueue *pQ)
 {
-    /* 访问初始顶点 v. */
-    Visit(G.vertices[v]);
+    /* 访问初始顶点 vexIndex. */
+    VisitFunc(G.vertices[vexIndex]);
 
-    /* 对 v 做已访问标记. */
-    visited[v] = TRUE;
+    /* 对 vexIndex 做已访问标记. */
+    visited[vexIndex] = TRUE;
 
-    /* 顶点 v 入队列.*/
-    EnQueue_Sq(pQ, v);
+    /* 顶点 vexIndex 入队列.*/
+    EnQueue_Sq(pQ, vexIndex);
 
     while (!QueueEmpty_Sq(*pQ))
     {
-        /* 顶点 v 出队列.*/
-        DeQueue_Sq(pQ, &v);
+        /* 顶点 vexIndex 出队列.*/
+        DeQueue_Sq(pQ, &vexIndex);
 
-        /* 检测 v 的所有邻接点. */
-        for (int w = FirstVex_M(G, v); w >= 0; w = NextVex_M(G, v, w))
+        /* 检测 vexIndex 的所有邻接点. */
+        for (int nextIndex = FirstVex_M(G, vexIndex);
+             nextIndex >= 0;
+             nextIndex = NextVex_M(G, vexIndex, nextIndex))
         {
-            /* 若 v 的邻接点 w 还没有被访问过. */
-            if (!visited[w])
+            /* 若 vexIndex 的邻接点 nextIndex 还没有被访问过. */
+            if (!visited[nextIndex])
             {
-                /* 访问顶点 w. */
-                Visit(G.vertices[w]);
+                /* 访问顶点 nextIndex. */
+                VisitFunc(G.vertices[nextIndex]);
 
-                /* 对 w 做已访问标记. */
-                visited[w] = TRUE;
+                /* 对 nextIndex 做已访问标记. */
+                visited[nextIndex] = TRUE;
 
-                /* 顶点 w 入队列. */
-                EnQueue_Sq(pQ, w);
+                /* 顶点 nextIndex 入队列. */
+                EnQueue_Sq(pQ, nextIndex);
             }
         }
     }
@@ -248,54 +257,56 @@ void BFS_M(MGraph G, int v, Status (*Visit)(VertexType v), int *visited, SqQueue
     return;
 }
 
-void DFSTraverse_M(MGraph G, Status (*Visit)(VertexType v))
+void DFSTraverse_M(MGraph G, Status (*VisitFunc)(VertexType vex))
 {
     /* 设置辅助数组, 标记顶点是否被访问. */
-    int visited[G.vexnum];
+    int visited[G.vexNum];
 
     /* 初始化辅助数组. */
-    for (int i = 0; i < G.vexnum; ++i)
+    for (int i = 0; i < G.vexNum; ++i)
     {
         visited[i] = FALSE;
     }
 
     /* 从 0 号顶点开始遍历. */
-    for (int v = 0; v < G.vexnum; ++v)
+    for (int vexIndex = 0; vexIndex < G.vexNum; ++vexIndex)
     {
         /* 对每个连通分量调用一次 DFS_M. */
-        if (!visited[v])
+        if (!visited[vexIndex])
         {
-            /* vi 还没有被访问过, 从 vi 开始 DFS_M. */
-            DFS_M(G, v, Visit, visited);
+            /* vexIndex 还没有被访问过, 从 vexIndex 开始 DFS_M. */
+            DFS_M(G, vexIndex, VisitFunc, visited);
         }
     }
 
     return;
 }
 
-void DFS_M(MGraph G, int v, Status (*Visit)(VertexType v), int *visited)
+void DFS_M(MGraph G, int vexIndex, Status (*VisitFunc)(VertexType vex), int *visited)
 {
-    /* 访问初始顶点 v. */
-    Visit(G.vertices[v]);
+    /* 访问初始顶点 vexIndex. */
+    VisitFunc(G.vertices[vexIndex]);
 
-    /* 对 v 做已访问标记. */
-    visited[v] = TRUE;
+    /* 对 vexIndex 做已访问标记. */
+    visited[vexIndex] = TRUE;
 
-    /* 检测 v 的所有邻接点. */
-    for (int w = FirstVex_M(G, v); w >= 0; w = NextVex_M(G, v, w))
+    /* 检测 vexIndex 的所有邻接点. */
+    for (int nextIndex = FirstVex_M(G, vexIndex);
+         nextIndex >= 0;
+         nextIndex = NextVex_M(G, vexIndex, nextIndex))
     {
-        /* w 为 v 尚未访问过的邻接点. */
-        if (!visited[w])
+        /* nextIndex 为 vexIndex 尚未访问过的邻接点. */
+        if (!visited[nextIndex])
         {
-            /* w 未访问过, 从 w 开始 DFS_M. */
-            DFS_M(G, w, Visit, visited);
+            /* nextIndex 未访问过, 从 nextIndex 开始 DFS_M. */
+            DFS_M(G, nextIndex, VisitFunc, visited);
         }
     }
 
     return;
 }
 
-// void DFS_M_NoRec(MGraph G, int v, Status (*Visit)(VertexType v), int *visited)
+// void DFS_M_NoRec(MGraph G, int v, Status (*VisitFunc)(VertexType v), int *visited)
 // {
 //     /**/
 //     SqStack S;
@@ -304,7 +315,7 @@ void DFS_M(MGraph G, int v, Status (*Visit)(VertexType v), int *visited)
 //     while (!StackEmpty_Sq(S))
 //     {
 //         int k = Pop_Sq(&S, k);
-//         Visit(G.vertices[k]);
+//         VisitFunc(G.vertices[k]);
 //         for (int w = FirstVex_M(G, k); k >= 0; w = NextVex_M(G, k, w))
 //         {
 //             if (!visited[w])
@@ -326,8 +337,8 @@ void Dijkstra_M(MGraph G, VertexType source)
      */
 
     /* 初始化 S. 集合 S 为已经包括进来的点. */
-    VertexType S[G.vexnum];
-    for (int i = 0; i < G.vexnum; ++i)
+    VertexType S[G.vexNum];
+    for (int i = 0; i < G.vexNum; ++i)
     {
         S[i] = FALSE;
     }
@@ -339,13 +350,13 @@ void Dijkstra_M(MGraph G, VertexType source)
      * 为: 若从 source 到 v 有弧, 则 dist[v] 为弧上的权值; 否则置 dist[v] = INFINITY.
      * dist[i] = G.arcs[sourceIndex][i].weight.
      */
-    WeightType dist[G.vexnum];
+    WeightType dist[G.vexNum];
 
     /**
      * 在创建图的时候已经考虑到了 INFINITY 的情况, 直接用 arcs[i][j].weight 赋值
      * 即可.
      */
-    for (int i = 0; i < G.vexnum; ++i)
+    for (int i = 0; i < G.vexNum; ++i)
     {
         dist[i] = G.arcs[sourceIndex][i].weight;
     }
@@ -353,14 +364,14 @@ void Dijkstra_M(MGraph G, VertexType source)
     /**
      * todo 辅助数组 path, 记录最短路径, 不会.
      */
-    VertexType path[G.vexnum][G.vexnum];
+    VertexType path[G.vexNum][G.vexNum];
 
     /**
      * 第二, 三步各执行一次为一轮.
      */
 
     /* 一共循环 n 次. */
-    for (int i = 0; i < G.vexnum; ++i)
+    for (int i = 0; i < G.vexNum; ++i)
     {
         /**
          * ! 第二步. 从顶点集合 V - S 中选择 vj, 满足
@@ -369,11 +380,11 @@ void Dijkstra_M(MGraph G, VertexType source)
          */
 
         /* 集合 V - S 中 dist 最小的元素的索引. */
-        VertexType minVertexIndex;
+        int minVexIndex;
         /* 最小值. */
-        VertexType min = INFINITY;
+        int min = INFINITY;
         /* 循环找最小值. */
-        for (int j = 0; j < G.vexnum; ++j)
+        for (int j = 0; j < G.vexNum; ++j)
         {
             /* 从集合 V - S 中选择一点*/
             if (S[j] == FALSE)
@@ -383,44 +394,44 @@ void Dijkstra_M(MGraph G, VertexType source)
                 {
                     /* 更新. */
                     min = dist[j];
-                    minVertexIndex = j;
+                    minVexIndex = j;
                 }
             }
         }
 
         /* 将 vj 加入到 S中, S = S ∪ {vj}. */
-        S[minVertexIndex] = TRUE;
+        S[minVexIndex] = TRUE;
 
         /**
          * ! 第三步. 修改从 source 出发到集合 V - S 上任一顶点 vk 可到达的最短路径
          * 长度: 若 dist[j] + arcs[j][k] < dist[k], 则更新 dist[k] = dist[j] + arcs[j][k].
          * 
          * 这么理解, dist[j] 是源点 source 到顶点 j 的距离, 此距离再加上 arcs[j][k],
-         * 即顶点 vj 到顶点 vk 的距离就是源点 source 到顶点 vk 的距离, 若新的距离
-         * 小于原来的距离 dist[k], 则更新 dist[k].
+         * 即源点 source 经顶点 vj 到顶点 vk 的距离. dist[k] 是源点 source 到顶点 vk 的距离,
+         * 若新的距离小于原来的距离 dist[k], 则更新 dist[k].
          */
 
-        for (int k = 0; k < G.vexnum; ++k)
+        for (int k = 0; k < G.vexNum; ++k)
         {
             /* 从集合 V - S 中选择一点*/
             if (S[k] == FALSE)
             {
                 /**
-                 * 1. 如果 arcs[minVertexIndex][k].weight 为无穷, 再对其求和会溢出, 导
+                 * 1. 如果 arcs[minVexIndex][k].weight 为无穷, 再对其求和会溢出, 导
                  * 致比较出错; 
                  * 2. 无穷表示无法从顶点 vj 到达顶点 vk, 即无法通过路径
                  * source -> ... -> vj 再到达顶点 vk, 自然也没有比较的意义;
                  * 3. 无穷加任意正数, 仍可以看作无穷, 必不小于原来的 dist[k]. 
                  */
-                if (G.arcs[minVertexIndex][k].weight != INFINITY)
+                if (G.arcs[minVexIndex][k].weight != INFINITY)
                 {
                     /**
-                     * 前面第二个 if 没有排除 k != minVertexIndex 的情况,
+                     * 前面第二个 if 没有排除 k != minVexIndex 的情况,
                      * 因为自己到自己的距离为 0, 不会更新最小值.
                      */
-                    if ((dist[minVertexIndex] + G.arcs[minVertexIndex][k].weight) < dist[k])
+                    if ((dist[minVexIndex] + G.arcs[minVexIndex][k].weight) < dist[k])
                     {
-                        dist[k] = dist[minVertexIndex] + G.arcs[minVertexIndex][k].weight;
+                        dist[k] = dist[minVexIndex] + G.arcs[minVexIndex][k].weight;
                     }
                 }
             }
@@ -436,12 +447,12 @@ void Dijkstra_M(MGraph G, VertexType source)
 
 void Floyd_M(MGraph G)
 {
-    WeightType dist[G.vexnum][G.vexnum];
+    WeightType dist[G.vexNum][G.vexNum];
 
     /* 初始化: 方阵 dist = arcs. */
-    for (int i = 0; i < G.vexnum; ++i)
+    for (int i = 0; i < G.vexNum; ++i)
     {
-        for (int j = 0; j < G.vexnum; ++j)
+        for (int j = 0; j < G.vexNum; ++j)
         {
             dist[i][j] = G.arcs[i][j].weight;
         }
@@ -459,11 +470,11 @@ void Floyd_M(MGraph G)
      * 标记更新之后的方阵为 dist^k.
      */
 
-    for (int k = 0; k < G.vexnum; ++k)
+    for (int k = 0; k < G.vexNum; ++k)
     {
-        for (int i = 0; i < G.vexnum; ++i)
+        for (int i = 0; i < G.vexNum; ++i)
         {
-            for (int j = 0; j < G.vexnum; ++j)
+            for (int j = 0; j < G.vexNum; ++j)
             {
                 if (dist[i][j] > dist[i][k] + dist[k][j])
                 {
@@ -478,11 +489,11 @@ void Floyd_M(MGraph G)
 
 void PrintGraph_M(MGraph G)
 {
-    for (int i = 0; i < G.vexnum; ++i)
+    for (int i = 0; i < G.vexNum; ++i)
     {
-        for (int j = 0; j < G.vexnum; ++j)
+        for (int j = 0; j < G.vexNum; ++j)
         {
-            printf("%d%c", G.arcs[i][j].weight, j == G.vexnum - 1 ? '\n' : '\t');
+            printf("%d%c", G.arcs[i][j].weight, j == G.vexNum - 1 ? '\n' : '\t');
         }
     }
 
