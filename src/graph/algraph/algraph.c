@@ -176,37 +176,37 @@ void BFSTraverse_AL(ALGraph G, Status (*VisitFunc)(VertexType v))
     InitQueue_Sq(&Q);
 
     /* 从 0 号顶点开始遍历. */
-    for (int vIndex = 0; vIndex < G.vexNum; ++vIndex)
+    for (int vexIndex = 0; vexIndex < G.vexNum; ++vexIndex)
     {
         /* 对每个连通分量调用一次 BFS_AL. */
-        if (!visited[vIndex])
+        if (!visited[vexIndex])
         {
             /* vi 未访问过, 从 vi 开始 BFS_AL. */
-            BFS_AL(G, vIndex, VisitFunc, visited, &Q);
+            BFS_AL(G, vexIndex, VisitFunc, visited, &Q);
         }
     }
 
     return;
 }
 
-void BFS_AL(ALGraph G, int vIndex, Status (*VisitFunc)(VertexType v), int *visited, SqQueue *Q)
+void BFS_AL(ALGraph G, int vexIndex, Status (*VisitFunc)(VertexType v), int *visited, SqQueue *Q)
 {
     /* 访问初始结点. */
-    VisitFunc(G.vertices[vIndex].vex);
+    VisitFunc(G.vertices[vexIndex].vex);
 
-    /* 对 vIndex 做已访问标记. */
-    visited[vIndex] = TRUE;
+    /* 对 vexIndex 做已访问标记. */
+    visited[vexIndex] = TRUE;
 
-    /* 顶点索引 vIndex 入队列. */
-    EnQueue_Sq(Q, vIndex);
+    /* 顶点索引 vexIndex 入队列. */
+    EnQueue_Sq(Q, vexIndex);
 
     while (!QueueEmpty_Sq(*Q))
     {
-        /* 顶点索引 vIndex 出队列.*/
-        DeQueue_Sq(Q, &vIndex);
+        /* 顶点索引 vexIndex 出队列.*/
+        DeQueue_Sq(Q, &vexIndex);
 
-        /* 检测所有依附于顶点 vIndex 的边. */
-        for (ArcNode *pArc = G.vertices[vIndex].firstArc; pArc != NULL; pArc = pArc->nextArc)
+        /* 检测所有依附于顶点 vexIndex 的边. */
+        for (ArcNode *pArc = G.vertices[vexIndex].firstArc; pArc != NULL; pArc = pArc->nextArc)
         {
             /* 若弧 pArc 指向的顶点还没有被访问过. */
             if (!visited[pArc->adjVex])
@@ -238,31 +238,31 @@ void DFSTraverse_AL(ALGraph G, Status (*VisitFunc)(VertexType v))
     }
 
     /* 从 0 号元素开始遍历. */
-    for (int vIndex = 0; vIndex < G.vexNum; ++vIndex)
+    for (int vexIndex = 0; vexIndex < G.vexNum; ++vexIndex)
     {
         /* 对每个连通分量调用一次 DFS_AL. */
-        if (!visited[vIndex])
+        if (!visited[vexIndex])
         {
             /* vi 还没有被访问过, 从 vi 开始 DFS_AL. */
-            DFS_AL(G, vIndex, VisitFunc, visited);
+            DFS_AL(G, vexIndex, VisitFunc, visited);
         }
     }
 
     return;
 }
 
-void DFS_AL(ALGraph G, int vIndex, Status (*VisitFunc)(VertexType v), int *visited)
+void DFS_AL(ALGraph G, int vexIndex, Status (*VisitFunc)(VertexType v), int *visited)
 {
     /* 访问初始结点. */
-    VisitFunc(G.vertices[vIndex].vex);
+    VisitFunc(G.vertices[vexIndex].vex);
 
-    /* 对 vIndex 做已访问标记. */
-    visited[vIndex] = TRUE;
+    /* 对 vexIndex 做已访问标记. */
+    visited[vexIndex] = TRUE;
 
-    /* 对 vIndex 的尚未访问的邻接顶点 arc->adjVex 递归调用 DFS_AL. */
-    for (ArcNode *arc = G.vertices[vIndex].firstArc; arc != NULL; arc = arc->nextArc)
+    /* 对 vexIndex 的尚未访问的邻接顶点 arc->adjVex 递归调用 DFS_AL. */
+    for (ArcNode *arc = G.vertices[vexIndex].firstArc; arc != NULL; arc = arc->nextArc)
     {
-        if (!visited[vIndex])
+        if (!visited[vexIndex])
         {
             DFS_AL(G, arc->adjVex, VisitFunc, visited);
         }
