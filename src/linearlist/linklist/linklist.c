@@ -38,7 +38,7 @@ Status InitList_L(Linklist *L)
     return OK;
 }
 
-Status HeadInsert_L(Linklist *L, ElemType e)
+Status HeadInsert_L(Linklist L, ElemType e)
 {
     /* 创建新结点. */
     LNode *s = malloc(sizeof(LNode));
@@ -47,15 +47,15 @@ Status HeadInsert_L(Linklist *L, ElemType e)
     s->data = e;
 
     /* 1. 新结点指向后继结点. */
-    s->next = (*L)->next;
+    s->next = L->next;
 
     /* 2. 头结点指向新结点. */
-    (*L)->next = s;
+    L->next = s;
 
     return OK;
 }
 
-Status TailInsert_L(Linklist *L, ElemType e)
+Status TailInsert_L(Linklist L, ElemType e)
 {
     /* 这是新结点. */
     LNode *s = malloc(sizeof(LNode));
@@ -74,7 +74,7 @@ Status TailInsert_L(Linklist *L, ElemType e)
      */
 
     /* 工作指针, 指向表尾结点, 即新结点的前驱结点. */
-    LNode *p = (*L);
+    LNode *p = L;
 
     /* 找到最后一个不为空的结点. */
     while (p->next != NULL)
@@ -127,16 +127,16 @@ LNode *LocateElem_L(Linklist L, ElemType e)
     return p;
 }
 
-Status ListInsert_L(Linklist *L, int i, ElemType e)
+Status ListInsert_L(Linklist L, int i, ElemType e)
 {
-    if (i < 1 || i > ListLength_L(*L) + 1)
+    if (i < 1 || i > ListLength_L(L) + 1)
     {
         printf("Illegal insertion position.\n");
         return ERROR;
     }
 
     /* 新结点的前驱结点. */
-    LNode *p = GetElem_L(*L, i - 1);
+    LNode *p = GetElem_L(L, i - 1);
 
     /* 这是要插入的结点. */
     LNode *s = malloc(sizeof(LNode));
@@ -151,16 +151,16 @@ Status ListInsert_L(Linklist *L, int i, ElemType e)
     return OK;
 }
 
-Status ListDelete_L(Linklist *L, int i)
+Status ListDelete_L(Linklist L, int i)
 {
-    if (i < 1 || i > ListLength_L(*L))
+    if (i < 1 || i > ListLength_L(L))
     {
         printf("Illegal deletion position.\n");
         return ERROR;
     }
 
     /* 被删除结点的前驱结点. */
-    LNode *p = GetElem_L(*L, i - 1);
+    LNode *p = GetElem_L(L, i - 1);
 
     /* 这是要删除的结点. */
     LNode *q = p->next;
@@ -632,7 +632,7 @@ void Union(Linklist A, Linklist B)
     /* 指向 A 尾结点. A 用于存储求交集之后的结果, 所以初始尾结点是头结点. */
     LNode *rA = A;
 
-    /* 剥离链表 A 的头结点. */
+    /* 剥离链表 A 的头结点. 目的链表 A 的头结点作为新链表的头结点. */
     A->next = NULL;
 
     while (pA && pB)
@@ -640,8 +640,12 @@ void Union(Linklist A, Linklist B)
         /* 异步前进, 相互追赶. 释放不属于交集的结点. */
         if (pA->data < pB->data)
         {
+            /* 记录待回收结点. */
             r = pA;
+            /* 指针进一. */
             pA = pA->next;
+
+            /* 回收先前的结点. */
             free(r);
         }
         else if (pA->data > pB->data)
@@ -659,9 +663,13 @@ void Union(Linklist A, Linklist B)
             /* pA 前进一. */
             pA = pA->next;
 
-            /* pB 也前进一, 但是用指针 r 指向 pB 指向的结点, pB再前进一. */
+            /**
+             * pB 也前进一, 因为要销毁链表 B, 所以用指针 r 指向 pB 指向的结点,
+             * pB再前进一.
+             */
             r = pB;
             pB = pB->next;
+
             /* 释放不属于交集的结点. */
             free(r);
         }
