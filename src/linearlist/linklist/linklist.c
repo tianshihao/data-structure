@@ -1,15 +1,15 @@
 ﻿/**
  * @file linklist.c
  * @author 田世豪 (tianshihao@4944@126.com)
- * @brief 单向链表
- * @version 0.1
- * @date 2020-01-25
+ * @brief 单向链表方法实现.
+ * @version 0.2
+ * @date 2020-12-16
  * 
  * @copyright Copyright (c) 2020
  * 
  */
 
-#include <linearlist/linklist.h>
+#include <linearlist/linklist/linklist.h>
 
 Status InitList_L(Linklist *L)
 {

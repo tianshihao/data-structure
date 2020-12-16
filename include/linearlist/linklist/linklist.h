@@ -1,9 +1,9 @@
-﻿/**
+/**
  * @file linklist.h
  * @author 田世豪 (tianshihao@4944@126.com)
- * @brief 
- * @version 0.1
- * @date 2020-01-25
+ * @brief 单向链表头文件.
+ * @version 0.2
+ * @date 2020-12-16
  * 
  * @copyright Copyright (c) 2020
  * 

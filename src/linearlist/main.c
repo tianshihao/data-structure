@@ -1,15 +1,19 @@
 ﻿/**
- * @file  : program.c
- * @brief : 使用第二章的数据结构.
- * @author: 田世豪
- * @date  : 2020-07-22
- * */
+ * @file main.c
+ * @author 田世豪 (tianshihao@4944@126.com)
+ * @brief 使用线性表.
+ * @version 0.2
+ * @date 2020-12-16
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
 
-#include <linearlist/clinklist.h>
-#include <linearlist/dclinklist.h>
-#include <linearlist/dlinklist.h>
-#include <linearlist/linklist.h>
-#include <linearlist/sqlist.h>
+#include <linearlist/linklist/clinklist.h>
+#include <linearlist/linklist/dclinklist.h>
+#include <linearlist/linklist/dlinklist.h>
+#include <linearlist/linklist/linklist.h>
+#include <linearlist/sqlist/sqlist.h>
 
 void UseSqlist();
 void UseLinklist();
@@ -20,17 +24,17 @@ Status MyCompare(ElemType e1, ElemType e2);
 
 int main()
 {
-    // UseSqlist();
+    /* UseSqlist(); */
 
-    // UseLinklist();
+    /* UseLinklist(); */
 
     UseCLinklist();
 
-    // UseDLinklist();
+    /* UseDLinklist(); */
 
-    // UseDCLinklist();
+    /* UseDCLinklist(); */
 
-    // UseSLinklist();
+    /* UseSLinklist(); */
 
     system("pause");
 
@@ -41,12 +45,12 @@ void UseSqlist()
 {
     SqList A, B, C;
 
-    // 初始化顺序表.
+    /* 初始化顺序表. */
     InitList_Sq(&A);
     InitList_Sq(&B);
     InitList_Sq(&C);
 
-    // 如果顺序表为空, 向顺序表中插入数据元素.
+    /* 如果顺序表为空, 向顺序表中插入数据元素. */
     if (ListEmpty_Sq(A))
     {
         ListInsert_Sq(&A, 1, 9);
@@ -89,7 +93,7 @@ void UseLinklist()
     TailInsert_L(&L, 9);
     PrintList_L(L);
 
-    // ChangeList(&L);
+    /* ChangeList(&L); */
     Reverse_L2(L);
     PrintList_L(L);
 

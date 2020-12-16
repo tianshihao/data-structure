@@ -1,0 +1,12 @@
+set(src
+   clinklist.c
+   dclinklist.c
+   dlinklist.c
+   linklist.c
+)
+
+add_library(linklist STATIC
+   ${src}
+)
+
+set_target_properties(linklist PROPERTIES ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/obj")
