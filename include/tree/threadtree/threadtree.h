@@ -1,9 +1,9 @@
 ﻿/**
  * @file threadtree.h
- * @author tianshihao
- * @brief 线索二叉树
- * @version 0.1
- * @date 2020-08-10
+ * @author 田世豪 (tianshihao@4944@126.com)
+ * @brief 线索二叉树头文件
+ * @version 0.2
+ * @date 2020-12-21
  * 
  * @copyright Copyright (c) 2020
  * 
@@ -16,13 +16,14 @@
 
 typedef char ElemType;
 
-// Link == 0 表示指针, Thread == 1 表示线索.
+/* 指针标签, Link == 0 表示指针, Thread == 1 表示线索. */
 typedef enum PointerTag
 {
-    Link,
-    Thread
+    Link,  /* 链接. */
+    Thread /* 线索. */
 } PointerTag;
 
+/* 线索二叉树存储结构. */
 typedef struct ThreadNode
 {
     ElemType data;
@@ -123,7 +124,7 @@ Status InOrderThreading(ThreadTree *T);
  * ! 有存储 pre, 所以我先将其作为一个局部变量传递. 但这个中序线索化的算法是一个
  * ! 递归形式的回溯, 系统会维护一个函数调用栈, 当回溯到上一次使用 InThreading 的
  * ! 状态时, 本次的 pre 会消失, 恢复到上一次的状态, 所以会出现后继设置失败的情况.
- * 改进方法有两个, 设置全局变量 pre, 或者将函数参数改为传递 pre 的地址, 这样
+ * 改进方法有两个, 设置全局变量 pre, 或者将函数参数改为传递 pre 的地址.
  */
 /**
  * @brief 中序线索化.
@@ -171,4 +172,4 @@ void PostThreading(ThreadTree p, ThreadNode **pre);
  */
 Status PostOrder(ThreadTree T, Status (*Visit)(ElemType e));
 
-#endif // THREADTREE_H
+#endif /* THREADTREE_H */

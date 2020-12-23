@@ -9,7 +9,7 @@
  * 
  */
 
-#include <linearlist/sqlist.h>
+#include <linearlist/sqlist/sqlist.h>
 
 Status InitList_Sq(SqList *L)
 {

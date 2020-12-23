@@ -1,9 +1,9 @@
 ﻿/**
  * @file linklist.h
  * @author 田世豪 (tianshihao@4944@126.com)
- * @brief 
- * @version 0.1
- * @date 2020-01-25
+ * @brief 单向链表头文件.
+ * @version 0.2
+ * @date 2020-12-16
  * 
  * @copyright Copyright (c) 2020
  * 
@@ -34,14 +34,14 @@ Status InitList_L(Linklist *L);
  * @param L 指向已存在单向链表的指针.
  * @param e 要插入的数据元素.
  */
-Status HeadInsert_L(Linklist *L, ElemType e);
+Status HeadInsert_L(Linklist L, ElemType e);
 
 /**
  * @brief 尾插法.
  * @param L 指向已存在单向链表的指针.
  * @param e 要插入的数据元素.
  */
-Status TailInsert_L(Linklist *L, ElemType e);
+Status TailInsert_L(Linklist L, ElemType e);
 
 /**
  * @brief 按序号查找结点值.
@@ -66,7 +66,7 @@ LNode *LocateElem_L(Linklist L, ElemType e);
  * @param i 插入的位置. 取值范围 1 <= i <= length+1.
  * @param e 要插入的元素.
  * */
-Status ListInsert_L(Linklist *L, int i, ElemType e);
+Status ListInsert_L(Linklist L, int i, ElemType e);
 
 /**
  * 删除单向链表 L 中第 i 个元素.
@@ -74,7 +74,7 @@ Status ListInsert_L(Linklist *L, int i, ElemType e);
  * @param i 插入的位置. 取值范围 1 <= i <= length.
  * @param e 要插入的元素.
  * */
-Status ListDelete_L(Linklist *L, int i);
+Status ListDelete_L(Linklist L, int i);
 
 /**
  * @brief 返回单向链表 L 中数据元素个数.
@@ -169,7 +169,6 @@ Linklist GetCommon(Linklist A, Linklist B);
  * 但是修改了原表, 将布署于交集的结点释放, 实际上销毁了链表 B.
  * @param A 待归并单项链表.
  * @param B 待归并单项链表.
- * @return Linklist 交集.
  */
 void Union(Linklist A, Linklist B);
 

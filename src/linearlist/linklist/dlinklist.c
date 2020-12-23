@@ -2,14 +2,14 @@
  * @file dlinklist.c
  * @author 田世豪 (tianshihao@4944@126.com)
  * @brief 双向链表方法实现.
- * @version 0.1
- * @date 2020-07-26
+ * @version 0.2
+ * @date 2020-12-16
  * 
  * @copyright Copyright (c) 2020
  * 
  */
 
-#include <linearlist/dlinklist.h>
+#include <linearlist/linklist/dlinklist.h>
 
 Status InitList_D(DLinklist *L)
 {
@@ -229,7 +229,7 @@ Status ListInsert_D(DLinklist *L, int i, ElemType e)
     /* 3. 新结点指向前驱结点. */
     s->prior = p;
 
-    /* 2. 前驱结点指向新结点. */
+    /* 4. 前驱结点指向新结点. */
     p->next = s;
 
     return OK;

@@ -1,9 +1,9 @@
 ﻿/**
  * @file dlinklist.h
  * @author 田世豪 (tianshihao@4944@126.com)
- * @brief 双向链表.
- * @version 0.1
- * @date 2020-07-26
+ * @brief 双向链表头文件.
+ * @version 0.2
+ * @date 2020-12-16
  * 
  * @copyright Copyright (c) 2020
  * 

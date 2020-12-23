@@ -2,14 +2,14 @@
  * @file clinklist.c
  * @author 田世豪 (tianshihao@4944@126.com)
  * @brief 单向循环链表方法实现.
- * @version 0.2
- * @date 2020-07-26
+ * @version 0.3
+ * @date 2020-12-16
  * 
  * @copyright Copyright (c) 2020
  * 
  */
 
-#include <linearlist/clinklist.h>
+#include <linearlist/linklist/clinklist.h>
 
 Status InitList_C(CLinklist *L)
 {

@@ -1,0 +1,9 @@
+set(src
+    sqlist.c
+)
+
+add_library(sqlist STATIC
+    ${src}
+)
+
+set_target_properties(sqlist PROPERTIES ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/obj")
