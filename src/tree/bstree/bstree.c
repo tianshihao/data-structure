@@ -1,10 +1,12 @@
 ﻿/**
  * @file bstree.c
- * @author tianshihao
- * @brief 二叉排序树函数实现
- * @version 0.1
- * @date 2020-09-01
+ * @author 田世豪 (tianshihao@4944@126.com)
+ * @brief 二叉排序树方法实现
+ * @version 0.2
+ * @date 2020-12-21
+ * 
  * @copyright Copyright (c) 2020
+ * 
  */
 
 #include <tree/bstree/bstree.h>
@@ -17,25 +19,25 @@ Status InitTree_BS(BSTree *T)
 
 Status Insert_BST(BSTree *T, BSTElem e)
 {
-    // 找到了合适的位置.
+    /* 找到了合适的位置. */
     if (*T == NULL)
     {
-        (*T) = (BSTNode *)malloc(sizeof(BSTNode));
+        (*T) = malloc(sizeof(BSTNode));
         (*T)->data = e;
         (*T)->lchild = (*T)->rchild = NULL;
         return OK;
     }
-    // 树中存在相同关键字的结点, 插入失败.
+    /* 树中存在相同关键字的结点, 插入失败. */
     else if (e == (*T)->data)
     {
         return ERROR;
     }
-    // 插入到左子树中.
+    /* 插入到左子树中. */
     else if (e < (*T)->data)
     {
         return Insert_BST(&(*T)->lchild, e);
     }
-    // 插入到右子树中.
+    /* 插入到右子树中. */
     else
     {
         return Insert_BST(&(*T)->rchild, e);
@@ -46,7 +48,7 @@ Status CreateTree_BST(BSTree *T, BSTElem *str, int n)
 {
     *T = NULL;
 
-    // 计数器.
+    /* 计数器. */
     int i = 0;
 
     while (i < n)
