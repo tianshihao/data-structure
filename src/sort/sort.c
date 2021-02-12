@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file sort.c
  * @author tianshihao4944@126.com
  * @brief 排序算法实现
@@ -299,7 +299,7 @@ void HeapAdjust(ElemType A[], int parent, int len)
             ++child;
         }
         /* 好, 选出了最大子结点. 若亲结点大于最大子结点, 则没有调整的必要, 跳出. */
-        if (A[0] > A[child])
+        if (A[parent] > A[child])
         {
             break;
         }
