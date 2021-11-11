@@ -3,9 +3,10 @@
         {
             "name": "mingw-w64",
             "defines": [],
-            "compilerPath": "C:\\Program Files\\mingw-w64\\x86_64-8.1.0-posix-seh-rt_v6-rev0\\mingw64\\bin\\gcc.exe",
+            "compilerPath": "C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/bin/gcc.exe",
             "cStandard": "c11",
-            "intelliSenseMode": "gcc-x64",
+            "intelliSenseMode": "${default}",
+            "configurationProvider": "ms-vscode.cmake-tools",
             "includePath": [
                 "${workspaceFolder}\\**"
             ],
@@ -14,7 +15,8 @@
                     "${workspaceFolder}\\**"
                 ],
                 "limitSymbolsToIncludedHeaders": true
-            }
+            },
+            "cppStandard": "c++11"
         }
     ],
     "version": 4

@@ -1,0 +1,66 @@
+{
+  "folders": [
+    {
+      "path": ".."
+    }
+  ],
+  "settings": {
+    "files.associations": {
+      "functional": "cpp",
+      "memory": "cpp",
+      "set": "cpp",
+      "vector": "cpp",
+      "kdtree": "cpp",
+      "quat": "cpp",
+      "vec3b": "cpp",
+      "vec3d": "cpp",
+      "vec3f": "cpp",
+      "vec3i": "cpp",
+      "vec3s": "cpp",
+      "vec3ub": "cpp",
+      "vec3ui": "cpp",
+      "vec3us": "cpp",
+      "vec4b": "cpp",
+      "vec4d": "cpp",
+      "vec4f": "cpp",
+      "vec4i": "cpp",
+      "vec4s": "cpp",
+      "vec4ub": "cpp",
+      "vec4ui": "cpp",
+      "vec4us": "cpp",
+      "guieventadapter": "cpp",
+      "graphicscontext": "cpp",
+      "vec2b": "cpp",
+      "vec2d": "cpp",
+      "vec2f": "cpp",
+      "vec2i": "cpp",
+      "vec2s": "cpp",
+      "vec2ub": "cpp",
+      "vec2ui": "cpp",
+      "vec2us": "cpp",
+      "viewport": "cpp",
+      "linklist.h": "c",
+      "sort.h": "c",
+      "status.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "Enabled",
+    "C_Cpp.clang_format_style": "Visual Studio"
+  },
+  "extensions": {
+    "recommendations": [
+      "albert.TabOut",
+      "alefragnani.Bookmarks",
+      "christian-kohler.path-intellisense",
+      "donjayamanne.githistory",
+      "eamodio.gitlens",
+      "miguelsolorio.fluent-icons",
+      "ms-vscode.cmake-tools",
+      "ms-vscode.cpptools",
+      "PKief.material-icon-theme",
+      "twxs.cmake",
+      "usernamehw.errorlens",
+      "vscodevim.vim",
+      "whizkydee.material-palenight-theme",
+    ]
+  }
+}

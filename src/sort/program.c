@@ -38,7 +38,7 @@ int main()
     // MergeSort(A, 0, len - 1, len);
     // HeapSort(A, len - 1);
     // SelectionSort(A, len);
-    BidirectionalBubbleSort(A, len);
+    // BidirectionalBubbleSort(A, len);
     // Move(A, len);
 
     for (int i = 0; i < len; ++i)
