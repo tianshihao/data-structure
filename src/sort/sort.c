@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file sort.c
  * @author tianshihao4944@126.com
  * @brief 排序算法实现
@@ -265,7 +265,7 @@ void Merge(ElemType arr[], int low, int mid, int high, int n)
      * buffer     [38      49      65      97]    [13      27      49     79]
      *             i(low)                          j(mid + 1)
      *
-     * arr        [13                                                       ]
+     * arr        [13      __      __      __      __      __      __     __]
      *        write_ptr
      * 
      *                        ⬇  进行比较, 13 < 38  ⬇

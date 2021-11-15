@@ -7,9 +7,9 @@
  * @copyright Copyright (c) 2020
  */
 
-#include <queue/sqqueue/sqqueue.h>
+#include <sqqueue.h>
 
-Status InitQueue_Sq(SqQueue *Q)
+Status InitQueueSq(SqQueue *Q)
 {
     /* 为顺序队列申请内存空间. */
     Q->base = (QueueElemType *)malloc(MAX_SIZE * sizeof(QueueElemType));
@@ -24,12 +24,12 @@ Status InitQueue_Sq(SqQueue *Q)
     return OK;
 }
 
-Status QueueEmpty_Sq(SqQueue Q)
+Status QueueEmptySq(SqQueue Q)
 {
     return Q.front == Q.rear;
 }
 
-Status EnQueue_Sq(SqQueue *Q, QueueElemType e)
+Status EnQueueSq(SqQueue *Q, QueueElemType e)
 {
     /**
      * 为了区分队空还是队满的情况, 牺牲一个单元来区分队空和队满, 入队时少用一个
@@ -50,7 +50,7 @@ Status EnQueue_Sq(SqQueue *Q, QueueElemType e)
     return OK;
 }
 
-Status DeQueue_Sq(SqQueue *Q, QueueElemType *e)
+Status DeQueueSq(SqQueue *Q, QueueElemType *e)
 {
     /* 如果队列为空. */
     if (Q->front == Q->rear)
@@ -67,7 +67,7 @@ Status DeQueue_Sq(SqQueue *Q, QueueElemType *e)
     return OK;
 }
 
-Status GetHead_Sq(SqQueue Q, QueueElemType *e)
+Status GetHeadSq(SqQueue Q, QueueElemType *e)
 {
     /* 如果队列为空. */
     if (Q.front == Q.rear)
@@ -81,12 +81,12 @@ Status GetHead_Sq(SqQueue Q, QueueElemType *e)
     return OK;
 }
 
-int QueueLength_Sq(SqQueue Q)
+int QueueLengthSq(SqQueue Q)
 {
     return (Q.rear - Q.front + MAX_SIZE) % MAX_SIZE;
 }
 
-Status DestoryQueue_Sq(SqQueue *Q)
+Status DestoryQueueSq(SqQueue *Q)
 {
     /* 如果为队列分配了内存空间. */
     if (Q->base)
@@ -106,9 +106,9 @@ Status DestoryQueue_Sq(SqQueue *Q)
     }
 }
 
-Status PrintQueue_Sq(SqQueue Q)
+Status PrintQueueSq(SqQueue Q)
 {
-    if (QueueEmpty_Sq(Q))
+    if (QueueEmptySq(Q))
     {
         exit(ERROR);
     }

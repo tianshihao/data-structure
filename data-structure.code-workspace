@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"*.c": "c",
+			"*.h": "c",
+			"limits": "c",
+			"type_traits": "c",
+			"cstdio": "c"
+		},
+		"files.defaultLanguage": "c"
+	}
+}

@@ -7,9 +7,9 @@
  * @copyright Copyright (c) 2020
  */
 
-#include <stack/sqstack/sqstack.h>
+#include <sqstack.h>
 
-Status InitStack_Sq(SqStack *S)
+Status InitStackSq(SqStack *S)
 {
     /* 栈顶指针指向分配的内存空间的起始地址. */
     S->base = malloc(STACK_INIT_SIZE * sizeof(StackElemType));
@@ -29,7 +29,7 @@ Status InitStack_Sq(SqStack *S)
     return OK;
 }
 
-Status StackEmpty_Sq(SqStack S)
+Status StackEmptySq(SqStack S)
 {
     if (S.top == S.base)
     {
@@ -39,7 +39,7 @@ Status StackEmpty_Sq(SqStack S)
     return FALSE;
 }
 
-Status Push_Sq(SqStack *S, StackElemType e)
+Status PushSq(SqStack *S, StackElemType e)
 {
     /* 栈满, 追加存储空间. */
     if ((S->top - S->base) >= S->allocatedSize)
@@ -65,7 +65,7 @@ Status Push_Sq(SqStack *S, StackElemType e)
     return OK;
 }
 
-Status Pop_Sq(SqStack *S, StackElemType *e)
+Status PopSq(SqStack *S, StackElemType *e)
 {
     /* 若栈为空. */
     if (S->top == S->base)
@@ -79,7 +79,7 @@ Status Pop_Sq(SqStack *S, StackElemType *e)
     return OK;
 }
 
-Status GetTop_Sq(SqStack S, StackElemType *e)
+Status GetTopSq(SqStack S, StackElemType *e)
 {
     /* 空栈. */
     if (S.top == S.base)
@@ -108,7 +108,7 @@ Status DestoryStack(SqStack *S)
 void Conversion()
 {
     SqStack S;
-    InitStack_Sq(&S);
+    InitStackSq(&S);
 
     printf("Enter a decimal number: ");
 
@@ -117,16 +117,16 @@ void Conversion()
 
     while (N)
     {
-        Push_Sq(&S, N % 8);
+        PushSq(&S, N % 8);
         N = N / 8;
     }
 
     printf("Octal of this number is: ");
 
     StackElemType e;
-    while (!StackEmpty_Sq(S))
+    while (!StackEmptySq(S))
     {
-        Pop_Sq(&S, &e);
+        PopSq(&S, &e);
         printf("%d", e);
     }
 
@@ -140,7 +140,7 @@ Status MatchBrackets()
     printf("Enter a bracket sequence, length does not exceed 20.\n");
 
     SqStack S;
-    InitStack_Sq(&S);
+    InitStackSq(&S);
 
     char bracketSequence[20] = "\0";
     gets(bracketSequence);
@@ -151,14 +151,14 @@ Status MatchBrackets()
         /* 左括号压栈. */
         if ((bracketSequence[i] == '(') || (bracketSequence[i] == '[') || (bracketSequence[i] == '{') || (bracketSequence[i] == '<'))
         {
-            Push_Sq(&S, bracketSequence[i]);
+            PushSq(&S, bracketSequence[i]);
         }
         else
         {
             StackElemType leftBracket;
 
             /* 栈中有括号. */
-            if ((!StackEmpty_Sq(S)) && (Pop_Sq(&S, &leftBracket)))
+            if ((!StackEmptySq(S)) && (PopSq(&S, &leftBracket)))
             {
                 /* 匹配. */
                 /* 每对括号的 ASCII 相差 2, 除了 () 相差 1. */
@@ -181,7 +181,7 @@ Status MatchBrackets()
     }
 
     /* 若存在未消解的括号, 则说明匹配失败. */
-    if (StackEmpty_Sq(S))
+    if (StackEmptySq(S))
     {
         return TRUE;
     }

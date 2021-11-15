@@ -7,7 +7,7 @@
  * @copyright Copyright (c) 2020
  */
 
-#include <queue/linkqueue/linkqueue.h>
+#include <linkqueue.h>
 
 Status InitQueue_Link(LinkQueue *Q)
 {

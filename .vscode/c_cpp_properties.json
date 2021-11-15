@@ -7,15 +7,16 @@
             "cStandard": "c11",
             "intelliSenseMode": "${default}",
             "configurationProvider": "ms-vscode.cmake-tools",
-            "includePath": [
-                "${workspaceFolder}\\**"
-            ],
-            "browse": {
-                "path": [
-                    "${workspaceFolder}\\**"
-                ],
-                "limitSymbolsToIncludedHeaders": true
-            },
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json",
+            // "includePath": [
+            //     "${workspaceFolder}\\**"
+            // ],
+            // "browse": {
+            //     "path": [
+            //         "${workspaceFolder}\\**"
+            //     ],
+            //     "limitSymbolsToIncludedHeaders": true
+            // },
             "cppStandard": "c++11"
         }
     ],

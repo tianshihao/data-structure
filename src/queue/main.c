@@ -1,5 +1,5 @@
-﻿#include <queue/linkqueue/linkqueue.h>
-#include <queue/sqqueue/sqqueue.h>
+﻿#include <linkqueue.h>
+#include <sqqueue.h>
 
 void UseSqqueue();
 void UseLinkqueue();
@@ -16,31 +16,33 @@ int main()
 void UseSqqueue()
 {
     SqQueue Q;
-    InitQueue_Sq(&Q);
 
-    EnQueue_Sq(&Q, 100);
-    EnQueue_Sq(&Q, 2);
-    EnQueue_Sq(&Q, 3);
-    EnQueue_Sq(&Q, 4);
-    EnQueue_Sq(&Q, 5);
+    if (OK == InitQueueSq(&Q))
+    {
+        EnQueueSq(&Q, 100);
+        EnQueueSq(&Q, 2);
+        EnQueueSq(&Q, 3);
+        EnQueueSq(&Q, 4);
+        EnQueueSq(&Q, 5);
 
-    PrintQueue_Sq(Q);
+        PrintQueueSq(Q);
 
-    QueueElemType e;
+        QueueElemType e;
 
-    GetHead_Sq(Q, &e);
+        GetHeadSq(Q, &e);
 
-    DeQueue_Sq(&Q, &e);
+        DeQueueSq(&Q, &e);
 
-    PrintQueue_Sq(Q);
-    // GetHead_Sq(Q, &e);
+        PrintQueueSq(Q);
+        // GetHead_Sq(Q, &e);
 
-    DestoryQueue_Sq(&Q);
+        DestoryQueueSq(&Q);
+    }
 
     SqQueue P;
-    InitQueue_Sq(&P);
+    InitQueueSq(&P);
 
-    DestoryQueue_Sq(&Q);
+    DestoryQueueSq(&Q);
 
     return;
 }

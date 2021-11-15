@@ -2,7 +2,7 @@
  * @file sqqueue.h
  * @author tianshihao4944@126.com
  * @brief 顺序队列头文件. 
- * @version 0.1
+ * @version 0.2
  * @date 2020-1-30
  * @copyright Copyright (c) 2020
  */
@@ -35,7 +35,7 @@ typedef struct SqQueue
  * @brief 初始化顺序队列, 构造一个空队列.
  * @param Q 指向空循环的指针.
  */
-Status InitQueue_Sq(SqQueue *Q);
+Status InitQueueSq(SqQueue *Q);
 
 /**
  * @brief 判队列空, 若顺序队列 Q 为空返回 TRUE, 否则返回 FALSE.
@@ -43,21 +43,21 @@ Status InitQueue_Sq(SqQueue *Q);
  * @return TRUE 队列为空返回 TRUE.
  * @return FALSE 队列不空返回 FALSE.
  */
-Status QueueEmpty_Sq(SqQueue Q);
+Status QueueEmptySq(SqQueue Q);
 
 /**
  * @brief 入队, 若顺序队列 Q 未满, 将 x 加入, 使之成为新的队尾.
  * @param Q 指向顺序队列的指针.
  * @param e 入队的数据元素.
  */
-Status EnQueue_Sq(SqQueue *Q, QueueElemType e);
+Status EnQueueSq(SqQueue *Q, QueueElemType e);
 
 /**
  * @brief 出队, 若顺序队列 Q 非空, 删除队头元素, 并用 e 返回.
  * @param Q 指向顺序队列的指针,
  * @param e 用以返回队头元素.
  */
-Status DeQueue_Sq(SqQueue *Q, QueueElemType *e);
+Status DeQueueSq(SqQueue *Q, QueueElemType *e);
 
 /**
  * @brief 读队头元素. 若队列不空, 则用 e 返回 Q 的队头元素, 并返回 OK;
@@ -65,14 +65,14 @@ Status DeQueue_Sq(SqQueue *Q, QueueElemType *e);
  * @param Q 顺序队列.
  * @param e 存储队头元素.
  */
-Status GetHead_Sq(SqQueue Q, QueueElemType *e);
+Status GetHeadSq(SqQueue Q, QueueElemType *e);
 
 /**
  * @brief 返回顺序队列数据元素个数
  * @param Q 队列
  * @return int 队列中元素个数.
  */
-int QueueLength_Sq(SqQueue Q);
+int QueueLengthSq(SqQueue Q);
 
 /**
  * @brief 删除队列, 释放其内存空间.
@@ -80,7 +80,7 @@ int QueueLength_Sq(SqQueue Q);
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR. 
  */
-Status DestoryQueue_Sq(SqQueue *Q);
+Status DestoryQueueSq(SqQueue *Q);
 
 /**
  * @brief 打印顺序队列.
@@ -88,6 +88,6 @@ Status DestoryQueue_Sq(SqQueue *Q);
  * @return OK 打印成功.
  * @return ERROR 打印失败.
  */
-Status PrintQueue_Sq(SqQueue Q);
+Status PrintQueueSq(SqQueue Q);
 
 #endif /* SQQUEUE_H */
