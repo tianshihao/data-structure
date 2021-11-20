@@ -11,14 +11,14 @@
 
 Status InitQueueSq(SqQueue *Q)
 {
-    /* 为顺序队列申请内存空间. */
+    // 为顺序队列申请内存空间.
     Q->base = (QueueElemType *)malloc(MAX_SIZE * sizeof(QueueElemType));
     if (!Q->base)
     {
         exit(OVERFLOW);
     }
 
-    /* 初始化指针. */
+    // 初始化指针.
     Q->front = Q->rear = 0;
 
     return OK;
@@ -35,16 +35,16 @@ Status EnQueueSq(SqQueue *Q, QueueElemType e)
      * 为了区分队空还是队满的情况, 牺牲一个单元来区分队空和队满, 入队时少用一个
      * 队列单元, 约定以队头指针在队尾指针的下一位置作为队满的标志.
      */
-    /* 如果队列已满. */
+    // 如果队列已满.
     if ((Q->rear + 1) % MAX_SIZE == Q->front)
     {
         return ERROR;
     }
 
-    /* 新元素入队尾. */
+    // 新元素入队尾.
     *(Q->base + Q->rear) = e;
 
-    /* 队尾指针进一. */
+    // 队尾指针进一.
     Q->rear = (Q->rear + 1) % MAX_SIZE;
 
     return OK;
@@ -52,16 +52,16 @@ Status EnQueueSq(SqQueue *Q, QueueElemType e)
 
 Status DeQueueSq(SqQueue *Q, QueueElemType *e)
 {
-    /* 如果队列为空. */
+    // 如果队列为空.
     if (Q->front == Q->rear)
     {
         return ERROR;
     }
 
-    /* 队头元素出队. */
+    // 队头元素出队.
     *e = Q->base[Q->front];
 
-    /* 队头进一. */
+    // 队头进一.
     Q->front = (Q->front + 1) % MAX_SIZE;
 
     return OK;
@@ -69,13 +69,13 @@ Status DeQueueSq(SqQueue *Q, QueueElemType *e)
 
 Status GetHeadSq(SqQueue Q, QueueElemType *e)
 {
-    /* 如果队列为空. */
+    // 如果队列为空.
     if (Q.front == Q.rear)
     {
         return ERROR;
     }
 
-    /* 读取队头元素. */
+    // 读取队头元素.
     *e = Q.base[Q.front];
 
     return OK;
@@ -113,7 +113,7 @@ Status PrintQueueSq(SqQueue Q)
         exit(ERROR);
     }
 
-    printf("[debug] Print sequence queue:\n");
+    printf("Print sequence queue:\n");
     printf("        <-front ");
 
     int p = Q.front;
@@ -126,7 +126,7 @@ Status PrintQueueSq(SqQueue Q)
         p = (p + 1) % MAX_SIZE;
     }
 
-    printf(" rear->\n");
+    printf(" <-rear\n");
 
     return OK;
 }

@@ -9,18 +9,18 @@
  * 
  */
 
-#include <tree/bitree/bitree.h>
+#include <bitree.h>
 #include <tree/bstree/bstree.h>
 #include <tree/threadtree/threadtree.h>
 
-void UseBinaryTree();
+void TestBinaryTree();
 void UseThreadTree();
 void UseBinarySearchTree();
 Status MyVisit(ElemType e);
 
 int main()
 {
-    UseBinaryTree();
+    TestBinaryTree();
 
     // int *p;
 
@@ -37,24 +37,29 @@ int main()
     return 0;
 }
 
-void UseBinaryTree()
+void TestBinaryTree()
 {
-    BiTree T;
-    InitTree_Binary(&T);
+    BiTree t;
+    InitTreeBinary(&t);
 
-    CreateBinaryTree(&T, "../input/input1.txt");
+    const char *file_path = "../../../data/bitree.txt";
+
+    if (ERROR == CreateBinaryTreeFromFile(&t, file_path))
+    {
+        exit(ERROR);
+    }
 
     printf("Tree's height or depth is ");
-    printf("%d\n", BiTreeHeight(T));
+    printf("%d\n", BiTreeHeight(t));
 
     printf("Traverse tree with level-order.\n");
-    LevelOrderTraverse_Binary(T, MyVisit);
+    LevelOrderTraverseBinary(t, MyVisit);
     printf("\n");
 
     int height = 0;
     int balance = 0;
 
-    JudgeAVL(T, &height, &balance);
+    JudgeAVL(t, &height, &balance);
 
     if (balance == 1)
     {
@@ -66,10 +71,10 @@ void UseBinaryTree()
     }
 
     printf("Tree's height or depth is ");
-    printf("%d\n", BiTreeHeight(T));
+    printf("%d\n", BiTreeHeight(t));
 
     printf("Taverse tree with inverted level-order (from bottom to top, from right to left)\n");
-    InvertLevelTraverse_Binary(T, MyVisit);
+    InvertLevelTraverseBinary(t, MyVisit);
     printf("\n");
 
     // {
@@ -84,7 +89,7 @@ void UseBinaryTree()
     // }
 
     printf("The width of binary tree is ");
-    printf("%d\n", BiTreeWidth(T));
+    printf("%d\n", BiTreeWidth(t));
 
     printf("Construct tree from preorder and inorder sequence.\n");
     ElemType pre[5] = {'A', 'B', 'D', 'E', 'C'};
@@ -92,10 +97,10 @@ void UseBinaryTree()
     BiTree N = PreInCreate(pre, 0, 4, in, 0, 4);
 
     printf("Binary tree N's level order traverse sequence is ");
-    LevelOrderTraverse_Binary(N, MyVisit);
+    LevelOrderTraverseBinary(N, MyVisit);
     printf("\n");
 
-    if (Similar(T, N))
+    if (Similar(t, N))
     {
         printf("Tree T and N is similar.\n");
     }
@@ -111,10 +116,10 @@ void UseBinaryTree()
     // // printf("\n");
 
     // // printf("depth = %d\n", BiTreeHeight(T));
-    // LevelOrderTraverse_Binary(T, MyVisit);
+    // LevelOrderTraverseBinary(T, MyVisit);
     // printf("\n");
     // SwapSubTree(T);
-    // LevelOrderTraverse_Binary(T, MyVisit);
+    // LevelOrderTraverseBinary(T, MyVisit);
     // printf("\n");
 
     return;

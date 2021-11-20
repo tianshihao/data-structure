@@ -27,7 +27,7 @@ typedef struct BiTNode
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR.
  */
-Status InitTree_Binary(BiTree *T);
+Status InitTreeBinary(BiTree *T);
 
 /**
   @brief 按先序次序输入二叉树中结点的值, ^字符表示空树, 构造二叉链表表示的
@@ -37,14 +37,14 @@ Status InitTree_Binary(BiTree *T);
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR. 
  */
-Status CreateBinaryTree(BiTree *T, const char *path);
+Status CreateBinaryTreeFromFile(BiTree *T, const char *path);
 
 /**
  * @brief 从文件中先序次序读取二叉树序列, 递归地建立二叉树.
  * @param T pointer to binary tree.
  * @param fp 存储二叉树信息的文件.
  */
-void CreateTree_Binary(BiTree *T, FILE *PreSeq);
+void CreateTreeBinary(BiTree *T, FILE *PreSeq);
 
 /**
  * @brief 采用二叉链表存储结构, Visit 是对结点操作的应用函数. 先序遍历二叉树 T,
@@ -54,7 +54,7 @@ void CreateTree_Binary(BiTree *T, FILE *PreSeq);
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR.
  */
-Status PreOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e));
+Status PreOrderTraverseBinaryRecur(BiTree T, Status (*Visit)(ElemType e));
 
 /**
  * @brief 借助顺序栈, 非递归地先序遍历二叉树.
@@ -63,7 +63,7 @@ Status PreOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e));
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR.
  */
-Status PreOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e));
+Status PreOrderTraverseBinaryNonRecur(BiTree T, Status (*Visit)(ElemType e));
 
 /**
  * @brief 采用二叉表存储结构, Visit 是对结操作的应用函数. 中序遍历二叉 T, 对每个
@@ -73,7 +73,7 @@ Status PreOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e));
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR.
  */
-Status InOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e));
+Status InOrderTraverseBinaryRecur(BiTree T, Status (*Visit)(ElemType e));
 
 /**
  * @brief 借助顺序栈, 非递归地中序遍历二叉树.
@@ -82,7 +82,7 @@ Status InOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e));
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR.
  */
-Status InOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e));
+Status InOrderTraverseBinaryNonRecur(BiTree T, Status (*Visit)(ElemType e));
 
 /**
  * @brief 采用二叉链表存储结构, Visit 是对结点操作的应用函数. 后序遍历二叉树 T,
@@ -92,7 +92,7 @@ Status InOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e));
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR.
  */
-Status PostOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e));
+Status PostOrderTraverseBinaryRecur(BiTree T, Status (*Visit)(ElemType e));
 
 /**
  * @brief 王道数据结构3, 借助顺序栈, 非递归地后序遍历二叉树.
@@ -103,7 +103,7 @@ Status PostOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e));
  * @todo @see FindAncestor, @see FindCommonAncestor, 看是否能将这两个函数中的
  * 退栈操作在本函数中找到, 如果能, 改写成明确的具有退栈操作的形式.
  */
-Status PostOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e));
+Status PostOrderTraverseBinaryNonRecur(BiTree T, Status (*Visit)(ElemType e));
 
 /**
  * @brief 层序遍历二叉树.
@@ -112,7 +112,7 @@ Status PostOrderTraverse_Binary2(BiTree T, Status (*Visit)(ElemType e));
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR.
  */
-Status LevelOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e));
+Status LevelOrderTraverseBinary(BiTree T, Status (*Visit)(ElemType e));
 
 /**
  * @brief 王道数据结构4, 自下而上, 自右向左遍历二叉树.
@@ -122,7 +122,7 @@ Status LevelOrderTraverse_Binary(BiTree T, Status (*Visit)(ElemType e));
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR.
  */
-Status InvertLevelTraverse_Binary(BiTree T, Status (*Visit)(ElemType e));
+Status InvertLevelTraverseBinary(BiTree T, Status (*Visit)(ElemType e));
 
 /**
  * @brief 王道数据结构5, 非递归算法求二叉树高度. 根据层序遍历修改.
@@ -175,7 +175,7 @@ BiTNode *FindCommonAncestor(BiTree T, BiTNode *p, BiTNode *q);
 
 /**
  * @brief 王道数据结构150/14, 求二叉树的宽度. 即拥有结点最多的一层的结点数.
- * @see LevelOrderTraverse_Binary
+ * @see LevelOrderTraverseBinary
  * @param T 非空二叉树.
  * @return int 二叉树的宽度.
  */

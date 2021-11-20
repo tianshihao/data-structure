@@ -23,7 +23,7 @@ Status InitStack_Sq(SqStack *S)
 
     S->top = S->base;
 
-    S->allocatedSize = STACK_INIT_SIZE;
+    S->allocated_size = STACK_INIT_SIZE;
 
     return OK;
 } // InitStack_Sq
@@ -41,9 +41,9 @@ Status StackEmpty_Sq(SqStack S)
 Status Push_Sq(SqStack *S, StackElemType e)
 {
     // 栈满, 追加存储空间
-    if ((S->top - S->base) >= S->allocatedSize)
+    if ((S->top - S->base) >= S->allocated_size)
     {
-        S->base = realloc(S->base, (S->allocatedSize + STACK_INCREMENT) * sizeof(StackElemType));
+        S->base = realloc(S->base, (S->allocated_size + STACK_INCREMENT) * sizeof(StackElemType));
 
         // 内存分配失败.
         if (!S->base)
@@ -52,10 +52,10 @@ Status Push_Sq(SqStack *S, StackElemType e)
         }
 
         // 重置栈顶指针
-        S->top = S->base + S->allocatedSize;
+        S->top = S->base + S->allocated_size;
 
         // 更新栈大小
-        S->allocatedSize += STACK_INCREMENT;
+        S->allocated_size += STACK_INCREMENT;
     }
 
     // 更新栈顶指针, top 始终指向栈顶元素的下一位.
@@ -115,7 +115,7 @@ Status DestoryStack(SqStack *S)
     S->top = NULL;
 
     // 更新栈大小.
-    S->allocatedSize = 0;
+    S->allocated_size = 0;
 
     return OK;
 } // DestoryStack

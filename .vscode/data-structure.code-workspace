@@ -41,7 +41,14 @@
       "viewport": "cpp",
       "linklist.h": "c",
       "sort.h": "c",
-      "status.h": "c"
+      "status.h": "c",
+      "sqqueue.h": "c",
+      "linkqueue.h": "c",
+      "stdlib.h": "c",
+      "stdio.h": "c",
+      "bitree.h": "c",
+      "sqstack.h": "c",
+      "cstdio": "c"
     },
     "C_Cpp.errorSquiggles": "Enabled",
     "C_Cpp.clang_format_style": "Visual Studio"

@@ -1,4 +1,14 @@
-﻿#include <linkqueue.h>
+﻿/**
+ * @file main.c
+ * @author tianshihao4944@126.com
+ * @brief Test sequence queue and link sequence.
+ * @version 0.1
+ * @date 2021-11-16
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
+#include <linkqueue.h>
 #include <sqqueue.h>
 
 void UseSqqueue();
@@ -26,6 +36,7 @@ void UseSqqueue()
         EnQueueSq(&Q, 5);
 
         PrintQueueSq(Q);
+        printf("Q length = %d.\n", QueueLengthSq(Q));
 
         QueueElemType e;
 
@@ -34,6 +45,7 @@ void UseSqqueue()
         DeQueueSq(&Q, &e);
 
         PrintQueueSq(Q);
+        printf("Q length = %d.\n", QueueLengthSq(Q));
         // GetHead_Sq(Q, &e);
 
         DestoryQueueSq(&Q);
@@ -50,38 +62,38 @@ void UseSqqueue()
 void UseLinkqueue()
 {
     LinkQueue Q;
-    InitQueue_Link(&Q);
+    InitQueueLink(&Q);
     QueueElemType e;
 
-    printf("length = %d\n", QueueLength_Link(Q));
+    printf("length = %d\n", QueueLengthLink(Q));
 
-    EnQueue_Link(&Q, 1);
-    EnQueue_Link(&Q, 2);
-    EnQueue_Link(&Q, 3);
-    EnQueue_Link(&Q, 4);
+    EnQueueLink(&Q, 1);
+    EnQueueLink(&Q, 2);
+    EnQueueLink(&Q, 3);
+    EnQueueLink(&Q, 4);
 
-    printf("length = %d\n", QueueLength_Link(Q));
+    printf("length = %d\n", QueueLengthLink(Q));
 
-    DeQueue_Link(&Q, &e);
+    DeQueueLink(&Q, &e);
     printf("e = %d\n", e);
-    printf("length = %d\n", QueueLength_Link(Q));
+    printf("length = %d\n", QueueLengthLink(Q));
 
-    PrintQueue_Link(Q);
+    PrintQueueLink(Q);
 
-    GetHead_Link(Q, &e);
+    GetHeadLink(Q, &e);
     printf("e = %d\n", e);
-    printf("length = %d\n", QueueLength_Link(Q));
+    printf("length = %d\n", QueueLengthLink(Q));
 
-    printf("length = %d\n", QueueLength_Link(Q));
+    printf("length = %d\n", QueueLengthLink(Q));
 
-    PrintQueue_Link(Q);
+    PrintQueueLink(Q);
 
-    if (DeQueue_Link(&Q, &e))
+    if (DeQueueLink(&Q, &e))
         printf("wrong\n");
     else
         printf("bingo\n");
 
-    DestoryQueue_Link(&Q);
+    DestoryQueueLink(&Q);
 
     return;
 }

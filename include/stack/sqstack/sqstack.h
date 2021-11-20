@@ -30,7 +30,7 @@ typedef struct SqStack
     StackElemType *top;
 
     /* 当前已分配的存储空间, 以元素为单位. */
-    int allocatedSize;
+    int allocated_size;
 } SqStack;
 
 /**

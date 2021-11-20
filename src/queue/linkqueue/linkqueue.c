@@ -9,7 +9,7 @@
 
 #include <linkqueue.h>
 
-Status InitQueue_Link(LinkQueue *Q)
+Status InitQueueLink(LinkQueue *Q)
 {
     /* 建立头结点. */
     Q->front = Q->rear = (LinkQNode *)malloc(sizeof(LinkQNode));
@@ -25,7 +25,7 @@ Status InitQueue_Link(LinkQueue *Q)
     return OK;
 }
 
-Status QueueEmpty_Link(LinkQueue Q)
+Status QueueEmptyLink(LinkQueue Q)
 {
     /* 队列为空的判断条件是头指针和尾指针均指向头结点. */
     if (Q.front == Q.rear)
@@ -38,7 +38,7 @@ Status QueueEmpty_Link(LinkQueue Q)
     }
 }
 
-Status EnQueue_Link(LinkQueue *Q, QueueElemType e)
+Status EnQueueLink(LinkQueue *Q, QueueElemType e)
 {
     /* 工作指针, 指向新入队的结点. */
     LinkQNode *p = (LinkQNode *)malloc(sizeof(LinkQNode));
@@ -61,7 +61,7 @@ Status EnQueue_Link(LinkQueue *Q, QueueElemType e)
     return OK;
 }
 
-Status DeQueue_Link(LinkQueue *Q, QueueElemType *e)
+Status DeQueueLink(LinkQueue *Q, QueueElemType *e)
 {
     /* 空队列. */
     if (Q->front == Q->rear)
@@ -90,7 +90,7 @@ Status DeQueue_Link(LinkQueue *Q, QueueElemType *e)
     return OK;
 }
 
-Status GetHead_Link(LinkQueue Q, QueueElemType *e)
+Status GetHeadLink(LinkQueue Q, QueueElemType *e)
 {
     if (Q.front != Q.rear)
     {
@@ -101,7 +101,7 @@ Status GetHead_Link(LinkQueue Q, QueueElemType *e)
         return ERROR;
 }
 
-int QueueLength_Link(LinkQueue Q)
+int QueueLengthLink(LinkQueue Q)
 {
     /* 计数器, 记录结点数目, 即队列长度. */
     int length = 0;
@@ -120,7 +120,7 @@ int QueueLength_Link(LinkQueue Q)
     return length;
 }
 
-Status DestoryQueue_Link(LinkQueue *Q)
+Status DestoryQueueLink(LinkQueue *Q)
 {
     /* 从头结点开始释放内存. */
     while (Q->front)
@@ -136,7 +136,7 @@ Status DestoryQueue_Link(LinkQueue *Q)
     return OK;
 }
 
-void PrintQueue_Link(LinkQueue Q)
+void PrintQueueLink(LinkQueue Q)
 {
     /* 空队列. */
     if (Q.front == Q.rear)

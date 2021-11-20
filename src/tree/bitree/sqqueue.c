@@ -7,55 +7,55 @@
  * @copyright Copyright (c) 2020
  */
 
-#include <tree/bitree/sqqueue.h>
+#include <sqqueue.h>
 
-Status InitQueue_Sq(SqQueue *Q)
+Status InitQueueSq(SqQueue *q)
 {
     /* 为顺序队列申请内存空间. */
-    Q->base = (QueueElemType *)malloc(MAX_SIZE * sizeof(QueueElemType));
+    q->base = (QueueElemType *)malloc(MAX_SIZE * sizeof(QueueElemType));
 
     /* 如果内存申请失败. */
-    if (!Q->base)
+    if (!q->base)
     {
         exit(OVERFLOW);
     }
 
     /* 初始化指针. */
-    Q->front = Q->rear = 0;
+    q->front = q->rear = 0;
 
     return OK;
 }
 
-Status QueueEmpty_Sq(SqQueue Q)
+Status QueueEmptySq(SqQueue q)
 {
-    return Q.front == Q.rear;
+    return q.front == q.rear;
 }
 
-Status EnQueue_Sq(SqQueue *Q, QueueElemType e)
+Status EnQueueSq(SqQueue *q, QueueElemType e)
 {
     /**
      * 为了区分队空还是队满的情况, 牺牲一个单元来区分队空和队满, 入队时少用一个
      * 队列单元, 约定以队头指针在队尾指针的下一位置作为队满的标志.
      */
     /* 如果队列已满. */
-    if ((Q->rear + 1) % MAX_SIZE == Q->front)
+    if ((q->rear + 1) % MAX_SIZE == q->front)
     {
         return ERROR;
     }
 
     /* 新元素入队尾. */
-    *(Q->base + Q->rear) = e;
+    *(q->base + q->rear) = e;
 
     /* 队尾指针进一. */
-    Q->rear = (Q->rear + 1) % MAX_SIZE;
+    q->rear = (q->rear + 1) % MAX_SIZE;
 
     return OK;
 }
 
-Status DeQueue_Sq(SqQueue *Q, QueueElemType *e)
+Status DeQueueSq(SqQueue *q, QueueElemType *e)
 {
     /* 如果队列为空. */
-    if (Q->front == Q->rear)
+    if (q->front == q->rear)
     {
         return ERROR;
     }
@@ -63,46 +63,46 @@ Status DeQueue_Sq(SqQueue *Q, QueueElemType *e)
     /* 队头元素出队. */
     /**
      * 这么做的理由同 
-     * @see PostOrderTraverse_Binary2
+     * @see PostOrderTraverseBinaryNonRecur
      */
-    *e = *(Q->base + Q->front);
+    *e = *(q->base + q->front);
 
     /* 队头进一. */
-    Q->front = (Q->front + 1) % MAX_SIZE;
+    q->front = (q->front + 1) % MAX_SIZE;
 
     return OK;
 }
 
-Status GetHead_Sq(SqQueue Q, QueueElemType *e)
+Status GetHead_Sq(SqQueue q, QueueElemType *e)
 {
     /* 如果队列为空. */
-    if (Q.front == Q.rear)
+    if (q.front == q.rear)
     {
         return ERROR;
     }
 
     /* 读取队头元素. */
-    *e = Q.base[Q.front];
+    *e = q.base[q.front];
 
     return OK;
 }
 
-int QueueLength_Sq(SqQueue Q)
+int QueueLength_Sq(SqQueue q)
 {
-    return (Q.rear - Q.front + MAX_SIZE) % MAX_SIZE;
+    return (q.rear - q.front + MAX_SIZE) % MAX_SIZE;
 }
 
-Status DestoryQueue_Sq(SqQueue *Q)
+Status DestoryQueueSq(SqQueue *q)
 {
     /* 如果为队列分配了内存空间. */
-    if (Q->base)
+    if (q->base)
     {
         /* 释放内存. */
-        free(Q->base);
+        free(q->base);
         /* 重置指向内存空间的指针. */
-        Q->base = NULL;
+        q->base = NULL;
         /* 重置队头队尾指针. */
-        Q->front = Q->rear = 0;
+        q->front = q->rear = 0;
 
         return OK;
     }
@@ -112,18 +112,18 @@ Status DestoryQueue_Sq(SqQueue *Q)
     }
 }
 
-void PrintQueue_Sq(SqQueue Q)
+void PrintQueue_Sq(SqQueue q)
 {
-    if (Q.front == Q.rear)
+    if (q.front == q.rear)
     {
         return;
     }
 
-    int p = Q.front;
+    int p = q.front;
 
-    while (p != Q.rear)
+    while (p != q.rear)
     {
-        printf(" %d ", Q.base[p]);
+        printf(" %d ", q.base[p]);
 
         /* 队列指针进一. */
         p = (p + 1) % MAX_SIZE;

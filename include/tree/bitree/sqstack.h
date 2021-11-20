@@ -12,8 +12,8 @@
 #ifndef SQSTACK_H
 #define SQSTACK_H
 
+#include <bitree.h>
 #include <status.h>
-#include <tree/bitree/bitree.h>
 
 /* 栈初始大小*/
 #define STACK_INIT_SIZE 100
@@ -33,7 +33,7 @@ typedef struct SqStack
     StackElemType *top;
 
     /* 当前已分配的存储空间, 以元素为单位. */
-    int allocatedSize;
+    int allocated_size;
 } SqStack;
 
 /**

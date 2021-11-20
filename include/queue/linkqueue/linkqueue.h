@@ -49,14 +49,14 @@ typedef struct LinkQueue
  * @param Q 指向链式队列的指针.
  * @return Status 构造成功返回 OK.
  */
-Status InitQueue_Link(LinkQueue *Q);
+Status InitQueueLink(LinkQueue *Q);
 
 /**
  * @brief 判断链式队列是否为空.
  * @param Q 链式队列.
  * @return Status 若链式队列为空, 则返回 TURE, 非空返回 FALSE.
  */
-Status QueueEmpty_Link(LinkQueue Q);
+Status QueueEmptyLink(LinkQueue Q);
 
 /**
  * @brief 元素入队.
@@ -64,7 +64,7 @@ Status QueueEmpty_Link(LinkQueue Q);
  * @param e 入队的数据元素.
  * @return Status 
  */
-Status EnQueue_Link(LinkQueue *Q, QueueElemType e);
+Status EnQueueLink(LinkQueue *Q, QueueElemType e);
 
 /**
  * @brief 元素出队.
@@ -72,7 +72,7 @@ Status EnQueue_Link(LinkQueue *Q, QueueElemType e);
  * @param e 用以返回队头元素.
  * @return Status 
  */
-Status DeQueue_Link(LinkQueue *Q, QueueElemType *e);
+Status DeQueueLink(LinkQueue *Q, QueueElemType *e);
 
 /**
  * @brief 读队头元素. 若队列不空, 则用 e 返回 Q 的队头元素, 并返回 OK;
@@ -81,26 +81,26 @@ Status DeQueue_Link(LinkQueue *Q, QueueElemType *e);
  * @param e 存储队头元素.
  * @return Status 
  */
-Status GetHead_Link(LinkQueue Q, QueueElemType *e);
+Status GetHeadLink(LinkQueue Q, QueueElemType *e);
 
 /**
  * @brief 返回链式队列数据元素个数
  * @param Q 链式队列
  * @return int 队列中元素个数.
  */
-int QueueLength_Link(LinkQueue Q);
+int QueueLengthLink(LinkQueue Q);
 
 /**
  * @brief 销毁链式队列.
  * @param Q 指向链式队列的指针.
  * @return Status 销毁成功返回 OK.
  */
-Status DestoryQueue_Link(LinkQueue *Q);
+Status DestoryQueueLink(LinkQueue *Q);
 
 /**
  * @brief 打印队列数据.
  * @param Q 指向链式队列的指针.
  */
-void PrintQueue_Link(LinkQueue Q);
+void PrintQueueLink(LinkQueue Q);
 
 #endif /* LINKQUEUE_H */

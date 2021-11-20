@@ -12,22 +12,25 @@
 
 #include <status.h>
 
-/* 队列的最大尺寸为 100.  实际能存储的元素数量为MAX_SIZE-1*/
+// 队列的最大尺寸为 100.  实际能存储的元素数量为MAX_SIZE-1
 #define MAX_SIZE 100
 
-/* 队列存储类型为 int. */
+// 队列存储类型为 int.
 typedef int QueueElemType;
 
-/* 顺序队列的存储类型. */
+/**
+ * @brief 顺序队列的存储类型.  该队列采用牺牲以为存储空间的方式标记队列是否满.
+ * 队列占用的内存空间大小为 MAX_SIZE, 实际能容纳的元素个数是 MAX_SIZE - 1.
+ */
 typedef struct SqQueue
 {
-    /* 初始化的动态分配存储空间. */
+    // 初始化的动态分配存储空间.
     QueueElemType *base;
 
-    /* 头指针, 若队列不空, 指向队头元素. */
+    // 头指针, 若队列不空, 指向队头元素.
     int front;
 
-    /* 尾指针, 若队列不空, 指向队尾元素的下一位置. */
+    // 尾指针, 若队列不空, 指向队尾元素的下一位置.
     int rear;
 } SqQueue;
 
@@ -90,4 +93,4 @@ Status DestoryQueueSq(SqQueue *Q);
  */
 Status PrintQueueSq(SqQueue Q);
 
-#endif /* SQQUEUE_H */
+#endif // SQQUEUE_H
