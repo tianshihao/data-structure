@@ -70,7 +70,7 @@ void CreateTree_Thread(ThreadTree *T, FILE *fp)
     return;
 }
 
-Status PreOrderTraverse_Thread(ThreadTree T, Status (*Visit)(ElemType e))
+Status PreOrderTraverse_Thread(ThreadTree T, Status (*Visit)(BiTElemType e))
 {
     if (T)
     {
@@ -93,7 +93,7 @@ Status PreOrderTraverse_Thread(ThreadTree T, Status (*Visit)(ElemType e))
     }
 }
 
-Status InOrderTraverse_Thread(ThreadTree T, Status (*Visit)(ElemType e))
+Status InOrderTraverse_Thread(ThreadTree T, Status (*Visit)(BiTElemType e))
 {
     if (T)
     {
@@ -171,7 +171,7 @@ void PreThreading(ThreadTree p, ThreadNode **pre)
     return;
 }
 
-Status PreOrder(ThreadTree T, Status (*Visit)(ElemType e))
+Status PreOrder(ThreadTree T, Status (*Visit)(BiTElemType e))
 {
     ThreadNode *p = T;
 
@@ -248,7 +248,7 @@ void InThreading(ThreadTree p, ThreadNode **pre)
     return;
 }
 
-Status InOrder(ThreadTree T, Status (*Visit)(ElemType e))
+Status InOrder(ThreadTree T, Status (*Visit)(BiTElemType e))
 {
     ThreadNode *p = T;
 
@@ -314,7 +314,7 @@ void PostThreading(ThreadTree p, ThreadNode **pre)
     return;
 }
 
-Status PostOrder(ThreadTree T, Status (*Visit)(ElemType e))
+Status PostOrder(ThreadTree T, Status (*Visit)(BiTElemType e))
 {
     return OK;
 }

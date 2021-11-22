@@ -1,7 +1,7 @@
 ﻿/**
  * @file sqstack.h
  * @author tianshihao4944@126.com
- * @brief 顺序栈头文件. 
+ * @brief 顺序栈头文件.
  * @version 0.1
  * @date 2020-01-27
  * @copyright Copyright (c) 2020
@@ -21,16 +21,15 @@
 typedef int StackElemType;
 
 /* 顺序栈的存储类型. */
-typedef struct SqStack
-{
-    /* 在栈构造之前和销毁之后, base 的值为 NULL. */
-    StackElemType *base;
+typedef struct SqStack {
+  /* 在栈构造之前和销毁之后, base 的值为 NULL. */
+  StackElemType *base;
 
-    /* 栈顶指针. */
-    StackElemType *top;
+  /* 栈顶指针. */
+  StackElemType *top;
 
-    /* 当前已分配的存储空间, 以元素为单位. */
-    int allocated_size;
+  /* 当前已分配的存储空间, 以元素为单位. */
+  int allocated_size;
 } SqStack;
 
 /**
@@ -53,7 +52,8 @@ Status StackEmptySq(SqStack S);
 Status PushSq(SqStack *S, StackElemType e);
 
 /**
- * @brief 若顺序栈 S 不空, 则删除 S 的栈顶元素, 用 e 返回其值, 并返回 OK; 否则返回ERROR.
+ * @brief 若顺序栈 S 不空, 则删除 S 的栈顶元素, 用 e 返回其值, 并返回 OK;
+ * 否则返回ERROR.
  * @param S 指向顺序栈的指针.
  * @param e 用 e 保存出栈元素.
  */
@@ -81,6 +81,6 @@ void Conversion();
  * @brief 检查给定的括号序列是否匹配.
  * @return Status 匹配返回 TRUE, 否则返回 FALSE.
  */
-Status MatchBrackets();
+Status MatchBracket();
 
-#endif // SQSTACK_H
+#endif  // SQSTACK_H

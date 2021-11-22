@@ -46,7 +46,7 @@ void UseSqqueue()
 
         PrintQueueSq(Q);
         printf("Q length = %d.\n", QueueLengthSq(Q));
-        // GetHead_Sq(Q, &e);
+        // GetHeadSq(Q, &e);
 
         DestoryQueueSq(&Q);
     }

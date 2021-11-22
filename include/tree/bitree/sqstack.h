@@ -46,7 +46,7 @@ Status InitStack_Sq(SqStack *S);
  * @brief 若顺序栈 S 为空, 则返回 TRUE, 否则返回 FALSE.
  * @param S 顺序栈.
  */
-Status StackEmpty_Sq(SqStack S);
+Status StackEmptySq(SqStack S);
 
 /**
  * @brief 插入元素 e 为新的栈顶元素.

@@ -10,8 +10,10 @@
 			"*.h": "c",
 			"limits": "c",
 			"type_traits": "c",
-			"cstdio": "c"
+			"cstdio": "c",
+			"typeinfo": "c"
 		},
-		"files.defaultLanguage": "c"
+		"files.defaultLanguage": "c",
+		"C_Cpp.clang_format_sortIncludes": true
 	}
 }

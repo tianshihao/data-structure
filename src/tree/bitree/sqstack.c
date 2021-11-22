@@ -8,12 +8,12 @@
  * @copyright Copyright (c) 2020
  * 
  */
-#include <tree/bitree/sqstack.h>
+#include <sqstack.h>
 
 Status InitStack_Sq(SqStack *S)
 {
     // 栈顶指针指向分配的内存空间的起始地址
-    S->base = malloc(STACK_INIT_SIZE * sizeof(StackElemType));
+    S->base = (StackElemType *)malloc(STACK_INIT_SIZE * sizeof(StackElemType));
 
     // 存储分配失败
     if (!S->base)
@@ -28,7 +28,7 @@ Status InitStack_Sq(SqStack *S)
     return OK;
 } // InitStack_Sq
 
-Status StackEmpty_Sq(SqStack S)
+Status StackEmptySq(SqStack S)
 {
     if (S.top == S.base)
     {
@@ -36,7 +36,7 @@ Status StackEmpty_Sq(SqStack S)
     }
 
     return FALSE;
-} // StackEmpty_Sq
+} // StackEmptySq
 
 Status Push_Sq(SqStack *S, StackElemType e)
 {

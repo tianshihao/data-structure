@@ -13,7 +13,7 @@
 #include <graph/algraph/sqqueue.h>
 #include <status.h>
 
-/* 队列的最大尺寸为 100.  实际能存储的元素数量为MAX_SIZE-1*/
+/* 队列的最大尺寸为 100.  实际能存储的元素数量为QUEUE_MAX_SIZE-1*/
 #define MAX_SIZE 100
 
 /* 队列存储类型为 int. */
@@ -65,13 +65,13 @@ Status DeQueue_Sq(SqQueue *Q, QueueElemType *e);
  * @param Q 顺序队列.
  * @param e 存储队头元素.
  */
-Status GetHead_Sq(SqQueue Q, QueueElemType *e);
+Status GetHeadSq(SqQueue Q, QueueElemType *e);
 
 /**
  * @brief 返回顺序队列数据元素个数.
  * @param Q 顺序队列.
  */
-int QueueLength_Sq(SqQueue Q);
+int QueueLengthSq(SqQueue Q);
 
 /**
  * @brief 删除队列, 释放其内存空间.

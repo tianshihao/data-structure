@@ -1,8 +1,6 @@
 {
     "C_Cpp.autocomplete": "Default",
-    "C_Cpp.clang_format_sortIncludes": true,
     // 关闭以下一项以防与 Clang 冲突.
-    "C_Cpp.clang_format_style": "Visual Studio",
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
     "C_Cpp.errorSquiggles": "Enabled",
     "C_Cpp.intelliSenseEngineFallback": "Enabled",

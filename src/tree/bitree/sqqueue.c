@@ -12,7 +12,7 @@
 Status InitQueueSq(SqQueue *q)
 {
     /* 为顺序队列申请内存空间. */
-    q->base = (QueueElemType *)malloc(MAX_SIZE * sizeof(QueueElemType));
+    q->base = (QueueElemType *)malloc(QUEUE_MAX_SIZE * sizeof(QueueElemType));
 
     /* 如果内存申请失败. */
     if (!q->base)
@@ -38,7 +38,7 @@ Status EnQueueSq(SqQueue *q, QueueElemType e)
      * 队列单元, 约定以队头指针在队尾指针的下一位置作为队满的标志.
      */
     /* 如果队列已满. */
-    if ((q->rear + 1) % MAX_SIZE == q->front)
+    if ((q->rear + 1) % QUEUE_MAX_SIZE == q->front)
     {
         return ERROR;
     }
@@ -47,7 +47,7 @@ Status EnQueueSq(SqQueue *q, QueueElemType e)
     *(q->base + q->rear) = e;
 
     /* 队尾指针进一. */
-    q->rear = (q->rear + 1) % MAX_SIZE;
+    q->rear = (q->rear + 1) % QUEUE_MAX_SIZE;
 
     return OK;
 }
@@ -68,12 +68,12 @@ Status DeQueueSq(SqQueue *q, QueueElemType *e)
     *e = *(q->base + q->front);
 
     /* 队头进一. */
-    q->front = (q->front + 1) % MAX_SIZE;
+    q->front = (q->front + 1) % QUEUE_MAX_SIZE;
 
     return OK;
 }
 
-Status GetHead_Sq(SqQueue q, QueueElemType *e)
+Status GetHeadSq(SqQueue q, QueueElemType *e)
 {
     /* 如果队列为空. */
     if (q.front == q.rear)
@@ -87,9 +87,9 @@ Status GetHead_Sq(SqQueue q, QueueElemType *e)
     return OK;
 }
 
-int QueueLength_Sq(SqQueue q)
+int QueueLengthSq(SqQueue q)
 {
-    return (q.rear - q.front + MAX_SIZE) % MAX_SIZE;
+    return (q.rear - q.front + QUEUE_MAX_SIZE) % QUEUE_MAX_SIZE;
 }
 
 Status DestoryQueueSq(SqQueue *q)
@@ -126,7 +126,7 @@ void PrintQueue_Sq(SqQueue q)
         printf(" %d ", q.base[p]);
 
         /* 队列指针进一. */
-        p = (p + 1) % MAX_SIZE;
+        p = (p + 1) % QUEUE_MAX_SIZE;
     }
     printf("\n");
 

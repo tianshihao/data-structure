@@ -10,14 +10,14 @@
 
 #include <status.h>
 
-typedef char ElemType;
+typedef char BiTElemType;
 
 /**
  * @brief 二叉树结点.
  */
 typedef struct BiTNode
 {
-  ElemType data; // data field.
+  BiTElemType data; // data field.
   struct BiTNode *lchild, *rchild;
 } BiTNode, *BiTree;
 
@@ -54,7 +54,7 @@ void CreateTreeBinary(BiTree *T, FILE *PreSeq);
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR.
  */
-Status PreOrderTraverseBinaryRecur(BiTree T, Status (*Visit)(ElemType e));
+Status PreOrderTraverseBinaryRecur(BiTree T, Status (*Visit)(BiTElemType e));
 
 /**
  * @brief 借助顺序栈, 非递归地先序遍历二叉树.
@@ -63,7 +63,7 @@ Status PreOrderTraverseBinaryRecur(BiTree T, Status (*Visit)(ElemType e));
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR.
  */
-Status PreOrderTraverseBinaryNonRecur(BiTree T, Status (*Visit)(ElemType e));
+Status PreOrderTraverseBinaryNonRecur(BiTree T, Status (*Visit)(BiTElemType e));
 
 /**
  * @brief 采用二叉表存储结构, Visit 是对结操作的应用函数. 中序遍历二叉 T, 对每个
@@ -73,7 +73,7 @@ Status PreOrderTraverseBinaryNonRecur(BiTree T, Status (*Visit)(ElemType e));
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR.
  */
-Status InOrderTraverseBinaryRecur(BiTree T, Status (*Visit)(ElemType e));
+Status InOrderTraverseBinaryRecur(BiTree T, Status (*Visit)(BiTElemType e));
 
 /**
  * @brief 借助顺序栈, 非递归地中序遍历二叉树.
@@ -82,7 +82,7 @@ Status InOrderTraverseBinaryRecur(BiTree T, Status (*Visit)(ElemType e));
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR.
  */
-Status InOrderTraverseBinaryNonRecur(BiTree T, Status (*Visit)(ElemType e));
+Status InOrderTraverseBinaryNonRecur(BiTree T, Status (*Visit)(BiTElemType e));
 
 /**
  * @brief 采用二叉链表存储结构, Visit 是对结点操作的应用函数. 后序遍历二叉树 T,
@@ -92,7 +92,7 @@ Status InOrderTraverseBinaryNonRecur(BiTree T, Status (*Visit)(ElemType e));
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR.
  */
-Status PostOrderTraverseBinaryRecur(BiTree T, Status (*Visit)(ElemType e));
+Status PostOrderTraverseBinaryRecur(BiTree T, Status (*Visit)(BiTElemType e));
 
 /**
  * @brief 王道数据结构3, 借助顺序栈, 非递归地后序遍历二叉树.
@@ -103,7 +103,7 @@ Status PostOrderTraverseBinaryRecur(BiTree T, Status (*Visit)(ElemType e));
  * @todo @see FindAncestor, @see FindCommonAncestor, 看是否能将这两个函数中的
  * 退栈操作在本函数中找到, 如果能, 改写成明确的具有退栈操作的形式.
  */
-Status PostOrderTraverseBinaryNonRecur(BiTree T, Status (*Visit)(ElemType e));
+Status PostOrderTraverseBinaryNonRecur(BiTree T, Status (*Visit)(BiTElemType e));
 
 /**
  * @brief 层序遍历二叉树.
@@ -112,7 +112,7 @@ Status PostOrderTraverseBinaryNonRecur(BiTree T, Status (*Visit)(ElemType e));
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR.
  */
-Status LevelOrderTraverseBinary(BiTree T, Status (*Visit)(ElemType e));
+Status LevelOrderTraverseBinary(BiTree T, Status (*Visit)(BiTElemType e));
 
 /**
  * @brief 王道数据结构4, 自下而上, 自右向左遍历二叉树.
@@ -122,7 +122,7 @@ Status LevelOrderTraverseBinary(BiTree T, Status (*Visit)(ElemType e));
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR.
  */
-Status InvertLevelTraverseBinary(BiTree T, Status (*Visit)(ElemType e));
+Status InvertLevelTraverseBinary(BiTree T, Status (*Visit)(BiTElemType e));
 
 /**
  * @brief 王道数据结构5, 非递归算法求二叉树高度. 根据层序遍历修改.
@@ -141,9 +141,9 @@ int BiTreeHeight(BiTree T);
  * @param InR 中序遍历序列最后一个结点索引.
  * @return BiTree 构建好的二叉树.
  */
-BiTree PreInCreate(ElemType *preOrder,
+BiTree PreInCreate(BiTElemType *preOrder,
                    int preL, int preR,
-                   ElemType *InOrder,
+                   BiTElemType *InOrder,
                    int InL, int InR);
 
 /**
@@ -162,7 +162,7 @@ Status SwapSubTree(BiTree T);
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR.
  */
-Status FindAncestor(BiTree T, ElemType x);
+Status FindAncestor(BiTree T, BiTElemType x);
 
 /**
  * @brief 王道数据结构150/13, 找到二叉树中任意两个结点的最近公共祖先.
@@ -191,9 +191,9 @@ int BiTreeWidth(BiTree T);
  * @param postR 
  * @see PreInCreate
  */
-void PreToPost(ElemType *Pre,
+void PreToPost(BiTElemType *Pre,
                int preL, int preR,
-               ElemType *Post,
+               BiTElemType *Post,
                int postL, int postR);
 
 /**

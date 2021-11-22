@@ -14,7 +14,7 @@
 
 #include <status.h>
 
-typedef char ElemType;
+typedef char BiTreeElemType;
 
 /* 指针标签, Link == 0 表示指针, Thread == 1 表示线索. */
 typedef enum PointerTag
@@ -26,7 +26,7 @@ typedef enum PointerTag
 /* 线索二叉树存储结构. */
 typedef struct ThreadNode
 {
-    ElemType data;
+    BiTreeElemType data;
     struct ThreadNode *lchild, *rchild;
     PointerTag LTag, RTag;
 } ThreadNode, *ThreadTree;
@@ -68,7 +68,7 @@ void CreateTree_Thread(ThreadTree *T, FILE *fp);
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR.
  */
-Status PreOrderTraverse_Thread(ThreadTree T, Status (*Visit)(ElemType e));
+Status PreOrderTraverse_Thread(ThreadTree T, Status (*Visit)(BiTreeElemType e));
 
 /**
  * @brief 采用二叉表存储结构, Visit 是对结操作的应用函数. 中序遍历二叉 T, 对每个
@@ -79,7 +79,7 @@ Status PreOrderTraverse_Thread(ThreadTree T, Status (*Visit)(ElemType e));
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR.
  */
-Status InOrderTraverse_Thread(ThreadTree T, Status (*Visit)(ElemType e));
+Status InOrderTraverse_Thread(ThreadTree T, Status (*Visit)(BiTreeElemType e));
 
 /**
  * @brief 通过先序遍历建立先序线索二叉树的主过程算法.
@@ -107,7 +107,7 @@ void PreThreading(ThreadTree p, ThreadNode **pre);
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR.
  */
-Status PreOrder(ThreadTree T, Status (*Visit)(ElemType e));
+Status PreOrder(ThreadTree T, Status (*Visit)(BiTreeElemType e));
 
 /**
  * @brief 通过中序遍历建立中序线索二叉树的主过程算法.
@@ -142,7 +142,7 @@ void InThreading(ThreadTree p, ThreadNode **pre);
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR.
  */
-Status InOrder(ThreadTree T, Status (*Visit)(ElemType e));
+Status InOrder(ThreadTree T, Status (*Visit)(BiTreeElemType e));
 
 /**
  * @brief 通过后序遍历建立后序线索二叉树的主过程算法.
@@ -170,6 +170,6 @@ void PostThreading(ThreadTree p, ThreadNode **pre);
  * @return OK 操作成功返回 OK.
  * @return ERROR 操作失败返回 ERROR.
  */
-Status PostOrder(ThreadTree T, Status (*Visit)(ElemType e));
+Status PostOrder(ThreadTree T, Status (*Visit)(BiTreeElemType e));
 
 #endif /* THREADTREE_H */

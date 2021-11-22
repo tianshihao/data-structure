@@ -27,7 +27,7 @@ Status InitStack_Sq(SqStack *S)
     return OK;
 }
 
-Status StackEmpty_Sq(SqStack S)
+Status StackEmptySq(SqStack S)
 {
     if (S.top == S.base)
     {

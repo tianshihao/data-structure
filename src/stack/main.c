@@ -10,69 +10,54 @@
 #include <linkstack.h>
 #include <sqstack.h>
 
-void UseSqstack();
+void TestStackSq();
 
-int main()
-{
-    UseSqstack();
+int main() {
+  TestStackSq();
 
-    system("pause");
+  system("pause");
 
-    return 0;
+  return 0;
 }
 
-void UseSqstack()
-{
-    printf("Input 1 to ");
-    printf("determine whether a bracket sequence matches.\n");
-    printf("Enter 2 to ");
-    printf("conver a decimal to an octal number.\n");
-    printf("Or input q to quit.\n");
+void TestStackSq() {
+  printf("Input 1 to ");
+  printf("determine whether a bracket sequence is matched.\n");
+  printf("Enter 2 to ");
+  printf("convert a decimal to an octal number.\n");
+  printf("Or input q to quit.\n");
 
-    char ch = getchar();
+  char request;
 
-    while (ch = getchar() != 'q')
-    {
-
-        if (ch == '1')
-        {
-            if (MatchBrackets())
-            {
-                printf("Match.\n");
-            }
-            else
-            {
-                printf("Not match.\n");
-            }
-        }
-        else if ('2' == ch)
-        {
-            Conversion();
-        }
-        else
-        {
-            printf("Input is invalid!\n");
-        }
-
-        while (getchar() != '\n')
-        {
-            continue;
-        }
-        // SqStack S;
-        // InitStackSq(&S);
-        // PushSq(&S, 2);
-        // PushSq(&S, 6);
-        // PushSq(&S, 10);
-        // PushSq(&S, 7);
-
-        // StackElemType e;
-        // printf("%d\n", e);
-
-        // PopSq(&S, &e);
-        // printf("%d\n", e);
+  while ((request = getchar()) != 'q') {
+    getchar();
+    if ('1' == request) {
+      if (MatchBracket()) {
+        printf("Input match.\n");
+      } else {
+        printf("Not match.\n");
+      }
+    } else if ('2' == request) {
+      Conversion();
+    } else {
+      printf("Input is invalid!\n");
     }
 
-    printf("Bye!\n");
+    // SqStack S;
+    // InitStackSq(&S);
+    // PushSq(&S, 2);
+    // PushSq(&S, 6);
+    // PushSq(&S, 10);
+    // PushSq(&S, 7);
 
-    return;
+    // StackElemType e;
+    // printf("%d\n", e);
+
+    // PopSq(&S, &e);
+    // printf("%d\n", e);
+  }
+
+  printf("Bye!\n");
+
+  return;
 }

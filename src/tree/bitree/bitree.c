@@ -13,9 +13,9 @@
 #include <sqqueue.h>
 #include <sqstack.h>
 
-Status InitTreeBinary(BiTree *T)
+Status InitTreeBinary(BiTree *t)
 {
-    *T = NULL; // 使得指针指向 NULL.
+    *t = NULL; // 使得指针指向 NULL.
 
     return OK;
 }
@@ -23,7 +23,7 @@ Status InitTreeBinary(BiTree *T)
 /**
  * 即使 BiTree 类型和 BiTNode * 等价, 表面上是指针, 但是在指针传递时, 仍要取
  * BiTree 的地址, 因为在子函数中需要改变是指针本身的内容 (改变了结点间的链接关
- * 系), 而不是指针指向的内容, 因此子函数参数列表中写 BiTree *T, 否则只能传递一份
+ * 系), 而不是指针指向的内容, 因此子函数参数列表中写 BiTree *t, 否则只能传递一份
  * 指向某二叉树的指针, 在子函数中修改了二叉树后, 主函数中的指针仍然指向 NULL.
  * 
  * 简单的理解是, 在 C 语言中, 若想使得传递的参数实际被修改, 则在子函数中加上一层
@@ -79,15 +79,15 @@ void CreateTreeBinary(BiTree *t, FILE *pre_seq)
     }
 }
 
-Status PreOrderTraverseBinaryRecur(BiTree T, Status (*Visit)(ElemType e))
+Status PreOrderTraverseBinaryRecur(BiTree t, Status (*Visit)(BiTElemType e))
 {
-    if (T != NULL)
+    if (t != NULL)
     {
-        if (Visit(T->data))
+        if (Visit(t->data))
         {
-            if (PreOrderTraverseBinaryRecur(T->lchild, Visit))
+            if (PreOrderTraverseBinaryRecur(t->lchild, Visit))
             {
-                if (PreOrderTraverseBinaryRecur(T->rchild, Visit))
+                if (PreOrderTraverseBinaryRecur(t->rchild, Visit))
                 {
                     return OK;
                 }
@@ -101,16 +101,16 @@ Status PreOrderTraverseBinaryRecur(BiTree T, Status (*Visit)(ElemType e))
     }
 }
 
-Status PreOrderTraverseBinaryNonRecur(BiTree T, Status (*Visit)(ElemType e))
+Status PreOrderTraverseBinaryNonRecur(BiTree t, Status (*Visit)(BiTElemType e))
 {
     SqStack S;
     InitStack_Sq(&S);
 
     // 工作指针.
-    BiTNode *p = T;
+    BiTNode *p = t;
 
     // 指针 p 不为空或栈不为空时.
-    while (p || !StackEmpty_Sq(S))
+    while (p || !StackEmptySq(S))
     {
         /**
          * 1. 沿着根的左子, 一遍访问, 一遍入栈, 直至当前结点为空, 为空时说明该访
@@ -135,15 +135,15 @@ Status PreOrderTraverseBinaryNonRecur(BiTree T, Status (*Visit)(ElemType e))
     return OK;
 }
 
-Status InOrderTraverseBinaryRecur(BiTree T, Status (*Visit)(ElemType e))
+Status InOrderTraverseBinaryRecur(BiTree t, Status (*Visit)(BiTElemType e))
 {
-    if (T)
+    if (t)
     {
-        if (InOrderTraverseBinaryRecur(T->lchild, Visit))
+        if (InOrderTraverseBinaryRecur(t->lchild, Visit))
         {
-            if (Visit(T->data))
+            if (Visit(t->data))
             {
-                if (InOrderTraverseBinaryRecur(T->rchild, Visit))
+                if (InOrderTraverseBinaryRecur(t->rchild, Visit))
                 {
                     return OK;
                 }
@@ -157,16 +157,16 @@ Status InOrderTraverseBinaryRecur(BiTree T, Status (*Visit)(ElemType e))
     }
 }
 
-Status InOrderTraverseBinaryNonRecur(BiTree T, Status (*Visit)(ElemType e))
+Status InOrderTraverseBinaryNonRecur(BiTree t, Status (*Visit)(BiTElemType e))
 {
     // 初始化顺序栈.
     SqStack S;
     InitStack_Sq(&S);
 
     // 工作指针.
-    BiTNode *p = T;
+    BiTNode *p = t;
 
-    while (p || !StackEmpty_Sq(S))
+    while (p || !StackEmptySq(S))
     {
         /**
          * 1. 沿着根的左子, 依次入栈, 直至左子为空, 说明已找到可以输出的结点.
@@ -192,15 +192,15 @@ Status InOrderTraverseBinaryNonRecur(BiTree T, Status (*Visit)(ElemType e))
     return OK;
 }
 
-Status PostOrderTraverseBinaryRecur(BiTree T, Status (*Visit)(ElemType e))
+Status PostOrderTraverseBinaryRecur(BiTree t, Status (*Visit)(BiTElemType e))
 {
-    if (T)
+    if (t)
     {
-        if (PostOrderTraverseBinaryRecur(T->lchild, Visit))
+        if (PostOrderTraverseBinaryRecur(t->lchild, Visit))
         {
-            if (PostOrderTraverseBinaryRecur(T->rchild, Visit))
+            if (PostOrderTraverseBinaryRecur(t->rchild, Visit))
             {
-                if (Visit(T->data))
+                if (Visit(t->data))
                 {
                     return OK;
                 }
@@ -214,13 +214,13 @@ Status PostOrderTraverseBinaryRecur(BiTree T, Status (*Visit)(ElemType e))
     }
 }
 
-Status PostOrderTraverseBinaryNonRecur(BiTree T, Status (*Visit)(ElemType e))
+Status PostOrderTraverseBinaryNonRecur(BiTree t, Status (*Visit)(BiTElemType e))
 {
     SqStack S;
     InitStack_Sq(&S);
 
     // p 是工作指针.
-    BiTNode *p = T;
+    BiTNode *p = t;
 
     // r 记录最近访问过的结点.
     BiTNode *r = NULL;
@@ -229,7 +229,7 @@ Status PostOrderTraverseBinaryNonRecur(BiTree T, Status (*Visit)(ElemType e))
      * 后续非递归遍历二叉树是先访问左子树, 再访问右子树, 最后访问根结点.
      */
 
-    while (p || !StackEmpty_Sq(S))
+    while (p || !StackEmptySq(S))
     {
         /**
          * 1. 沿着根结点的左子, 依次入栈, 直至左子为空.
@@ -268,7 +268,7 @@ Status PostOrderTraverseBinaryNonRecur(BiTree T, Status (*Visit)(ElemType e))
              * 否则栈顶元素出栈, 并访问.
              */
             /**
-             * @see LevelOrderTraverseBinary(BiTree T, Status (*Visit)(ElemType e))
+             * @see LevelOrderTraverseBinary(BiTree t, Status (*Visit)(ElemType e))
              * 
              * 这里 Pop_Sq 中第二个参数是类型是 BiTNode **, 即指向 BiTNode 指针的指
              * 针, 并不是我需要修改栈中的存储的元素本身, 而是只用当指针 p 为 NULL
@@ -289,17 +289,17 @@ Status PostOrderTraverseBinaryNonRecur(BiTree T, Status (*Visit)(ElemType e))
     return OK;
 }
 
-Status LevelOrderTraverseBinary(BiTree T, Status (*Visit)(ElemType e))
+Status LevelOrderTraverseBinary(BiTree t, Status (*Visit)(BiTElemType e))
 {
     // 初始化辅助队列.
-    SqQueue Q;
-    InitQueueSq(&Q);
+    SqQueue q;
+    InitQueueSq(&q);
 
     // 二叉树根结点入队, 根结点为第一层.
-    EnQueueSq(&Q, *T);
+    EnQueueSq(&q, *t);
 
     /**
-     * @see PostOrderTraverseBinaryNonRecur(BiTree T, Status (*Visit)(ElemType e))
+     * @see PostOrderTraverseBinaryNonRecur(BiTree t, Status (*Visit)(ElemType e))
      * 
      * 层序遍历 LevelOrderTraverseBinary() 中队列出队操作没有像出栈操作一样修改
      * 为传递指针的指针, 原因是出队之前, 工作指针 p 未被初始化为 NULL, 算法也使得
@@ -333,11 +333,11 @@ Status LevelOrderTraverseBinary(BiTree T, Status (*Visit)(ElemType e))
     p->lchild = NULL;
     p->rchild = NULL;
 
-    while (!QueueEmptySq(Q))
+    while (!QueueEmptySq(q))
     {
 
         // 队头结点出队.
-        DeQueueSq(&Q, p);
+        DeQueueSq(&q, p);
 
         // 访问出队结点.
         Visit(p->data);
@@ -345,52 +345,52 @@ Status LevelOrderTraverseBinary(BiTree T, Status (*Visit)(ElemType e))
         // 左子树不为空, 则左子树根结点入队.
         if (p->lchild != NULL)
         {
-            EnQueueSq(&Q, *p->lchild);
+            EnQueueSq(&q, *p->lchild);
         }
 
         // 右子树不为空, 则右子树根结点入队.
         if (p->rchild != NULL)
         {
-            EnQueueSq(&Q, *p->rchild);
+            EnQueueSq(&q, *p->rchild);
         }
     }
 
-    DestoryQueueSq(&Q);
+    DestoryQueueSq(&q);
 
     return OK;
 }
 
-Status InvertLevelTraverseBinary(BiTree T, Status (*Visit)(ElemType e))
+Status InvertLevelTraverseBinary(BiTree t, Status (*Visit)(BiTElemType e))
 {
-    if (T != NULL)
+    if (t != NULL)
     {
-        SqQueue Q;
-        InitQueueSq(&Q);
-        EnQueueSq(&Q, *T);
+        SqQueue q;
+        InitQueueSq(&q);
+        EnQueueSq(&q, *t);
 
         SqStack S;
         InitStack_Sq(&S);
 
-        BiTNode *p = T;
+        BiTNode *p = t;
 
-        while (!QueueEmptySq(Q))
+        while (!QueueEmptySq(q))
         {
-            DeQueueSq(&Q, p);
+            DeQueueSq(&q, p);
 
             Push_Sq(&S, *p);
 
             if (p->lchild != NULL)
             {
-                EnQueueSq(&Q, *p->lchild);
+                EnQueueSq(&q, *p->lchild);
             }
 
             if (p->rchild != NULL)
             {
-                EnQueueSq(&Q, *p->rchild);
+                EnQueueSq(&q, *p->rchild);
             }
         }
 
-        while (!StackEmpty_Sq(S))
+        while (!StackEmptySq(S))
         {
             Pop_Sq(&S, &p);
             Visit(p->data);
@@ -418,7 +418,7 @@ int BiTreeHeight(BiTree t)
         int height = 0;
 
         /* 工作指针 p. */
-        /* BiTNode *p = T; */
+        /* BiTNode *p = t; */
         BiTNode *p = (BiTNode *)malloc(sizeof(BiTNode));
         p->lchild = NULL;
         p->rchild = NULL;
@@ -466,38 +466,38 @@ int BiTreeHeight(BiTree t)
     }
 }
 
-BiTree PreInCreate(ElemType *PreOrder,
+BiTree PreInCreate(BiTElemType *pre_order,
                    int preL, int preR,
-                   ElemType *InOrder,
+                   BiTElemType *in_order,
                    int InL, int InR)
 {
     /* 创建根结点. */
     BiTree root = (BiTNode *)malloc(sizeof(BiTNode));
 
     /* 先序遍历序列第一个值是根结点的值. */
-    root->data = PreOrder[preL];
+    root->data = pre_order[preL];
 
     /* 在中序遍历序列中找到根结点的位置. */
-    int rootPos = InL;
-    while (InOrder[rootPos] != root->data)
+    int root_pos = InL;
+    while (in_order[root_pos] != root->data)
     {
-        ++rootPos;
+        ++root_pos;
     }
 
     /* 左子树长度. */
-    int lchildLen = rootPos - InL;
+    int lchild_len = root_pos - InL;
 
     /* 右子树长度. */
-    int rchildLen = InR - rootPos;
+    int rchild_len = InR - root_pos;
 
     /* 左子树不为空. */
-    if (lchildLen > 0)
+    if (lchild_len > 0)
     {
         /* 注意 +1, -1 边界条件. */
-        root->lchild = PreInCreate(PreOrder,
-                                   preL + 1, preL + lchildLen,
-                                   InOrder,
-                                   InL, InL + lchildLen - 1);
+        root->lchild = PreInCreate(pre_order,
+                                   preL + 1, preL + lchild_len,
+                                   in_order,
+                                   InL, InL + lchild_len - 1);
     }
     else
     {
@@ -505,12 +505,12 @@ BiTree PreInCreate(ElemType *PreOrder,
     }
 
     /* 右子树不为空. */
-    if (rchildLen > 0)
+    if (rchild_len > 0)
     {
-        root->rchild = PreInCreate(PreOrder,
-                                   preR - rchildLen + 1, preR,
-                                   InOrder,
-                                   InR - rchildLen + 1, InR);
+        root->rchild = PreInCreate(pre_order,
+                                   preR - rchild_len + 1, preR,
+                                   in_order,
+                                   InR - rchild_len + 1, InR);
     }
     else
     {
@@ -520,39 +520,39 @@ BiTree PreInCreate(ElemType *PreOrder,
     return root;
 }
 
-Status SwapSubTree(BiTree T)
+Status SwapSubTree(BiTree t)
 {
     /* 两种写法均可. */
-    if (T)
+    if (t)
     {
-        SwapSubTree(T->lchild);
-        SwapSubTree(T->rchild);
+        SwapSubTree(t->lchild);
+        SwapSubTree(t->rchild);
 
-        BiTNode *tmp = T->lchild;
-        T->lchild = T->rchild;
-        T->rchild = tmp;
+        BiTNode *tmp = t->lchild;
+        t->lchild = t->rchild;
+        t->rchild = tmp;
     }
 
-    /**
-    BiTNode *tmp = T->lchild;
-    T->lchild = T->rchild;
-    T->rchild = tmp;
+#if 0
+    BiTNode *tmp = t->lchild;
+    t->lchild = t->rchild;
+    t->rchild = tmp;
 
-    if (T->lchild)
+    if (t->lchild)
     {
-        SwapSubTree(T->lchild);
+        SwapSubTree(t->lchild);
     }
 
-    if (T->rchild)
+    if (t->rchild)
     {
-        SwapSubTree(T->rchild);
+        SwapSubTree(t->rchild);
     }
-     */
+#endif
 
     return OK;
 }
 
-Status FindAncestor(BiTree T, ElemType x)
+Status FindAncestor(BiTree t, BiTElemType x)
 {
     // 临时的栈.
     typedef struct stack
@@ -562,12 +562,12 @@ Status FindAncestor(BiTree T, ElemType x)
     } stack;
 
     // 算法本质是后序遍历过程, 所以栈的深度不会超过树的深度.
-    stack s[BiTreeHeight(T) + 1];
+    stack s[BiTreeHeight(t) + 1];
     // 栈顶指针. 从 1 开始, 0 表示空栈.
     int top = 0;
 
     // 工作指针 p.
-    BiTNode *p = T;
+    BiTNode *p = t;
 
     while (p != NULL || top > 0)
     {
@@ -607,7 +607,7 @@ Status FindAncestor(BiTree T, ElemType x)
     return ERROR;
 }
 
-BiTNode *FindCommonAncestor(BiTree T, BiTNode *p, BiTNode *q)
+BiTNode *FindCommonAncestor(BiTree t, BiTNode *p, BiTNode *q)
 {
     // 临时的栈.
     typedef struct stack
@@ -617,15 +617,15 @@ BiTNode *FindCommonAncestor(BiTree T, BiTNode *p, BiTNode *q)
     } stack;
 
     // 算法本质是后序遍历过程, 所以栈的深度不会超过树的深度.
-    stack s[BiTreeHeight(T) + 1];
+    stack s[BiTreeHeight(t) + 1];
     // 栈顶指针. 从 1 开始, 0 表示空栈.
     int top = 0;
 
-    stack s1[BiTreeHeight(T) + 1];
+    stack s1[BiTreeHeight(t) + 1];
     int top1 = 0;
 
     // 工作指针.
-    BiTNode *ptr = T;
+    BiTNode *ptr = t;
 
     while (ptr != NULL || top > 0)
     {
@@ -642,7 +642,7 @@ BiTNode *FindCommonAncestor(BiTree T, BiTNode *p, BiTNode *q)
         }
 
         /**
-         * @see FindAncestor(BiTree T, ElemType x)
+         * @see FindAncestor(BiTree t, ElemType x)
          * 退栈, FindAncestor 中退栈上面的操作也可以向下面这样写到退栈循环里面,
          * 先于 top-- 执行.
          */
@@ -691,49 +691,49 @@ BiTNode *FindCommonAncestor(BiTree T, BiTNode *p, BiTNode *q)
     return NULL;
 }
 
-int BiTreeWidth(BiTree T)
+int BiTreeWidth(BiTree t)
 {
-    if (T != NULL)
+    if (t != NULL)
     {
-        SqQueue Q;
-        InitQueueSq(&Q);
+        SqQueue q;
+        InitQueueSq(&q);
 
-        BiTNode *p = T;
+        BiTNode *p = t;
 
-        EnQueueSq(&Q, *p);
+        EnQueueSq(&q, *p);
 
-        int last = Q.rear;
-        int width = 0;
-        int maxWidth = 0;
+        int last = q.rear;
+        int cur_width = 0;
+        int max_width = 0;
 
-        while (!QueueEmptySq(Q))
+        while (!QueueEmptySq(q))
         {
-            DeQueueSq(&Q, p);
+            DeQueueSq(&q, p);
 
-            ++width;
+            ++cur_width;
 
             if (p->lchild != NULL)
             {
-                EnQueueSq(&Q, *p->lchild);
+                EnQueueSq(&q, *p->lchild);
             }
 
             if (p->lchild != NULL)
             {
-                EnQueueSq(&Q, *p->rchild);
+                EnQueueSq(&q, *p->rchild);
             }
 
-            if (last == Q.front)
+            if (last == q.front)
             {
-                last = Q.rear;
-                if (width > maxWidth)
+                last = q.rear;
+                if (cur_width > max_width)
                 {
-                    maxWidth = width;
+                    max_width = cur_width;
                 }
-                width = 0;
+                cur_width = 0;
             }
         }
 
-        return maxWidth;
+        return max_width;
     }
     else
     {
@@ -741,9 +741,9 @@ int BiTreeWidth(BiTree T)
     }
 }
 
-void PreToPost(ElemType *Pre,
+void PreToPost(BiTElemType *pre_order,
                int preL, int preR,
-               ElemType *Post,
+               BiTElemType *post_order,
                int postL, int postR)
 {
     if (preR >= preL)
@@ -751,43 +751,43 @@ void PreToPost(ElemType *Pre,
         // 满二叉树左右子树在遍历序列中的长度相等.
         int half = (preR - preL) / 2;
 
-        Post[postR] = Pre[preL];
+        post_order[postR] = pre_order[preL];
 
         /**
          * 即先序遍历序列的非根结点部分的二分遍历. 每次二分都需要挖去先序序列中
          * 的最左边的元素 (即根结点), 且每次二分的长度都是上次的 1/2.
          */
-        PreToPost(Pre,
+        PreToPost(pre_order,
                   preL + 1, preL + half,
-                  Post,
+                  post_order,
                   postL, postL + half - 1);
 
-        PreToPost(Pre,
+        PreToPost(pre_order,
                   preL + half + 1, preR,
-                  Post,
+                  post_order,
                   postL + half, postR - 1);
     }
 }
 
-Status Similar(BiTree T1, BiTree T2)
+Status Similar(BiTree t1, BiTree t2)
 {
-    if (T1 == NULL && T2 == NULL)
+    if (t1 == NULL && t2 == NULL)
     {
         return TRUE;
     }
-    else if (T1 == NULL || T2 == NULL)
+    else if (t1 == NULL || t2 == NULL)
     {
         return FALSE;
     }
     else
     {
-        return Similar(T1->lchild, T2->lchild) && Similar(T1->rchild, T2->rchild);
+        return Similar(t1->lchild, t2->lchild) && Similar(t1->rchild, t2->rchild);
     }
 }
 
-int WPL(BiTree T)
+int WPL(BiTree t)
 {
-    return WPLPreOrder(T, 1);
+    return WPLPreOrder(t, 1);
 }
 
 int WPLPreOrder(BiTree p, int depth)
@@ -815,20 +815,20 @@ int WPLPreOrder(BiTree p, int depth)
     return wpl;
 }
 
-int WPLLevelOrder(BiTree T)
+int WPLLevelOrder(BiTree t)
 {
     // 顺序队列.
-    SqQueue Q;
-    InitQueueSq(&Q);
+    SqQueue q;
+    InitQueueSq(&q);
 
     // 工作指针 p.
-    BiTNode *p = T;
+    BiTNode *p = t;
 
     // 根结点入队.
-    EnQueueSq(&Q, *p);
+    EnQueueSq(&q, *p);
 
     // 记录队尾指针, 用于判断一层是否遍历完毕.
-    int last = Q.rear;
+    int last = q.rear;
 
     // wpl.
     int wpl = 0;
@@ -836,9 +836,9 @@ int WPLLevelOrder(BiTree T)
     // 当前访问的叶结点深度. 根结点以入队, 所以初始深度为 1.
     int depth = 1;
 
-    while (!QueueEmptySq(Q))
+    while (!QueueEmptySq(q))
     {
-        DeQueueSq(&Q, p);
+        DeQueueSq(&q, p);
 
         // 找到叶子结点, 更新 wpl.
         if (p->lchild == NULL && p->rchild == NULL)
@@ -848,18 +848,18 @@ int WPLLevelOrder(BiTree T)
 
         if (p->lchild != NULL)
         {
-            EnQueueSq(&Q, *p->lchild);
+            EnQueueSq(&q, *p->lchild);
         }
 
         if (p->rchild != NULL)
         {
-            EnQueueSq(&Q, *p->rchild);
+            EnQueueSq(&q, *p->rchild);
         }
 
-        if (last == Q.front)
+        if (last == q.front)
         {
             ++depth;
-            last = Q.rear;
+            last = q.rear;
         }
     }
 
@@ -868,58 +868,58 @@ int WPLLevelOrder(BiTree T)
 
 char predt = 0;
 
-Status JudgeBST(BiTree T)
+Status JudgeBST(BiTree t)
 {
-    if (T == NULL)
+    if (t == NULL)
     {
         return TRUE;
     }
     else
     {
         // 判断左子树.
-        int left = JudgeBST(T->lchild);
+        int left = JudgeBST(t->lchild);
 
         // 如果左子树不是二叉排序树或者前驱结点即左子的值大于当前结点,
-        if (left == 0 || predt >= T->data)
+        if (left == 0 || predt >= t->data)
         {
             // 则不是二叉排序树.
             return FALSE;
         }
 
         // 更新前驱结点值.
-        predt = T->data;
+        predt = t->data;
 
         // 判断右子树.
-        int right = JudgeBST(T->rchild);
+        int right = JudgeBST(t->rchild);
         // 返回右子树的结果.
         return right;
     }
 }
 
-Status JudgeAVL(BiTree T, int *height, int *balance)
+Status JudgeAVL(BiTree t, int *height, int *balance)
 {
     int lheight = 0, lbalance = 0, rheight = 0, rbalance = 0;
 
-    // 1. 若 T 为空, 则height = 0, balance = 1.
-    if (T == NULL)
+    // 1. 若 t 为空, 则height = 0, balance = 1.
+    if (t == NULL)
     {
         *height = 0;
         *balance = 1;
     }
     // 2. 仅有根结点, 则height = 1, balance = 1.
-    else if (T->lchild == NULL && T->rchild == NULL)
+    else if (t->lchild == NULL && t->rchild == NULL)
     {
         *height = 1;
         *balance = 1;
     }
-    // 3. 否则,对 T 的左右子树执行后续遍历递归算法, 返回左右子树的高度和平衡标记.
-    // T 的高度为最高子树的高度加 1. 若左右子树的高度差大于 1, 则 balance = 0;
+    // 3. 否则,对 t 的左右子树执行后续遍历递归算法, 返回左右子树的高度和平衡标记.
+    // t 的高度为最高子树的高度加 1. 若左右子树的高度差大于 1, 则 balance = 0;
     // 若左右子树的高度差小于等于 1, 且左右子树都平衡时, balance = 1, 否则,
     // balance = 0.
     else
     {
-        JudgeAVL(T->lchild, &lheight, &lbalance);
-        JudgeAVL(T->rchild, &rheight, &rbalance);
+        JudgeAVL(t->lchild, &lheight, &lbalance);
+        JudgeAVL(t->rchild, &rheight, &rbalance);
 
         *height = (lheight > rheight ? lheight : rheight) + 1;
 

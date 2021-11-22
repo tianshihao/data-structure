@@ -16,7 +16,7 @@
 void TestBinaryTree();
 void UseThreadTree();
 void UseBinarySearchTree();
-Status MyVisit(ElemType e);
+Status MyVisit(BiTElemType e);
 
 int main()
 {
@@ -92,8 +92,8 @@ void TestBinaryTree()
     printf("%d\n", BiTreeWidth(t));
 
     printf("Construct tree from preorder and inorder sequence.\n");
-    ElemType pre[5] = {'A', 'B', 'D', 'E', 'C'};
-    ElemType in[5] = {'D', 'B', 'E', 'A', 'C'};
+    BiTElemType pre[5] = {'A', 'B', 'D', 'E', 'C'};
+    BiTElemType in[5] = {'D', 'B', 'E', 'A', 'C'};
     BiTree N = PreInCreate(pre, 0, 4, in, 0, 4);
 
     printf("Binary tree N's level order traverse sequence is ");
@@ -165,7 +165,7 @@ void UseBinarySearchTree()
     return;
 }
 
-Status MyVisit(ElemType e)
+Status MyVisit(BiTElemType e)
 {
     printf("%c", e);
 

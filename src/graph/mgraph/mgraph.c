@@ -312,7 +312,7 @@ void DFS_M(MGraph G, int vexIndex, Status (*VisitFunc)(VertexType vex), int *vis
 //     SqStack S;
 //     InitStack_Sq(&S);
 //     Push_Sq(&S, v);
-//     while (!StackEmpty_Sq(S))
+//     while (!StackEmptySq(S))
 //     {
 //         int k = Pop_Sq(&S, k);
 //         VisitFunc(G.vertices[k]);
