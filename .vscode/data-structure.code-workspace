@@ -50,8 +50,7 @@
       "sqstack.h": "c",
       "cstdio": "c"
     },
-    "C_Cpp.errorSquiggles": "Enabled",
-    "C_Cpp.clang_format_style": "Visual Studio"
+    "C_Cpp.errorSquiggles": "Enabled"
   },
   "extensions": {
     "recommendations": [
