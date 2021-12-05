@@ -10,12 +10,12 @@
  */
 
 #include <bitree.h>
-#include <tree/bstree/bstree.h>
-#include <tree/threadtree/threadtree.h>
+#include <bstree.h>
+#include <threadtree.h>
 
 void TestBinaryTree();
-void UseThreadTree();
-void UseBinarySearchTree();
+void TestThreadTree();
+void TestBSTree();
 Status MyVisit(BiTElemType e);
 
 int main() {
@@ -27,9 +27,9 @@ int main() {
 
   // system("pause");
 
-  // UseThreadTree();
+  // TestThreadTree();
 
-  // UseBinarySearchTree();
+  // TestBSTree();
 
   system("pause");
 
@@ -118,7 +118,7 @@ void TestBinaryTree() {
   return;
 }
 
-void UseThreadTree() {
+void TestThreadTree() {
   ThreadTree T;
   InitTree_Thread(&T);
 
@@ -133,13 +133,13 @@ void UseThreadTree() {
   return;
 }
 
-void UseBinarySearchTree() {
+void TestBSTree() {
   BSTree T;
-  InitTree_BS(&T);
+  InitTreeBS(&T);
 
   BSTElem arr[8] = {53, 17, 78, 45, 9, 23, 87, 65};
 
-  CreateTree_BST(&T, arr, 8);
+  CreateTreeBS(&T, arr, 8);
 
   if (SearchElem(T, 87)) {
     printf("found\n");

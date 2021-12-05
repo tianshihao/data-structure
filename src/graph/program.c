@@ -16,68 +16,62 @@ Status MyVisit(VertexType v);
 void UseMgraph();
 void UseAlgraph();
 
-int main()
-{
-    UseMgraph();
-    // UseAlgraph();
+int main() {
+  UseMgraph();
+  // UseAlgraph();
 
-    system("pause");
+  system("pause");
 
-    return 0;
+  return 0;
 }
 
-void UseMgraph()
-{
-    MGraph G;
+void UseMgraph() {
+  MGraph G;
 
-    CreateGraph_M(&G);
+  CreateGraphM(&G);
 
-    PrintGraph_M(G);
+  PrintGraphM(G);
 
-    Floyd_M(G);
+  FloydM(G);
 
-    return;
+  return;
 }
 
-void UseAlgraph()
-{
-    ALGraph G;
+void UseAlgraph() {
+  ALGraph G;
 
-    CreateGraph_AL(&G);
+  CreateGraphAL(&G);
 
-    DFSTraverse_AL(G, MyVisit);
-    printf("\n");
-    BFSTraverse_AL(G, MyVisit);
-    printf("\n");
+  DFSTraverse_AL(G, MyVisit);
+  printf("\n");
+  BFSTraverse_AL(G, MyVisit);
+  printf("\n");
 
-    PrintGraph_AL(G);
+  PrintGraph_AL(G);
 
-    return;
+  return;
 }
 
-void WriteGraph(MGraph *G)
-{
-    FILE *fp = fopen("./mgraph.bin", "wb");
+void WriteGraph(MGraph *G) {
+  FILE *fp = fopen("./mgraph.bin", "wb");
 
-    fwrite(G, sizeof(*G), 1, fp);
+  fwrite(G, sizeof(*G), 1, fp);
 
-    fclose(fp);
+  fclose(fp);
 
-    return;
+  return;
 }
 
-void ReadGraph(MGraph *G)
-{
-    FILE *fp = fopen("./mgraph.bin", "rb");
+void ReadGraph(MGraph *G) {
+  FILE *fp = fopen("./mgraph.bin", "rb");
 
-    fread(G, sizeof(*G), 1, fp);
+  fread(G, sizeof(*G), 1, fp);
 
-    return;
+  return;
 }
 
-Status MyVisit(VertexType v)
-{
-    printf("%d ", v);
+Status MyVisit(VertexType v) {
+  printf("%d ", v);
 
-    return OK;
+  return OK;
 }

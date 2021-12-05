@@ -186,8 +186,8 @@ Status PostOrderTraverseBinaryNonRecur(BiTree t,
   // p 是工作指针.
   BiTNode *p = t;
 
-  // r 记录最近访问过的结点.
-  BiTNode *r = NULL;
+  // last_visit 记录最近访问过的结点.
+  BiTNode *last_visit = NULL;
 
   /**
    * 后续非递归遍历二叉树是先访问左子树, 再访问右子树, 最后访问根结点.
@@ -211,15 +211,15 @@ Status PostOrderTraverseBinaryNonRecur(BiTree t,
        * 2. 若栈顶元素右子非空且未访问过, 则将右子执行 1.
        */
       /**
-       * 注意, 原来 PushSq 只是将结点复制了一份存到了栈中, 所以 r 记录的上
-       * 次访问过的结点和栈中相对应的结点并不相同, 不能直接使用
-       * p->rchild != r 比较, 可以比较 data. 但是二叉树中可能会出现重复的
-       * 元素, 比较 data 会出现误差, 所以修改 PushSq 为向栈中存放二叉树中
-       * 结点本身, 而不是拷贝比较好.
+       * 注意, 原来 PushSq 只是将结点复制了一份存到了栈中, 所以 last_visit
+       * 记录的上 次访问过的结点和栈中相对应的结点并不相同, 不能直接使用
+       * p->rchild != last_visit 比较, 可以比较 data.
+       * 但是二叉树中可能会出现重复的 元素, 比较 data 会出现误差, 所以修改
+       * PushSq 为向栈中存放二叉树中 结点本身, 而不是拷贝比较好.
        *
        * 刚才试了一下, 还是直接比较 data 方便.
        */
-      if (NULL != p->rchild && p->rchild->data != r->data) {
+      if (NULL != p->rchild && p->rchild->data != last_visit->data) {
         p = p->rchild;
         PushSq(&s, *p);  // 右子入栈.
         p = p->lchild;   // 检查右子左子.
@@ -239,8 +239,8 @@ Status PostOrderTraverseBinaryNonRecur(BiTree t,
       else {
         PopSq(&s, &p);
         Visit(p->data);
-        r = p;     // 更新最近访问结点.
-        p = NULL;  // 结点访问之后置 p 为 NULL.
+        last_visit = p;  // 更新最近访问结点.
+        p = NULL;        // 结点访问之后置 p 为 NULL.
       }
     }
   }
@@ -665,9 +665,9 @@ void PreToPost(BiTElemType *pre_order, int preL, int preR,
 }
 
 Status Similar(BiTree t1, BiTree t2) {
-  if (t1 == NULL && t2 == NULL) {
+  if (NULL == t1 && NULL == t2) {
     return TRUE;
-  } else if (t1 == NULL || t2 == NULL) {
+  } else if (NULL == t1 || NULL == t2) {
     return FALSE;
   } else {
     return Similar(t1->lchild, t2->lchild) && Similar(t1->rchild, t2->rchild);
@@ -679,18 +679,18 @@ int WPL(BiTree t) { return WPLPreOrder(t, 1); }
 int WPLPreOrder(BiTree p, int depth) {
   static int wpl = 0;
 
-  // 若是叶结点, 累计 wpl.
-  if (p->lchild == NULL && p->rchild == NULL) {
+  // 若是叶结点, 则累积 wpl.
+  if (NULL == p->lchild && NULL == p->rchild) {
     wpl += depth * p->data;
   }
 
   // 若左子树不空, 则对左子树进行递归调用.
-  if (p->lchild != NULL) {
+  if (NULL != p->lchild) {
     WPLPreOrder(p->lchild, depth + 1);
   }
 
   // 若右子树不空, 则对右子树进行递归调用.
-  if (p->rchild != NULL) {
+  if (NULL != p->rchild) {
     WPLPreOrder(p->rchild, depth + 1);
   }
 
@@ -705,7 +705,7 @@ int WPLLevelOrder(BiTree t) {
   // 工作指针 p.
   BiTNode *p = t;
 
-  // 根结点入队.
+  // * 根结点入队.
   EnQueueSq(&q, *p);
 
   // 记录队尾指针, 用于判断一层是否遍历完毕.
@@ -721,15 +721,15 @@ int WPLLevelOrder(BiTree t) {
     DeQueueSq(&q, p);
 
     // 找到叶子结点, 更新 wpl.
-    if (p->lchild == NULL && p->rchild == NULL) {
+    if (NULL == p->lchild && NULL == p->rchild) {
       wpl += depth * p->data;
     }
 
-    if (p->lchild != NULL) {
+    if (NULL != p->lchild) {
       EnQueueSq(&q, *p->lchild);
     }
 
-    if (p->rchild != NULL) {
+    if (NULL != p->rchild) {
       EnQueueSq(&q, *p->rchild);
     }
 
@@ -742,58 +742,74 @@ int WPLLevelOrder(BiTree t) {
   return wpl;
 }
 
-char predt = 0;
+Status JudgeBST(BiTree tree) {
+  /**
+   * 存储遍历过程中前驱结点的值.  判断根结点时存储的左子的值,
+   * 判断右子时存储的是根结点的值.  由二叉排序树的性质可知, left < sub_tree <
+   * right.  因此前驱节点的值要小于当前结点才符合要求.
+   */
 
-Status JudgeBST(BiTree t) {
-  if (t == NULL) {
+  // 由于二叉树中数据类型是 char, 因此最小值是 0.
+  static BiTElemType previous = 0;
+
+  if (NULL == tree) {
     return TRUE;
   } else {
     // 判断左子树.
-    int left = JudgeBST(t->lchild);
+    Status left_bst = JudgeBST(tree->lchild);
 
-    // 如果左子树不是二叉排序树或者前驱结点即左子的值大于当前结点,
-    if (left == 0 || predt >= t->data) {
+    // 如果左子树不是二叉排序树或者前驱结点子的值大于当前结点的值.
+    if (FALSE == left_bst || previous >= tree->data) {
       // 则不是二叉排序树.
       return FALSE;
     }
 
     // 更新前驱结点值.
-    predt = t->data;
+    previous = tree->data;
 
     // 判断右子树.
-    int right = JudgeBST(t->rchild);
-    // 返回右子树的结果.
-    return right;
+    Status right_bst = JudgeBST(tree->rchild);
+
+    // 返回右子树的结果.  作为整个子树的结果.
+    return right_bst;
   }
 }
 
-Status JudgeAVL(BiTree t, int *height, int *balance) {
-  int lheight = 0, lbalance = 0, rheight = 0, rbalance = 0;
+Status JudgeAVL(BiTree tree, size_t *tree_height, Status *tree_balance) {
+  size_t left_child_height = 0;
+  Status left_child_balance = 0;
+  size_t right_child_height = 0;
+  Status right_child_balance = 0;
 
-  // 1. 若 t 为空, 则height = 0, balance = 1.
-  if (t == NULL) {
-    *height = 0;
-    *balance = 1;
+  // 1. 若 tree 为空, 则 tree_height = 0, tree_balance = 1.
+  if (NULL == tree) {
+    *tree_height = 0;
+    *tree_balance = TRUE;
   }
-  // 2. 仅有根结点, 则height = 1, balance = 1.
-  else if (t->lchild == NULL && t->rchild == NULL) {
-    *height = 1;
-    *balance = 1;
+  // 2. 仅有根结点, 则 tree_height = 1, tree_balance = 1.
+  else if (NULL == tree->lchild && NULL == tree->rchild) {
+    *tree_height = 1;
+    *tree_balance = TRUE;
   }
-  // 3. 否则,对 t 的左右子树执行后续遍历递归算法, 返回左右子树的高度和平衡标记.
-  // t 的高度为最高子树的高度加 1. 若左右子树的高度差大于 1, 则 balance = 0;
-  // 若左右子树的高度差小于等于 1, 且左右子树都平衡时, balance = 1, 否则,
-  // balance = 0.
+  // 3. 否则, 对 tree 的左右子树执行后续遍历递归算法,
+  // 返回左右子树的高度和平衡标记.  tree 的高度为最高子树的高度加 1.
+  // 若左右子树的高度差大于 1, 则 tree_balance = 0; 若左右子树的高度差小于等于
+  // 1, 且左右子树都平衡时, tree_balance = 1, 否则, tree_balance = 0.
   else {
-    JudgeAVL(t->lchild, &lheight, &lbalance);
-    JudgeAVL(t->rchild, &rheight, &rbalance);
+    JudgeAVL(tree->lchild, &left_child_height, &left_child_balance);
+    JudgeAVL(tree->rchild, &right_child_height, &right_child_balance);
 
-    *height = (lheight > rheight ? lheight : rheight) + 1;
+    *tree_height =
+        (left_child_height > right_child_height ? left_child_height
+                                                : right_child_height) +
+        1;
 
-    if (lheight - rheight < 2 || rheight - lheight < 2) {
-      *balance = lbalance && rbalance;
+    // 由左右子树的高度决定当前子树是否平衡.
+    if (left_child_height - right_child_height < 2 ||
+        right_child_height - left_child_height < 2) {
+      *tree_balance = left_child_balance && right_child_balance;
     } else {
-      *balance = 0;
+      *tree_balance = FALSE;
     }
   }
 }

@@ -48,7 +48,12 @@
       "stdio.h": "c",
       "bitree.h": "c",
       "sqstack.h": "c",
-      "cstdio": "c"
+      "cstdio": "c",
+      "cmath": "c",
+      "math.h": "c",
+      "bstree.h": "c",
+      "mgraph.h": "c",
+      "graphtype.h": "c"
     },
     "C_Cpp.errorSquiggles": "Enabled"
   },

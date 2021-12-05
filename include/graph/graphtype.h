@@ -10,12 +10,11 @@
 #ifndef GRAPHTYPE_H
 #define GRAPHTYPE_H
 
-typedef enum GraphType
-{
-    DG = 1, /* Digraph, 有向图. */
-    DN,     /* Dinet, 有向网/有向带权图. */
-    UDG,    /* Undigraph, 无向图. */
-    UDN     /* Undinet, 无向网/无向带权图. */
+typedef enum GraphType {
+  DG = 1,  /* Digraph, 有向图. */
+  DN = 2,  /* Dinet, 有向网/有向带权图. */
+  UDG = 3, /* Undigraph, 无向图. */
+  UDN = 4  /* Undinet, 无向网/无向带权图. */
 } GraphType;
 
 #endif /* GRAPHTYPE_H */

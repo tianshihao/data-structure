@@ -128,6 +128,7 @@ Status InvertLevelTraverseBinary(BiTree t, Status (*Visit)(BiTElemType e));
 
 /**
  * @brief 王道数据结构5, 非递归算法求二叉树高度. 根据层序遍历修改.
+ * 其实就是层序遍历的层数.
  * @param t 非空二叉树.
  * @return int 返回二叉树高度.
  */
@@ -198,6 +199,7 @@ void PreToPost(BiTElemType *Pre, int preL, int preR, BiTElemType *Post,
  * @brief 王道数据结构151/17, 判断两颗二叉树是否相似. 所谓二叉树相似是指 T1 和
  * T2 都是空树或都只有一个根结点; 或 T1 的左子树和 T2 的左子树时相似的, 且 T1 的
  * 右子树和 T2 的右子树是相似的.
+ * 所谓相同的结构, 可以通过同步遍历, 例如中序遍历.
  * @param T1 二叉树.
  * @param T2 二叉树.
  * @return TRUE T1 和 T2 相似.
@@ -215,7 +217,7 @@ int WPL(BiTree t);
 /**
  * @brief 递归的方式计算 WPL.
  * @param t 二叉树.
- * @param depth 当前所在深度.
+ * @param depth 当前所在深度.  根结点所在深度为 1.
  * @return int
  */
 int WPLPreOrder(BiTree t, int depth);
@@ -239,14 +241,14 @@ Status JudgeBST(BiTree t);
 /**
  * @brief 195/8, 给定一棵二叉树, 判定其是否为平衡二叉树. 采用后续遍历递归算法.
  * 还可以顺便求出高度.
- * @param t 二叉树.
- * @param height 二叉树的高度.
- * @param balance 平衡标记.
+ * @param tree 二叉树.
+ * @param tree_height 二叉树的高度.
+ * @param tree_balance 平衡标记.
  * @return TRUE 是平衡二叉树.
  * @return FALSE 不是平衡二叉树.
- * @note AVL 树一般是一棵平衡的二叉排序树, 但是这里的 AVL 只注重平衡, 只是平衡二
- * 叉树.
+ * @note AVL 树首先是一棵平衡的二叉排序树, 但是这里的 AVL 树只注重平衡,
+ * 只是平衡二叉树.
  */
-Status JudgeAVL(BiTree t, int *height, int *balance);
+Status JudgeAVL(BiTree tree, size_t *tree_height, Status *tree_balance);
 
 #endif  // BITREE_H
